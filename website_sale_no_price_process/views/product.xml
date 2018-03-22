@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Product grid -->
+        <template id="products_item_no_price" inherit_id="website_sale.products_item">
+            <xpath expr="//div[@itemprop='offers']" position="replace" />
+            <xpath expr="//section" position="attributes">
+                <attribute name="style">min-height: 15px; padding: 0 15px 0px 10px;</attribute>
+            </xpath>
+        </template>
+
+        <!-- Product page price -->
+        <template id="product_price_no_price" inherit_id="website_sale.product_price">
+            <xpath expr="//div[@itemprop='offers']" position="replace" />
+        </template>
+
+        <!-- Cart page -->
+        <template id="cart_lines_no_price" inherit_id="website_sale.cart_lines">
+            <xpath expr="//table//th[@width='100']" position="replace" />
+            <xpath expr="//tbody//td[@id='td-price']" position="replace" />
+        </template>
+
+        <!-- Cart total -->
+        <template id="total_no_price" inherit_id="website_sale.total">
+            <xpath expr="//div[@id='cart_total']" position="replace" />
+        </template>
+
+        <!-- Cart total -->
+        <template id="payment_no_price" inherit_id="website_sale.payment">
+            <xpath expr="//thead//th[last()]" position="replace" />
+            <xpath expr="//tbody//td[last()]" position="replace" />
+            <xpath expr="//div[@id='payment_method']" position="replace">
+                <div class="js_payment mb64 row" t-if="not website_sale_order.amount_total" id="payment_method">
+                                <div class="col-sm-12">
+                                    <form target="_self" action="/shop/payment/validate" method="post" class="pull-right">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <a class="btn btn-primary a-submit">
+                                            <span t-if="order.amount_total &gt; 0">Pay Now <span class="fa fa-long-arrow-right"/></span>
+                                            <span t-if="order.amount_total == 0">Confirm Order <span class="fa fa-long-arrow-right"/></span>
+                                        </a>
+                                    </form>
+                                </div>
+                            </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>
