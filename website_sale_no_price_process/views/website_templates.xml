@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Product grid -->
+        <template id="products_item_no_price" inherit_id="website_sale.products_item">
+            <xpath expr="//div[@itemprop='offers']" position="replace" />
+            <xpath expr="//section" position="attributes">
+                <attribute name="style">min-height: 15px; padding: 0 15px 0px 10px;</attribute>
+            </xpath>
+        </template>
+
+        <!-- Product page price -->
+        <template id="product_price_no_price" inherit_id="website_sale.product_price">
+            <xpath expr="//div[@itemprop='offers']" position="replace" />
+        </template>
+
+        <!-- Cart page -->
+        <template id="cart_lines_no_price" inherit_id="website_sale.cart_lines">
+            <xpath expr="//table//th[@width='100']" position="replace" />
+            <xpath expr="//tbody//td[@id='td-price']" position="replace" />
+        </template>
+
+        <!-- Cart total -->
+        <template id="total_no_price" inherit_id="website_sale.total">
+            <xpath expr="//div[@id='cart_total']" position="replace" />
+        </template>
+
+        <!-- Cart total -->
+        <template id="payment_no_price" inherit_id="website_sale.payment">
+            <xpath expr="//thead//th[last()]" position="replace" />
+            <xpath expr="//tbody//td[last()]" position="replace" />
+            <xpath expr="//div[@id='payment_method']" position="replace">
+                <div class="js_payment mb64 row" id="quotation_confirmation">
+                    <div class="col-sm-12">
+                        <p>
+                            Your request has been recorded.
+                            <br />
+                            We will get back to you as soon as possible
+                            <a class="btn btn-default btn-primary pull-right mb32 " href="/shop/quotation/validate">Return to the catalog <span class="fa fa-long-arrow-right"/></a>
+                        </p>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+
+        <!-- Cart -->
+        <template id="checkout_end" inherit_id="website_sale.checkout">
+            <xpath expr="(//div[last()]//a[@href='/shop/confirm_order'])" position="replace">
+                <a class="btn btn-default btn-primary pull-right mb32 " href="/shop/confirm_order">Confirm your request <span class="fa fa-long-arrow-right"/></a>
+            </xpath>
+        </template>
+        	
+
+        <!-- My orders page -->
+        <template id="portal_my_quotations_no_price" inherit_id="website_portal_sale.portal_my_quotations">
+            <xpath expr="//table//td[last()]" position="replace">
+                <t t-if="quotation.portal_price_visible==True">
+                    <td>
+                        <span t-field="quotation.amount_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: quotation.pricelist_id.currency_id}"/>
+                    </td>
+                </t>
+                <t t-if="quotation.portal_price_visible==False">
+                    <td>Requested</td>
+                </t>
+            </xpath>
+        </template>
+
+        <!-- Order page -->
+        <template id="portal_my_quotations_no_price" inherit_id="website_portal_sale.orders_followup">
+            <!-- Price unit -->
+            <xpath expr="//span[@t-field='ol.price_unit']" position="replace">
+                <t t-if="order.portal_price_visible==True">
+                    <span t-field="ol.price_unit" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: order.pricelist_id.currency_id}"/>
+                </t>
+                <t t-if="order.portal_price_visible==False">
+                    Requested
+                </t>
+            </xpath>
+            <!-- Price subtotal -->
+            <xpath expr="//span[@t-field='ol.price_subtotal']" position="replace">
+                <t t-if="order.portal_price_visible==True">
+                    <span t-field="ol.price_subtotal" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: order.pricelist_id.currency_id}"/>
+                </t>
+                <t t-if="order.portal_price_visible==False">
+                    Requested
+                </t>
+            </xpath>
+            <!-- Untaxed amount -->
+            <xpath expr="//span[@t-field='order.amount_untaxed']" position="replace">
+                <t t-if="order.portal_price_visible==True">
+                    <span t-field="order.amount_untaxed" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: order.pricelist_id.currency_id}"/>
+                </t>
+                <t t-if="order.portal_price_visible==False">
+                    Requested
+                </t>
+            </xpath>
+            <!-- Taxes -->
+            <xpath expr="//span[@t-field='order.amount_tax']" position="replace">
+                <t t-if="order.portal_price_visible==True">
+                    <span t-field="order.amount_tax" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: order.pricelist_id.currency_id}"/>
+                </t>
+                <t t-if="order.portal_price_visible==False">
+                    /
+                </t>
+            </xpath>
+
+            <!-- Total amount -->
+            <xpath expr="//span[@t-field='order.amount_total']" position="replace">
+                <t t-if="order.portal_price_visible==True">
+                    <span t-field="order.amount_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: order.pricelist_id.currency_id}"/>
+                </t>
+                <t t-if="order.portal_price_visible==False">
+                    Requested
+                </t>
+            </xpath>
+        </template>
+        
+        <!-- Wizard checkout -->
+        <template id="wizard_checkout_no_payment" inherit_id="website_sale.wizard_checkout">
+            <xpath expr="//li[@id='step40']" position="replace">
+                <li t-att-class="(step==40 and 'text-primary') or 'text-muted'" id="step40">
+                    Confirmation<span class="chevron"/>
+                </li>
+            </xpath>
+            <xpath expr="//li[@id='step50']" position="replace" />
+        </template>
+
+        <!-- Cart -->
+        <template id="cart_nocheckout" inherit_id="website_sale.cart">
+            <xpath expr="(//div[@class='row']//span)[1]" position="replace">
+                <span class="hidden-xs">Process Shipping &amp; Billing</span>
+            </xpath>
+        </template>
+    </data>
+</odoo>
