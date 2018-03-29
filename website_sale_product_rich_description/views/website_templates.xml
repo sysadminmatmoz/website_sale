@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Product page price -->
+        <template id="product_rich_description" inherit_id="website_sale.product">
+            <xpath expr="//section[@id='product_detail']" position="inside">
+                <div itemprop="rich_description" t-field="product.rich_description" class="oe_structure mt16" id="product_rich_description"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>
