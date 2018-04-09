@@ -7,7 +7,7 @@
                 <a t-att-href="keep('/shop/category/' + slug(c), category=0)" t-field="c.name"/>
                 <ul t-if="c.child_id" class="nav nav-pills nav-stacked nav-hierarchy">
                     <t t-foreach="c.child_id" t-as="c">
-                        <t t-if="categories_product_count[c.name] > 0">
+                        <t t-if="c.products_count > 0">
                             <t t-call="website_sale_category_navigation.categories_recursive_hide"/>
                         </t>
                     </t>
@@ -18,7 +18,7 @@
         <!-- Regular parent category listing -->
         <template id="category_empty_hide" inherit_id="website_sale.products_categories">
             <xpath expr="//div[@id='products_grid_before']/ul/t/t" position="replace">
-                <t t-if="categories_product_count[c.name] > 0">
+                <t t-if="c.products_count > 0">
                     <t t-call="website_sale_category_navigation.categories_recursive_hide"/>
                 </t>
             </xpath>
@@ -33,7 +33,7 @@
                 <ul t-if="categ.child_id" class="nav nav-pills nav-stacked nav-hierarchy"
                     t-att-style="'display:block;' if categ.id in parent_category_ids else 'display:none;'">
                     <t t-foreach="categ.child_id" t-as="categ">
-                        <t t-if="categories_product_count[categ.name] > 0">
+                        <t t-if="categ.products_count > 0">
                             <t t-call="website_sale_category_navigation.option_collapse_categories_recursive_hide"/>
                         </t>
                     </t>
@@ -45,7 +45,7 @@
         <template id="option_collapsible_category_empty_hide"
                   inherit_id="website_sale.option_collapse_products_categories">
             <xpath expr="//ul[@id='o_shop_collapse_category']/t/t" position="replace">
-                <t t-if="categories_product_count[categ.name] > 0">
+                <t t-if="categ.products_count > 0">
                     <t t-call="website_sale_category_navigation.option_collapse_categories_recursive_hide"/>
                 </t>
             </xpath>
