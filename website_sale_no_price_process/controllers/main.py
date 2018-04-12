@@ -16,12 +16,9 @@ _logger = logging.getLogger(__name__)
 class WebsiteSale(http.Controller):
 
     @http.route('/shop/quotation/validate', type='http', auth="public", website=True)
-    def quotation_validate(self, transaction_id=None, sale_order_id=None, **post):
-
+    def quotation_validate(self, **post):
         order = request.website.sale_get_order()
-
-        _logger.debug("1 Request : %s", request.session)
-        request.session['sale_order_id'] = None
-        _logger.debug("2 Request : %s", request.session)
+        order.partner_id.write({'last_website_so_id': False})
+        request.website.sale_reset()
 
         return request.redirect('/shop/')
