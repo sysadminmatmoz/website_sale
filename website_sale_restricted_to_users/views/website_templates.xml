@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Restricted Acced -->
+        <template id="website_sale_restricted_access" name="Shop restricted access">
+            <t t-call="website.layout">
+                <div id="wrap">
+                    <div class="oe_structure oe_empty">
+                        <div class="container">
+                            <h1 class="mt32">Access denied!</h1>
+                            <p>Sorry, the webshop part of this website is restricted to the registered users.</p>
+                            <p>
+                                If you have an account, please <a href="/web">log yourself in</a><br />
+                                If not, you can <a href="/page/contactus">contact us</a> to get your personal partner account.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>
