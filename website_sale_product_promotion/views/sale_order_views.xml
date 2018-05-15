@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menu -->
+    <menuitem id="menu_catalog_products" name="Promotions"
+              action="product_promotion_template_action_website"
+              parent="website_sale.menu_catalog" sequence="2"/>
+</odoo>
