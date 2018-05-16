@@ -2,8 +2,11 @@
   Promotion on Product
 =====================================
 
-This module is an addon to ``sale``.
+This module is an addon to ``website_sale``.
+
 It allows creating a weekly promotion on a two products.
+
+We feature a reminder notification to all managers in case next week promotion is not created yet.
 
 Installation notes
 ==================

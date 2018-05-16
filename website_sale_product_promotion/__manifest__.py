@@ -13,6 +13,8 @@
         'views/product_view.xml',
         'views/sale_order_views.xml',
 
+        'data/ir_cron.xml',
+
         'security/ir.model.access.csv',
     ],
     'installable': True
