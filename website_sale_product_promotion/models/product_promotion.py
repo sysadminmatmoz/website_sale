@@ -25,10 +25,14 @@ class ProductPromotion(models.Model):
         ('curr', _('Current')),
         ('closed', _('Closed'))], string='Status', default='draft', required=True)
 
+    _sql_constraints = [
+        ('name', 'UNIQUE (name)', 'Your already have a promotion for this week.'),
+    ]
+
     @api.model
     def create(self, values):
         if values.get('name', _('New')) == _('New'):
-            values['name'] = fields.Datetime.from_string(self.date_beg).strftime('%Yw%V')
+            values['name'] = fields.Datetime.from_string(values['date_beg']).strftime('%Yw%V')
         return super(ProductPromotion, self).create(values)
 
     @api.one
