@@ -79,6 +79,13 @@ class ProductPromotion(models.Model):
         _logger.debug('Promotion Creation Check: week {} - {}'.format(next_week_name, res))
 
     @api.multi
+    def cron_promotion_mailing(self):
+        """ Send mass mailing to all registered portal user with the right flag on """
+        template = self.env.ref('website_sale_product_promotion.promotion_email_template')
+        self.env['mail.template'].browse(template.id).send_mail(self.id)
+        return
+
+    @api.multi
     def action_draft_to_next(self):
         return self.write({'state': 'next'})
 

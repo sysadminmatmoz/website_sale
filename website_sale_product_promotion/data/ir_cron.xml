@@ -2,7 +2,7 @@
 <odoo>
     <data noupdate="1">
         <record id="ir_cron_promotion_creation_check" model="ir.cron">
-            <field name="name">Weekly Promotion Creation Notification</field>
+            <field name="name">Daily Promotion Creation Check</field>
             <field name="user_id" ref="base.user_root"/>
             <field name="active" eval="True"/>
             <field name="interval_number">1</field>
@@ -11,6 +11,18 @@
             <field name="doall" eval="False" />
             <field name="model" eval="'product.promotion'" />
             <field name="function" eval="'cron_promotion_creation_check'" />
+            <field name="args" eval="'()'" />
+        </record>
+        <record id="ir_cron_promotion_mailing" model="ir.cron">
+            <field name="name">Weekly Promotion Mailing</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="active" eval="True"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">weeks</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False" />
+            <field name="model" eval="'product.promotion'" />
+            <field name="function" eval="'cron_promotion_mailing'" />
             <field name="args" eval="'()'" />
         </record>
     </data>
