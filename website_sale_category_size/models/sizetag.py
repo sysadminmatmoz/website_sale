@@ -23,5 +23,6 @@ class SizeTageLine(models.Model):
     _name = 'category.sizetag.line'
     _description = 'Category Size tag Line'
 
-    sizetag_id = fields.Many2one('category.sizetag', string="Size Tag")
+    product_id = fields.Many2one('product.template', string="Product")
+    sizetag_id = fields.Many2one('category.sizetag', string="Size Tag", ondelete='cascade', required=True)
     sizetag_price = fields.Float(string='Size Tag Price', default=0.0)
