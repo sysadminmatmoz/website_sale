@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="product_template_form_view" model="ir.ui.view">
+            <field name="name">product.template.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='sales']" position="after">
+                    <page name="sizetags" string="Size Tags" attrs="{'invisible':[('has_sizetag','=',False)]}">
+                        <field name="has_sizetag" invisible="1"/>
+                        <field name="sizetags_line_ids" widget="one2many_list">
+                            <tree string="Size Tags" editable="bottom">
+                                <field name="sizetag_id"/>
+                                <field name="sizetag_price"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

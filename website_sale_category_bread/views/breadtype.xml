@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <!-- Tree views for category breadtype -->
+    <record id="category_breadtype_view_tree" model="ir.ui.view">
+        <field name="name">category.breadtype.tree</field>
+        <field name="model">category.breadtype</field>
+        <field name="arch" type="xml">
+            <tree string="category breadtype Tree">
+                <field name="name" />
+                <field name="active" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form views for category_breadtype  -->
+    <record id="category_breadtype_view_form" model="ir.ui.view">
+        <field name="name">category.breadtype.form</field>
+        <field name="model">category.breadtype</field>
+        <field name="arch" type="xml">
+            <form string="category breadtype Form" class="o_category_breadtype">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="active" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+     <!-- Action for category_breadtype -->
+    <record id="category_breadtype_action" model="ir.actions.act_window">
+        <field name="name">category Bread Type</field>
+        <field name="res_model">category.breadtype</field>
+        <field name="view_id" ref="category_breadtype_view_tree" />
+    </record>
+
+    <!-- Menu entry -->
+    <menuitem name="Category Bread Type"
+              id="menu_category_breadtype_action"
+              action="category_breadtype_action"
+              parent="sales_team.menu_sales" sequence="15" />
+</odoo>

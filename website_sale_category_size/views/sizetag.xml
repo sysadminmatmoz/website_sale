@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <!-- Tree views for category sizetag -->
+    <record id="category_sizetag_view_tree" model="ir.ui.view">
+        <field name="name">category.sizetag.tree</field>
+        <field name="model">category.sizetag</field>
+        <field name="arch" type="xml">
+            <tree string="category sizetag Tree">
+                <field name="name" />
+                <field name="active" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form views for category_sizetag  -->
+    <record id="category_sizetag_view_form" model="ir.ui.view">
+        <field name="name">category.sizetag.form</field>
+        <field name="model">category.sizetag</field>
+        <field name="arch" type="xml">
+            <form string="category sizetag Form" class="o_category_sizetag">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="active" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+     <!-- Action for category_sizetag -->
+    <record id="category_sizetag_action" model="ir.actions.act_window">
+        <field name="name">category size tag</field>
+        <field name="res_model">category.sizetag</field>
+        <field name="view_id" ref="category_sizetag_view_tree" />
+    </record>
+
+    <!-- Menu entry -->
+    <menuitem name="Category Size tag"
+              id="menu_category_sizetag_action"
+              action="category_sizetag_action"
+              parent="sales_team.menu_sales" sequence="14" />
+</odoo>
