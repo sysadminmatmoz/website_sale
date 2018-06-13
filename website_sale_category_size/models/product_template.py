@@ -12,4 +12,5 @@ class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     has_sizetag = fields.Boolean(related='categ_id.has_sizetag')
-    sizetags_line_ids = fields.Many2one('category.sizetag.line', "Size Tags")
+    sizetags_line_ids = fields.Many2one('category.sizetag.line', string="Size Tag Lines")
+
