@@ -11,9 +11,6 @@ _logger = logging.getLogger(__name__)
 
 class WebsiteSale(http.Controller):
 
-    def foobar(self, product):
-        return []
-
     def get_attribute_value_ids(self, product):
         """ list of selectable attributes of a product
         :return: list of product variant description
