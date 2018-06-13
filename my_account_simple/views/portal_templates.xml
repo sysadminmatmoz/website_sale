@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="details_simplified" inherit_id="website_portal.details">
+        <!-- Hide irrelevant fields (instead of removing them) -->
+        <xpath expr="//div[contains(@t-attf-class,'company_name')]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//div[contains(@t-attf-class,'vat')]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//div[contains(@t-attf-class,'street')]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//div[contains(@t-attf-class,'city')]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//div[contains(@t-attf-class,'zip')]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//div[contains(@t-attf-class,'country_id')]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//div[contains(@t-attf-class,'state_id')]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+    </template>
+</odoo>
