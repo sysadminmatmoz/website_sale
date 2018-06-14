@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record model="product.product_category" id="product.product_category_sandwich">
+            <field name="name">Sandwich</field>
+            <field name="type">Normal</field>
+            <field name="has_breadtype">True</field>
+            <field name="has_sizetag">True</field>
+            <field name="parent_id">product.product_category_1</field>
+        </record>
+        <record model="product.product_category" id="product.product_category_salad">
+            <field name="name">Salad</field>
+            <field name="type">Normal</field>
+            <field name="has_breadtype">False</field>
+            <field name="has_sizetag">True</field>
+            <field name="parent_id">product.product_category_1</field>
+        </record>
+        <record model="product.product_category" id="product.product_category_meal">
+            <field name="name">Meal</field>
+            <field name="type">Normal</field>
+            <field name="has_breadtype">False</field>
+            <field name="has_sizetag">False</field>
+            <field name="parent_id">product.product_category_1</field>
+        </record>
+        <record model="product.product_category" id="product.product_category_dessert">
+            <field name="name">Dessert</field>
+            <field name="type">Normal</field>
+            <field name="has_breadtype">False</field>
+            <field name="has_sizetag">False</field>
+            <field name="parent_id">product.product_category_1</field>
+        </record>
+    </data>
+</odoo>

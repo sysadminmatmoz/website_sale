@@ -71,7 +71,9 @@ class WebsiteSale(http.Controller):
     def shop_simple_category(self, category=None, search='', **kwargs):
 
         if not category:
-            categories = request.env['product.public.category'].search([('parent_id', '=', False)])
+            simple_categories = ('sandwich', 'salad', 'meal', 'dessert')
+            # Build the /shop/simple endpoint
+            categories = request.env['product.public.category'].search([('name', 'in', simple_categories)])
 
             values = {
                 'categories': categories,
@@ -82,6 +84,7 @@ class WebsiteSale(http.Controller):
 
             return request.render("webshop_simple.shop_simple", values)
 
+        # Build the /shop/simple/category/  endpoint
         category_context = dict(request.env.context,
                                 active_id=category.id,
                                 partner=request.env.user.partner_id)
@@ -91,12 +94,11 @@ class WebsiteSale(http.Controller):
         attrib_set = set([v[1] for v in attrib_values])
 
         # Get all products from this category
-        Product = request.env['product.template']
         domain = self._get_search_domain(search, category, attrib_values)
-        product_count = Product.search_count(domain)
-        products = Product.search(domain)
+        products = request.env['product.template'].search(domain)
+        product_count = len(products)
 
-        keep = QueryURL('/shop', category=category and category.id, search=search, attrib=attrib_list)
+        keep = QueryURL('/shop/simple', category=category and category.id, search=search, attrib=attrib_list)
         pricelist_context = dict(request.env.context)
         if not pricelist_context.get('pricelist'):
             pricelist = request.website.get_current_pricelist()
