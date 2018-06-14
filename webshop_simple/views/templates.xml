@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <!-- simple shop product inner frame -->
     <template id="product_price">
       <div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price mt16">
           <h4 class="oe_price_h4 css_editable_mode_hidden">
@@ -20,6 +21,55 @@
           </h4>
           <h4 class="hidden oe_not_available bg-warning">Product not available</h4>
       </div>
+    </template>
+
+    <!-- sizetag feature innerframe : this is a select single item type of attribute -->
+    <template id="sizetag" name="Size Tag">
+        <t t-if="len(product.sizetags_line_ids)>0">
+            <div>
+                <span>Size Tag</span>
+                <t t-foreach="product.sizetags_line_ids" t-as="st_id">
+                    <div>
+                        <input type="radio" class="js_variant_change" name="sizetag" t-att-value="st_id.id"
+                               style="vertical-align: top; margin-right: 10px;"/>
+                        <span t-field="st_id.sizetag_id.name"/>
+                        <span t-field="st_id.sizetag_price">
+                            <t t-esc="st_id.sizetag_price > 0 and '+' or ''"/>
+                            <span t-field="st_id.sizetag_price" style="white-space: nowrap;"
+                                  t-options='{
+                                      "widget": "monetary",
+                                      "from_currency": product.currency_id,
+                                      "display_currency": website.currency_id
+                                   }'/>
+                        </span>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+
+    <template id="breadtype" name="Bread Type">
+        <t t-if="len(product.breadtype_line_ids)>0">
+            <div>
+                <span>Bread Type</span>
+                <t t-foreach="product.breadtype_line_ids" t-as="st_id">
+                    <div>
+                        <input type="radio" class="js_variant_change" name="sizetag" t-att-value="st_id.id"
+                               style="vertical-align: top; margin-right: 10px;"/>
+                        <span t-field="st_id.breadtype_id.name"/>
+                        <span t-field="st_id.breadtype_price">
+                            <t t-esc="st_id.breadtype_price > 0 and '+' or ''"/>
+                            <span t-field="st_id.breadtype_price" style="white-space: nowrap;"
+                                  t-options='{
+                                      "widget": "monetary",
+                                      "from_currency": product.currency_id,
+                                      "display_currency": website.currency_id
+                                   }'/>
+                        </span>
+                    </div>
+                </t>
+            </div>
+        </t>
     </template>
 
     <!-- /shop/simple/category product page -->
@@ -53,7 +103,7 @@
                     <!-- category row -->
                     <div class="row">
                         <div class="col-sm-5 col-lg-4 col-lg-offset-1" id="product_details">
-                            <h1 itemprop="name" t-field="category.name">Category Name</h1>
+                            <!-- h1 itemprop="name" t-field="category.name">Category Name</h1 -->
                             <form action="/shop/cart/update" class="js_add_cart_variants" t-att-data-attribute_value_ids="attribute_value_ids" method="POST">
                                 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
                                 <!-- Sandwich Size -->
@@ -128,23 +178,23 @@
                                                 </div>
                                             </t>
                                         </div>
-                                        <!-- infos -->
+                                        <!-- product infos -->
                                         <div class="col-sm-5 col-lg-4 col-lg-offset-1" id="product_details">
                                             <h1 itemprop="name" t-field="product.name">Product Name</h1>
-                                            <span itemprop="url" style="display:none;"
-                                                  t-esc="'%sshop/product/%s' % (request.httprequest.url_root, slug(product))"/>
+                                            <span itemprop="url" style="display:none;" t-esc="'%sshop/product/%s' % (request.httprequest.url_root, slug(product))"/>
                                             <t t-set="attribute_value_ids" t-value="get_attribute_value_ids(product)"/>
                                             <form action="/shop/cart/update" class="js_add_cart_variants"
                                                   t-att-data-attribute_value_ids="attribute_value_ids"
                                                   method="POST">
-                                                <input type="hidden" name="csrf_token"
-                                                       t-att-value="request.csrf_token()"/>
+                                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                                 <div class="js_product" t-if="product.product_variant_ids">
                                                     <t t-placeholder="select">
-                                                        <input type="hidden" class="product_id" name="product_id"
-                                                               t-att-value="product.product_variant_id.id if len(product.product_variant_ids) == 1 else '0'"/>
-                                                        <t t-call="website_sale.variants">
-                                                            <t t-set="ul_class" t-value="'nav-stacked'"/>
+                                                        <input type="hidden" class="product_id" name="product_id" t-att-value="product.product_variant_id.id if len(product.product_variant_ids) == 1 else '0'"/>
+                                                        <t t-if="product.categ_id.has_sizetag">
+                                                            <t t-call="webshop_simple.sizetag"/>
+                                                        </t>
+                                                        <t t-if="product.categ_id.has_breadtype">
+                                                            <t t-call="webshop_simple.breadtype"/>
                                                         </t>
                                                     </t>
                                                     <t t-call="webshop_simple.product_price"/>
@@ -158,6 +208,7 @@
                                                     </a>
                                                 </div>
                                             </form>
+                                            <!-- additional info regarding sales and availability -->
                                             <hr t-if="product.availability != 'empty'"/>
                                             <div t-if="product.availability == 'in_stock'"
                                                  class="alert alert-success">
@@ -174,6 +225,7 @@
                                                 <p t-field="product.description_sale" class="text-muted"/>
                                             </div>
                                             <hr/>
+                                            <!-- additional text regarding purchase and shipping: To be removed -->
                                             <p class="text-muted">
                                                 30-day money-back guarantee
                                                 <br/>
