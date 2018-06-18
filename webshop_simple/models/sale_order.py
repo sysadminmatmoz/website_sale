@@ -13,24 +13,32 @@ class SaleOrder(models.Model):
 
     @api.multi
     def _get_extra_line_description(self, order_id, product_id, breadtype=None, sizetag=None, sides=None):
-        name = ""
+        extra_name = ""
+
         order = self.sudo().browse(order_id)
         product_context = dict(self.env.context)
         product_context.setdefault('lang', order.partner_id.lang)
-        main_product = self.env['product.template'].search([('id', '=', product_id)])
+        main_product = self.env['product.product'].with_context(product_context).browse(product_id)
+        _logger.debug("ABAKUS**: product_id:{} - main_product:{}".format(product_id, main_product))
         if breadtype:
             for bl in main_product.breadtype_line_ids:
-                if bl.id == breadtype:
-                    name += "\nBread: %s" % bl.breadtype_id.name
+                if int(bl.id) == int(breadtype):
+                    extra_name += "\nBread: %s" % bl.breadtype_id.name
         if sizetag:
             for sl in main_product.sizetags_line_ids:
-                if sl.id == sizetag:
-                    name += "\nSize: %s" % sl.sizetag_id.name
+                if int(sl.id) == int(sizetag):
+                    extra_name += "\nSize: %s" % sl.sizetag_id.name
         if sides and len(sides) > 0:
             for side in sides:
-                side_product = self.env['product.template'].browse(int(side))
-                name += "\nSide: %s" % side_product.name
-        return name
+                _logger.debug("ABAKUS**: side:{}".format(side))
+                side_product = self.env['product.template'].search([('id', '=', int(side))])
+                if side_product:
+                    _logger.debug("ABAKUS**: side_product.display_name:{}".format(pformat(side_product.display_name)))
+                    extra_name += "\nSide: %s" % side_product.display_name
+                else:
+                    _logger.debug("ABAKUS**: can_t find side product_id:{}".format(int(side)))
+        _logger.debug("ABAKUS**: extra_name:{}".format(extra_name))
+        return extra_name
 
     @api.multi
     def _cart_update(self, product_id=None, line_id=None, add_qty=0, set_qty=0, attributes=None, **kwargs):
@@ -63,10 +71,10 @@ class SaleOrder(models.Model):
             # Take our custom field into account
             breadtype = None
             if 'breadtype' in kwargs:
-                breadtype = int(kwargs['breadtype'])
+                breadtype = kwargs['breadtype']
             sizetag = None
             if 'sizetag' in kwargs:
-                sizetag = int(kwargs['sizetag'])
+                sizetag = kwargs['sizetag']
             sides = []
             if 'sides' in kwargs:
                 # we can not turn them into attributes because it will create variants

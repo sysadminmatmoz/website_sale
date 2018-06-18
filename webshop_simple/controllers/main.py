@@ -145,9 +145,6 @@ class WebsiteSale(http.Controller):
 
     @http.route(['/shop/cart/update'], type='http', auth="public", methods=['POST'], website=True, csrf=False)
     def cart_update(self, product_id, add_qty=1, set_qty=0, **kw):
-        # _logger.debug("ABAKUS: product_id:{} - add_qty:{} - set_qty:{} - kw:{}".format(
-        #     int(product_id), add_qty, set_qty, pformat(kw, depth=4)
-        # ))
         breadtype = None
         if 'breadtype' in kw:
             breadtype = kw['breadtype']
@@ -157,7 +154,9 @@ class WebsiteSale(http.Controller):
         sides = []
         for key in kw:
             if key.startswith("sides-"):
-                sides.append(kw[key])
+                sides.append(int(kw[key]))
+
+        _logger.debug("ABAKUS: breadtype:{}, sizetag:{} - sides:{}".format(breadtype, sizetag, sides))
 
         request.website.sale_get_order(force_create=1)._cart_update(
             product_id=int(product_id),
