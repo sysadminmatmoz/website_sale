@@ -42,7 +42,7 @@
                 <span itemprop="price" style="display:none;" t-esc="product.website_price"/>
                 <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name"/>
             </h4>
-            <h4 class="oe_price_h4 css_editable_mode_hidden">>
+            <h4 class="oe_price_h4 css_editable_mode_hidden">
                 <span>Total price ................... </span>
                 <b class="oe_price" style="white-space: nowrap;" id="product_unit_price"
                    t-options="{'widget': 'monetary', 'display_currency': website.currency_id}">0.0</b>

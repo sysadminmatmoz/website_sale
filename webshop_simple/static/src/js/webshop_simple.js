@@ -59,7 +59,7 @@ function compute_unit_total(){
     var base_price = document.getElementById('base_price');
     var sizetag_price = document.getElementById('sizetag_price');
     var breadtype_price = document.getElementById('breadtype_price');
-    var sides = document.getElementById('sides_price');
+    var sides_price = document.getElementById('sides_price');
     var product_unit_price = 0.00;
     if(base_price){
         product_unit_price += parseFloat(base_price.innerText);
@@ -76,3 +76,5 @@ function compute_unit_total(){
     document.getElementById('product_unit_price').innerText = product_unit_price.toFixed(2);
 };
 
+// run it onload to initiate tota unit price
+window.onload = function(){ compute_unit_total(); }
