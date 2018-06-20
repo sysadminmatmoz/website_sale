@@ -3,7 +3,7 @@
     'name': "Category bread type",
 
     'summary': "Bread type management",
-
+    'description': "Bread type management",
     'author': "AbAKUS it-solutions SARL",
     'website': "http://www.abakusitsolutions.eu",
     'category': 'eCommerce',
