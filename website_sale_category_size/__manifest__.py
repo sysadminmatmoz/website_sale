@@ -3,6 +3,7 @@
     'name': "Category size tag",
 
     'summary': "Size tag management",
+    'description': "Size tag management",
 
     'author': "AbAKUS it-solutions SARL",
     'website': "http://www.abakusitsolutions.eu",
