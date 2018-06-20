@@ -318,7 +318,6 @@
 
 /* Create 3 equal columns that sits next to each other */
 .sandwich_column {
-  flex: 33%;
   max-width: 33%;
   padding: 0 4px;
 }
