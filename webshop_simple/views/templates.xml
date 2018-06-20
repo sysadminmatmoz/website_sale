@@ -10,8 +10,7 @@
                     <span style="width:75%;">Size tag ................... </span>
                     <b class="oe_price" style="white-space: nowrap;" id="sizetag_price"
                        t-options="{'widget': 'monetary', 'display_currency': website.currency_id}">0.00</b>
-                    <span itemprop="price" style="display:none;">0.0</span>
-                    <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name"/>
+                    <b><![CDATA[&nbsp;&euro;]]></b>
                 </h4>
             </t>
             <t t-if="product.categ_id.has_breadtype">
@@ -19,13 +18,15 @@
                     <span style="width:75%;">Bread type .............. </span>
                     <b class="oe_price" style="white-space: nowrap;" id="breadtype_price"
                        t-options="{'widget': 'monetary', 'display_currency': website.currency_id}">0.00</b>
+                    <b><![CDATA[&nbsp;&euro;]]></b>
                 </h4>
             </t>
             <t t-if="sides_count>0">
                 <h4 class="oe_price_h4 css_editable_mode_hidden">
                     <span style="width:75%;">Sides ....................... </span>
                     <b class="oe_price" style="white-space: nowrap;" id="sides_price"
-                       t-options="{'widget': 'monetary', 'display_currency': website.currency_id}">0.0</b>
+                       t-options="{'widget': 'monetary', 'display_currency': website.currency_id}">0.00</b>
+                    <b><![CDATA[&nbsp;&euro;]]></b>
                 </h4>
             </t>
             <h4 class="oe_price_h4 css_editable_mode_hidden">
@@ -45,7 +46,8 @@
             <h4 class="oe_price_h4 css_editable_mode_hidden">
                 <span>Total price ................... </span>
                 <b class="oe_price" style="white-space: nowrap;" id="product_unit_price"
-                   t-options="{'widget': 'monetary', 'display_currency': website.currency_id}">0.0</b>
+                   t-options="{'widget': 'monetary', 'display_currency': website.currency_id}">0.00</b>
+                <b><![CDATA[&nbsp;&euro;]]></b>
             </h4>
             <!-- non editable  -->
             <h4 class="css_non_editable_mode_hidden decimal_precision"
@@ -98,11 +100,11 @@
 }
             </style>
             <div class="row" id="sizetag_row">
-            <p style="margin:0px;">Size Tag</p>
+            <p style="padding-left:10px;">Size Tag</p>
             <div class="radio-group">
             <t t-foreach="product.sizetags_line_ids" t-as="sl">
                 <input type="radio" t-attf-id="sizetag_{{sl.id}}" name="sizetag" t-att-value="sl.id" t-att-checked="'checked' if sl_index == 0 else None"  onclick="compute_sizetag();"/>
-                <label t-attf-for="sizetag_{{sl.id}}"><t t-esc="sl.sizetag_id.name"/></label>
+                <label t-attf-for="sizetag_{{sl.id}}"><t t-esc="sl.sizetag_id.name"/> (<t t-esc="'{0:,.2f}'.format(sl.sizetag_price)"/><![CDATA[&nbsp;&euro;]]>)</label>
                 <input type="hidden" t-attf-id="sizetag_price_{{sl.id}}" t-att-value="sl.sizetag_price" />
             </t>
             </div>
@@ -146,11 +148,11 @@
 }
             </style>
             <div class="row" id="breadtype_row">
-                <p style="margin:0px;">Bread Type</p>
+                <p style="padding-left:10px;">Bread Type</p>
                 <div class="radio-group">
                 <t t-foreach="product.breadtype_line_ids" t-as="bl">
                     <input type="radio" t-attf-id="breadtype_{{bl.id}}" name="breadtype" t-att-value="bl.id" t-att-checked="'checked' if bl_index == 0 else None" onclick="compute_breadtype();"/>
-                    <label t-attf-for="breadtype_{{bl.id}}"><t t-esc="bl.breadtype_id.name"/></label>
+                    <label t-attf-for="breadtype_{{bl.id}}"><t t-esc="bl.breadtype_id.name"/> (<t t-esc="'{0:,.2f}'.format(bl.breadtype_price)"/><![CDATA[&nbsp;&euro;]]>)</label>
                     <input type="hidden" t-attf-id="breadtype_price_{{bl.id}}" t-att-value="bl.breadtype_price" />
                 </t>
                 </div>
@@ -187,12 +189,12 @@
 }
         </style>
         <div class="row" id="sides_row">
-            <p style="margin:0px;">Sides</p>
+            <p style="padding-left:10px;">Sides</p>
             <div>
                 <t t-foreach="sides" t-as="side_product">
                     <div class="checkbox-group">
                         <input type="checkbox" t-attf-id="sides-{{side_product.id}}" t-attf-name="sides-{{side_product.id}}" t-att-value="side_product.id" onclick="compute_sides();"/>
-                        <label t-attf-for="sides-{{side_product.id}}" ><t t-esc="side_product.name"/></label>
+                        <label t-attf-for="sides-{{side_product.id}}" ><t t-esc="side_product.name"/>  (<t t-esc="'{0:,.2f}'.format(side_product.lst_price)"/><![CDATA[&nbsp;&euro;]]>)</label>
                         <input type="hidden" t-attf-id="side_price_{{side_product.id}}" t-att-value="side_product.lst_price" />
                     </div>
                 </t>
