@@ -29,7 +29,8 @@
                     <b><![CDATA[&nbsp;&euro;]]></b>
                 </h4>
             </t>
-            <h4 class="oe_price_h4 css_editable_mode_hidden">
+            <h4 class="oe_price_h4 css_editable_mode_hidden"
+                t-att-style="'display:none' if (sides_count==0) and product.categ_id.has_breadtype is False and product.categ_id.has_sizetag is False else ''">
                 <span><t t-esc="product.name"/>......... </span>
                 <span class="text-danger oe_default_price"
                       style="text-decoration: line-through; white-space: nowrap;"
@@ -459,7 +460,7 @@
                                 </a>
                             </div>
                             <div class="sandwich_column">
-                                <a href="/shop/simple/category/salades-23">
+                                <a href="/shop/simple/category/salades-19">
                                     <img class="fillwidth" src="/webshop_simple/static/src/img/cat_salade.jpg"/>
                                 </a>
                             </div>
