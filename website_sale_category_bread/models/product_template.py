@@ -13,4 +13,4 @@ class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     has_breadtype = fields.Boolean(related='categ_id.has_breadtype')
-    breadtypes_line_ids = fields.One2many('category.breadtype.line', 'product_id', string="Size Tag Lines", copy=True)
+    breadtype_line_ids = fields.One2many('category.breadtype.line', 'product_id', string="Size Tag Lines", copy=True)

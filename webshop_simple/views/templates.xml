@@ -1,31 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <!-- modified shop product inner frame -->
     <template id="product_price">
-      <div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price mt16">
-          <h4 class="oe_price_h4 css_editable_mode_hidden">
-              <span class="text-danger oe_default_price" style="text-decoration: line-through; white-space: nowrap;"
-                t-esc="compute_currency(product.website_public_price)" t-options="{'widget': 'monetary', 'display_currency': website.get_current_pricelist().currency_id, 'from_currency': website.currency_id}" t-att-style="'text-decoration: line-through; white-space: nowrap; ' + '' if product.website_price_difference and website.get_current_pricelist().discount_policy == 'without_discount' else 'display: none;'"
-              />
-              <b class="oe_price" style="white-space: nowrap;" t-esc="product.website_price" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
-              <span itemprop="price" style="display:none;" t-esc="product.website_price"/>
-              <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name"/>
-          </h4>
-          <h4 class="css_non_editable_mode_hidden decimal_precision" t-att-data-precision="str(product.currency_id.decimal_places)">
-            <span t-field="product.lst_price"
-                t-options='{
-                   "widget": "monetary",
-                   "display_currency": product.currency_id,
-               }'/>
-          </h4>
-          <h4 class="hidden oe_not_available bg-warning">Product not available</h4>
-      </div>
+        <div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price mt16">
+            <!-- Actual price -->
+            <t t-if="product.categ_id.has_sizetag">
+                <h4 class="oe_price_h4 css_editable_mode_hidden">
+                    <span style="width:75%;">Size tag ................... </span>
+                    <b class="oe_price" style="white-space: nowrap;" t-attf-id="sizetag_price_{{product_id}}"
+                       t-options="{'widget': 'monetary', 'display_currency': website.currency_id}">0.00</b>
+                    <b><![CDATA[&nbsp;&euro;]]></b>
+                </h4>
+            </t>
+            <t t-if="product.categ_id.has_breadtype">
+                <h4 class="oe_price_h4 css_editable_mode_hidden">
+                    <span style="width:75%;">Bread type .............. </span>
+                    <b class="oe_price" style="white-space: nowrap;" t-attf-id="breadtype_price_{{product_id}}"
+                       t-options="{'widget': 'monetary', 'display_currency': website.currency_id}">0.00</b>
+                    <b><![CDATA[&nbsp;&euro;]]></b>
+                </h4>
+            </t>
+            <t t-if="sides_count>0">
+                <h4 class="oe_price_h4 css_editable_mode_hidden">
+                    <span style="width:75%;">Sides ....................... </span>
+                    <b class="oe_price" style="white-space: nowrap;" t-attf-id="sides_price_{{product_id}}"
+                       t-options="{'widget': 'monetary', 'display_currency': website.currency_id}">0.00</b>
+                    <b><![CDATA[&nbsp;&euro;]]></b>
+                </h4>
+            </t>
+            <h4 class="oe_price_h4 css_editable_mode_hidden"
+                t-att-style="'display:none' if (sides_count==0) and product.categ_id.has_breadtype is False and product.categ_id.has_sizetag is False else ''">
+                <span><t t-esc="product.name"/>......... </span>
+                <span class="text-danger oe_default_price"
+                      style="text-decoration: line-through; white-space: nowrap;"
+                      t-esc="compute_currency(product.website_public_price)"
+                      t-options="{'widget': 'monetary', 'display_currency': website.get_current_pricelist().currency_id, 'from_currency': website.currency_id}"
+                      t-att-style="'text-decoration: line-through; white-space: nowrap; ' + '' if product.website_price_difference and website.get_current_pricelist().discount_policy == 'without_discount' else 'display: none;'"
+                />
+                <b class="oe_price" style="white-space: nowrap;" t-esc="product.website_price"
+                   t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
+                    t-attf-id="base_price_{{product_id}}"/>
+                <span itemprop="price" style="display:none;" t-esc="product.website_price"/>
+                <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name"/>
+            </h4>
+            <h4 class="oe_price_h4 css_editable_mode_hidden">
+                <span>Total price ................... </span>
+                <b class="oe_price" style="white-space: nowrap;" t-attf-id="product_unit_price_{{product_id}}"
+                   t-options="{'widget': 'monetary', 'display_currency': website.currency_id}">0.00</b>
+                <b><![CDATA[&nbsp;&euro;]]></b>
+            </h4>
+            <!-- non editable  -->
+            <h4 class="css_non_editable_mode_hidden decimal_precision"
+                t-att-data-precision="str(product.currency_id.decimal_places)">
+                <span t-field="product.lst_price"
+                      t-options="{'widget': 'monetary','display_currency': product.currency_id}"/>
+            </h4>
+            <!-- not available message -->
+            <h4 class="hidden oe_not_available bg-warning">Product not available</h4>
+        </div>
+    </template>
+
+    <!-- sizetag feature innerframe : this is a select single item type of attribute -->
+    <template id="sizetag" name="Size Tag">
+        <t t-if="len(product.sizetags_line_ids)>0">
+            <div class="row" id="sizetag_row">
+                <p style="padding-left:10px;">Size Tag</p>
+                <div class="radio-group">
+                <t t-foreach="product.sizetags_line_ids" t-as="sl">
+                    <input type="radio" t-attf-id="sizetag_{{product_id}}_{{sl.id}}" t-attf-name="sizetag_{{product_id}}" t-att-value="sl.id" t-att-checked="'checked' if sl_index == 0 else None"  t-attf-onclick="compute_sizetag({{product_id}});"/>
+                    <label t-attf-for="sizetag_{{product_id}}_{{sl.id}}"><t t-esc="sl.sizetag_id.name"/> (<t t-esc="'{0:,.2f}'.format(sl.sizetag_price)"/><![CDATA[&nbsp;&euro;]]>)</label>
+                    <input type="hidden" t-attf-id="sizetag_price_{{product_id}}_{{sl.id}}" t-att-value="sl.sizetag_price" />
+                </t>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="breadtype" name="Bread Type">
+        <t t-if="len(product.breadtype_line_ids)>0">
+            <div class="row" id="breadtype_row">
+                <p style="padding-left:10px;">Bread Type</p>
+                <div class="radio-group">
+                <t t-foreach="product.breadtype_line_ids" t-as="bl">
+                    <input type="radio" t-attf-id="breadtype_{{product_id}}_{{bl.id}}" t-attf-name="breadtype_{{product_id}}" t-att-value="bl.id" t-att-checked="'checked' if bl_index == 0 else None" t-attf-onclick="compute_breadtype({{product_id}});"/>
+                    <label t-attf-for="breadtype_{{product_id}}_{{bl.id}}"><t t-esc="bl.breadtype_id.name"/> (<t t-esc="'{0:,.2f}'.format(bl.breadtype_price)"/><![CDATA[&nbsp;&euro;]]>)</label>
+                    <input type="hidden" t-attf-id="breadtype_price_{{product_id}}_{{bl.id}}" t-att-value="bl.breadtype_price" />
+                </t>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="sides" name="Sides">
+        <div class="row" id="sides_row">
+            <p style="padding-left:10px;">Sides</p>
+            <div>
+                <t t-foreach="sides" t-as="side_product">
+                    <div class="checkbox-group">
+                        <input type="checkbox" t-attf-id="sides-{{product_id}}-{{side_product.id}}" t-attf-name="sides-{{product_id}}-{{side_product.id}}" t-att-value="side_product.id" t-attf-onclick="compute_sides({{product_id}});"/>
+                        <label t-attf-for="sides-{{product_id}}-{{side_product.id}}" ><t t-esc="side_product.name"/>  (<t t-esc="'{0:,.2f}'.format(side_product.lst_price)"/><![CDATA[&nbsp;&euro;]]>)</label>
+                        <input type="hidden" t-attf-id="side_price_{{product_id}}_{{side_product.id}}" t-att-value="side_product.lst_price" />
+                    </div>
+                </t>
+            </div>
+        </div>
     </template>
 
     <!-- /shop/simple/category product page -->
     <template id="category" name="Category">
         <t t-call="website.layout">
-            <t t-set="additional_title" t-value="category.name" />
+            <t t-set="additional_title" t-value="category.name"/>
+            <script type="text/javascript" src="/webshop_simple/static/src/js/webshop_simple.js"/>
+            <link rel="stylesheet" type="text/css" href="/webshop_simple/static/src/css/webshop_simple.css" />
             <div itemscope="itemscope" itemtype="http://schema.org/croduct" id="wrap" class="js_sale">
                 <section t-attf-class="container mt8 oe_website_sale" id="category_detail">
                     <!-- action row -->
@@ -37,179 +124,184 @@
                                     <a href="/shop/simple">Categories</a>
                                 </li>
                                 <li class="active">
-                                    <span t-field="category.name" />
+                                    <span t-field="category.name"/>
                                 </li>
                             </ol>
                         </div>
-                        <!-- search -->
-                        <div class="col-sm-3 mb8">
-                            <t t-call="website_sale.search" />
-                        </div>
+                        <!-- search box is removed -->
                         <!-- currency -->
                         <div class="col-sm-2 text-right">
-                            <t t-call="website_sale.pricelist_list" />
+                            <t t-call="website_sale.pricelist_list"/>
                         </div>
                     </div>
+                    <!-- h1 itemprop="name" t-field="category.name">Category Name</h1 -->
+                    <t t-foreach="products" t-as="product">
+                        <t t-set="product_id"  t-value="product.product_variant_id.id if len(product.product_variant_ids) == 1 else '0'"/>
                     <!-- category row -->
                     <div class="row">
-                        <div class="col-sm-5 col-lg-4 col-lg-offset-1" id="product_details">
-                            <h1 itemprop="name" t-field="category.name">Category Name</h1>
-                            <form action="/shop/cart/update" class="js_add_cart_variants" t-att-data-attribute_value_ids="attribute_value_ids" method="POST">
-                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
-                                <!-- Sandwich Size -->
-                                <div>
-                                    <t t-foreach="products" t-as="product">
-                                        <!-- ===============  Main Product Detail ==================  -->
-                                        <!-- images -->
-                                        <div class="col-sm-7">
-                                            <span itemprop="image"
-                                                  t-attf-content="{{request.httprequest.url_root}}web/image/product.template/{{product.id}}/image"
-                                                  t-field="product.image"
-                                                  t-options="{'widget': 'image', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image'}"
-                                                  groups="!website_sale.group_website_multi_image"/>
-                                            <t groups="website_sale.group_website_multi_image">
-                                                <t t-set="variant_img"
-                                                   t-value="product.product_variant_id.image_variant"/>
-                                                <t t-set="image_ids" t-value="product.product_image_ids"/>
-                                                <div id="o-carousel-product" class="carousel slide" data-ride="carousel"
-                                                     data-interval="0">
-                                                    <div class="carousel-outer">
-                                                        <div class="carousel-inner">
-                                                            <div t-if="variant_img" class="item active" itemprop="image"
-                                                                 t-field="product.product_variant_id.image"
-                                                                 t-options="{'widget': 'image', 'class': 'product_detail_img js_variant_img', 'alt-field': 'name', 'zoom': 'image', 'unique': product['__last_update'] + (product.product_variant_id['__last_update'] or '')}"/>
-                                                            <div t-attf-class="item#{'' if variant_img else ' active'}"
-                                                                 itemprop="image" t-field="product.image"
-                                                                 t-options="{'widget': 'image', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image', 'unique': product['__last_update']}"/>
-                                                            <t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
-                                                                <div class="item" t-field="pimg.image"
-                                                                     t-options='{"widget": "image", "class": "product_detail_img", "alt-field": "name", "zoom": "image" }'/>
-                                                            </t>
-                                                        </div>
+                            <!-- ===============  Main Product Detail ==================  -->
+                            <!-- images -->
+                            <div class="col-sm-7">
+                                <span itemprop="image"
+                                      t-attf-content="{{request.httprequest.url_root}}web/image/product.template/{{product.id}}/image"
+                                      t-field="product.image"
+                                      t-options="{'widget': 'image', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image'}"
+                                      groups="!website_sale.group_website_multi_image"/>
+                                <t groups="website_sale.group_website_multi_image">
+                                    <t t-set="variant_img"
+                                       t-value="product.product_variant_id.image_variant"/>
+                                    <t t-set="image_ids" t-value="product.product_image_ids"/>
+                                    <div id="o-carousel-product" class="carousel slide" data-ride="carousel"
+                                         data-interval="0">
+                                        <div class="carousel-outer">
+                                            <div class="carousel-inner">
+                                                <div t-if="variant_img" class="item active" itemprop="image"
+                                                     t-field="product.product_variant_id.image"
+                                                     t-options="{'widget': 'image', 'class': 'product_detail_img js_variant_img', 'alt-field': 'name', 'zoom': 'image', 'unique': product['__last_update'] + (product.product_variant_id['__last_update'] or '')}"/>
+                                                <div t-attf-class="item#{'' if variant_img else ' active'}"
+                                                     itemprop="image" t-field="product.image"
+                                                     t-options="{'widget': 'image', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image', 'unique': product['__last_update']}"/>
+                                                <t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
+                                                    <div class="item" t-field="pimg.image"
+                                                         t-options='{"widget": "image", "class": "product_detail_img", "alt-field": "name", "zoom": "image" }'/>
+                                                </t>
+                                            </div>
 
-                                                        <t t-if="len(image_ids) or variant_img">
-                                                            <a class="carousel-control left" href="#o-carousel-product"
-                                                               role="button" data-slide="prev">
-                                                                <span class="fa fa-chevron-left" aria-hidden="true"/>
-                                                                <span class="sr-only">Previous</span>
-                                                            </a>
-                                                            <a class="carousel-control right" href="#o-carousel-product"
-                                                               role="button" data-slide="next">
-                                                                <span class="fa fa-chevron-right" aria-hidden="true"/>
-                                                                <span class="sr-only">Next</span>
-                                                            </a>
-                                                        </t>
-                                                    </div>
-
-                                                    <ol class="carousel-indicators"
-                                                        t-if="len(image_ids) or variant_img">
-                                                        <li t-if="variant_img" data-target="#o-carousel-product"
-                                                            data-slide-to="0" class="active">
-                                                            <img class="img img-responsive js_variant_img_small"
-                                                                 t-attf-src="/website/image/product.product/{{product.product_variant_id.id}}/image/90x90"
-                                                                 t-att-alt="product.name"/>
-                                                        </li>
-                                                        <li data-target="#o-carousel-product"
-                                                            t-att-data-slide-to="1 if variant_img else 0"
-                                                            t-att-class="'' if variant_img else 'active'">
-                                                            <img class="img img-responsive"
-                                                                 t-attf-src="/website/image/product.template/{{product.id}}/image/90x90"
-                                                                 t-att-alt="product.name"/>
-                                                        </li>
-                                                        <t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
-                                                            <li data-target="#o-carousel-product"
-                                                                t-att-data-slide-to="pimg_index + (variant_img and 2 or 1)">
-                                                                <img class="img img-responsive"
-                                                                     t-attf-src="/website/image/product.image/{{pimg.id}}/image/90x90"
-                                                                     t-att-alt="pimg.name"/>
-                                                            </li>
-                                                        </t>
-                                                    </ol>
-                                                </div>
+                                            <t t-if="len(image_ids) or variant_img">
+                                                <a class="carousel-control left" href="#o-carousel-product"
+                                                   role="button" data-slide="prev">
+                                                    <span class="fa fa-chevron-left" aria-hidden="true"/>
+                                                    <span class="sr-only">Previous</span>
+                                                </a>
+                                                <a class="carousel-control right" href="#o-carousel-product"
+                                                   role="button" data-slide="next">
+                                                    <span class="fa fa-chevron-right" aria-hidden="true"/>
+                                                    <span class="sr-only">Next</span>
+                                                </a>
                                             </t>
                                         </div>
-                                        <!-- infos -->
-                                        <div class="col-sm-5 col-lg-4 col-lg-offset-1" id="product_details">
-                                            <h1 itemprop="name" t-field="product.name">Product Name</h1>
-                                            <span itemprop="url" style="display:none;"
-                                                  t-esc="'%sshop/product/%s' % (request.httprequest.url_root, slug(product))"/>
-                                            <t t-set="attribute_value_ids" t-value="get_attribute_value_ids(product)"/>
-                                            <form action="/shop/cart/update" class="js_add_cart_variants"
-                                                  t-att-data-attribute_value_ids="attribute_value_ids"
-                                                  method="POST">
-                                                <input type="hidden" name="csrf_token"
-                                                       t-att-value="request.csrf_token()"/>
-                                                <div class="js_product" t-if="product.product_variant_ids">
-                                                    <t t-placeholder="select">
-                                                        <input type="hidden" class="product_id" name="product_id"
-                                                               t-att-value="product.product_variant_id.id if len(product.product_variant_ids) == 1 else '0'"/>
-                                                        <t t-call="website_sale.variants">
-                                                            <t t-set="ul_class" t-value="'nav-stacked'"/>
-                                                        </t>
-                                                    </t>
-                                                    <t t-call="webshop_simple.product_price"/>
-                                                    <p t-if="len(product.product_variant_ids) &gt; 1"
-                                                       class="css_not_available_msg bg-danger"
-                                                       style="padding: 15px;">Product not available
-                                                    </p>
-                                                    <a id="add_to_cart"
-                                                       class="btn btn-primary btn-lg mt8 js_check_product a-submit"
-                                                       href="#">Add to Cart
-                                                    </a>
-                                                </div>
-                                            </form>
-                                            <hr t-if="product.availability != 'empty'"/>
-                                            <div t-if="product.availability == 'in_stock'"
-                                                 class="alert alert-success">
-                                                <span class="fa fa-check"/>
-                                                <span>In Stock</span>
-                                            </div>
-                                            <div t-if="product.availability == 'warning'"
-                                                 class="alert alert-warning">
-                                                <span class="fa fa-warning"/>
-                                                <span t-field="product.availability_warning"/>
-                                            </div>
-                                            <hr t-if="product.description_sale"/>
-                                            <div>
-                                                <p t-field="product.description_sale" class="text-muted"/>
-                                            </div>
-                                            <hr/>
-                                            <p class="text-muted">
-                                                30-day money-back guarantee
-                                                <br/>
-                                                Free Shipping in U.S.
-                                                <br/>
-                                                Buy now, get in 2 days
-                                            </p>
+
+                                        <ol class="carousel-indicators"
+                                            t-if="len(image_ids) or variant_img">
+                                            <li t-if="variant_img" data-target="#o-carousel-product"
+                                                data-slide-to="0" class="active">
+                                                <img class="img img-responsive js_variant_img_small"
+                                                     t-attf-src="/website/image/product.product/{{product.product_variant_id.id}}/image/90x90"
+                                                     t-att-alt="product.name"/>
+                                            </li>
+                                            <li data-target="#o-carousel-product"
+                                                t-att-data-slide-to="1 if variant_img else 0"
+                                                t-att-class="'' if variant_img else 'active'">
+                                                <img class="img img-responsive"
+                                                     t-attf-src="/website/image/product.template/{{product.id}}/image/90x90"
+                                                     t-att-alt="product.name"/>
+                                            </li>
+                                            <t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
+                                                <li data-target="#o-carousel-product"
+                                                    t-att-data-slide-to="pimg_index + (variant_img and 2 or 1)">
+                                                    <img class="img img-responsive"
+                                                         t-attf-src="/website/image/product.image/{{pimg.id}}/image/90x90"
+                                                         t-att-alt="pimg.name"/>
+                                                </li>
+                                            </t>
+                                        </ol>
+                                    </div>
+                                </t>
+                            </div>
+                            <!-- product infos -->
+                            <div class="col-sm-5 col-lg-4 col-lg-offset-1" id="product_details">
+                                <h1 itemprop="name" t-field="product.name">Product Name</h1>
+                                <span itemprop="url" style="display:none;"
+                                      t-esc="'%sshop/product/%s' % (request.httprequest.url_root, slug(product))"/>
+                                <t t-set="attribute_value_ids" t-value="get_attribute_value_ids(product)"/>
+                                <form action="/shop/cart/update" class="js_add_cart_variants"
+                                      t-att-data-attribute_value_ids="attribute_value_ids"
+                                      method="POST">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <div class="js_product" t-if="product.product_variant_ids">
+                                        <t t-placeholder="select">
+                                            <input type="hidden" class="product_id" name="product_id"
+                                                   t-att-value="product.product_variant_id.id if len(product.product_variant_ids) == 1 else '0'"/>
+                                            <!-- Item Size -->
+                                            <t t-if="product.categ_id.has_sizetag">
+                                                <t t-call="webshop_simple.sizetag"/>
+                                            </t>
+                                            <!-- Sandwich Bread -->
+                                            <t t-if="product.categ_id.has_breadtype">
+                                                <t t-call="webshop_simple.breadtype"/>
+                                            </t>
+                                            <!-- Sides products -->
+                                            <t t-if="sides_count>0">
+                                                <t t-call="webshop_simple.sides"/>
+                                            </t>
+                                        </t>
+                                        <!-- set the main product price -->
+                                        <t t-call="webshop_simple.product_price"/>
+                                        <!-- quantity increment widget -->
+                                        <div class="css_quantity input-group oe_website_spinner"
+                                             contenteditable="false">
+                                            <a t-attf-href="#" class="mb8 input-group-addon js_add_cart_json">
+                                                <i class="fa fa-minus"></i>
+                                            </a>
+                                            <input type="text" class="form-control quantity" data-min="1"
+                                                   name="add_qty" value="1"/>
+                                            <a t-attf-href="#"
+                                               class="mb8 input-group-addon float_left js_add_cart_json">
+                                                <i class="fa fa-plus"></i>
+                                            </a>
                                         </div>
-                                        <!-- ============================================================= -->
-                                    </t>
+
+                                        <!-- add to cart button -->
+                                        <a id="add_to_cart"
+                                           class="btn btn-primary btn-lg mt8 js_check_product a-submit"
+                                           href="#">Add to Cart
+                                        </a>
+                                    </div>
+                                </form>
+                                <!-- additional info regarding sales and availability -->
+                                <hr t-if="product.availability != 'empty'"/>
+                                <div t-if="product.availability == 'in_stock'"
+                                     class="alert alert-success">
+                                    <span class="fa fa-check"/>
+                                    <span>In Stock</span>
                                 </div>
-                                <!-- Sandwich Bread -->
-                                <div></div>
-                                <!-- Sandwich Ingredients -->
-                                <div></div>
-                                <!-- Total price -->
-                                <div></div>
-                                <!-- Add to cart button -->
-                                <a id="add_to_cart" class="btn btn-primary btn-lg mt8 js_check_product a-submit" href="#">Add to Cart</a>
-                            </form>
-                        </div>
+                                <div t-if="product.availability == 'warning'"
+                                     class="alert alert-warning">
+                                    <span class="fa fa-warning"/>
+                                    <span t-field="product.availability_warning"/>
+                                </div>
+                                <hr t-if="product.description_sale"/>
+                                <div>
+                                    <p t-field="product.description_sale" class="text-muted"/>
+                                </div>
+                                <hr/>
+                                <!-- additional text regarding purchase and shipping: To be removed -->
+                                <!--p class="text-muted">
+                                    30-day money-back guarantee
+                                    <br/>
+                                    Free Shipping in U.S.
+                                    <br/>
+                                    Buy now, get in 2 days
+                                </p-->
+                            </div>
+                            <!-- ============================================================= -->
                     </div>
+                    </t>
                 </section>
             </div>
         </t>
     </template>
 
+    <!-- /shop/simple : webshop_simple landing page -->
     <template id="shop_simple">
         <t t-call="website.layout">
             <t t-set="additional_title">Shop</t>
             <div id="wrap" class="js_sale">
-                <div class="oe_structure" />
+                <div class="oe_structure"/>
                 <div class="container oe_website_sale">
                     <div class="row">
                         <style>
-<![CDATA[
+                            <![CDATA[
 .fillwidth {
     max-width: 300px;
     height: auto;
@@ -226,7 +318,6 @@
 
 /* Create 3 equal columns that sits next to each other */
 .sandwich_column {
-  flex: 33%;
   max-width: 33%;
   padding: 0 4px;
 }
@@ -267,30 +358,30 @@
                         <div class="sandwich_row">
                             <div class="sandwich_column">
                                 <a href="/shop/simple/category/sandwich-18">
-                                    <img class="fillwidth" src="/webshop_simple/static/src/img/cat_sandwich.jpg" />
+                                    <img class="fillwidth" src="/webshop_simple/static/src/img/cat_sandwich.jpg"/>
                                 </a>
                             </div>
                             <div class="sandwich_column">
-                                <a href="/shop/simple/category/salades-21">
+                                <a href="/shop/simple/category/salades-19">
                                     <img class="fillwidth" src="/webshop_simple/static/src/img/cat_salade.jpg"/>
                                 </a>
                             </div>
                             <div class="sandwich_column">
-                                <a href="/shop/simple/category/meals-22">
+                                <a href="/shop/simple/category/menus-20">
                                     <img class="fillwidth" src="/webshop_simple/static/src/img/cat_plat.jpg"/>
                                 </a>
                             </div>
                         </div>
                         <div class="sandwich_row">
                             <div class="dessert_column">
-                                <a href="/shop/simple/category/desert-23">
-                                    <img class="fillheight" src="/webshop_simple/static/src/img/cat_dessert.jpg" />
+                                <a href="/shop/simple/category/desert-21">
+                                    <img class="fillheight" src="/webshop_simple/static/src/img/cat_dessert.jpg"/>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="oe_structure mb32" />
+                <div class="oe_structure mb32"/>
             </div>
         </t>
     </template>

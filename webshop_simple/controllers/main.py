@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 
+from pprint import pformat
 from odoo import http, tools, _
 from odoo.http import request
 from odoo.addons.website.controllers.main import QueryURL
@@ -10,9 +11,6 @@ _logger = logging.getLogger(__name__)
 
 
 class WebsiteSale(http.Controller):
-
-    def foobar(self, product):
-        return []
 
     def get_attribute_value_ids(self, product):
         """ list of selectable attributes of a product
@@ -35,7 +33,7 @@ class WebsiteSale(http.Controller):
             attribute_value_ids.append([variant.id, visible_attribute_ids, variant.website_price, price])
         return attribute_value_ids
 
-    def _get_search_domain(self, search, category, attrib_values):
+    def _get_search_domain_simple(self, search, category, attrib_values):
         domain = request.website.sale_product_domain()
         if search:
             for srch in search.split(" "):
@@ -44,7 +42,7 @@ class WebsiteSale(http.Controller):
                     ('description_sale', 'ilike', srch), ('product_variant_ids.default_code', 'ilike', srch)]
 
         if category:
-            domain += [('public_categ_ids', 'child_of', int(category))]
+            domain += [('public_categ_ids', '=', int(category))]
 
         if attrib_values:
             attrib = None
@@ -74,7 +72,9 @@ class WebsiteSale(http.Controller):
     def shop_simple_category(self, category=None, search='', **kwargs):
 
         if not category:
-            categories = request.env['product.public.category'].search([('parent_id', '=', False)])
+            simple_categories = ('sandwich', 'salad', 'meal', 'dessert')
+            # Build the /shop/simple endpoint
+            categories = request.env['product.public.category'].search([('name', 'in', simple_categories)])
 
             values = {
                 'categories': categories,
@@ -85,6 +85,7 @@ class WebsiteSale(http.Controller):
 
             return request.render("webshop_simple.shop_simple", values)
 
+        # Build the /shop/simple/category/  endpoint
         category_context = dict(request.env.context,
                                 active_id=category.id,
                                 partner=request.env.user.partner_id)
@@ -94,12 +95,20 @@ class WebsiteSale(http.Controller):
         attrib_set = set([v[1] for v in attrib_values])
 
         # Get all products from this category
-        Product = request.env['product.template']
-        domain = self._get_search_domain(search, category, attrib_values)
-        product_count = Product.search_count(domain)
-        products = Product.search(domain)
+        domain = self._get_search_domain_simple(search, category, attrib_values)
+        products = request.env['product.template'].search(domain)
+        product_count = len(products)
 
-        keep = QueryURL('/shop', category=category and category.id, search=search, attrib=attrib_list)
+        # Get all product sides if any
+        sides = []
+        sides_categories = request.env['product.public.category'].search([('parent_id', '=', category.id)])
+        sides_categories_count = len(sides_categories)
+        for sides_category in sides_categories:
+            sides_domain = self._get_search_domain_simple(search, sides_category, attrib_values)
+            sides.extend(request.env['product.template'].search(sides_domain))
+        sides_count = len(sides)
+
+        keep = QueryURL('/shop/simple', category=category and category.id, search=search, attrib=attrib_list)
         pricelist_context = dict(request.env.context)
         if not pricelist_context.get('pricelist'):
             pricelist = request.website.get_current_pricelist()
@@ -120,7 +129,42 @@ class WebsiteSale(http.Controller):
             'category': category,
             'product_count': product_count,
             'products': products,
+            'sides_count': sides_count,
+            'sides_categories_count': sides_categories_count,
+            'sides': sides,
             'compute_currency': compute_currency,
             'get_attribute_value_ids': self.get_attribute_value_ids,
         }
         return request.render("webshop_simple.category", values)
+
+    # ------------------------------------------------------
+    # Handle cart
+    # ------------------------------------------------------
+    def _filter_attributes(self, **kw):
+        return {k: v for k, v in kw.items() if "attribute" in k}
+
+    @http.route(['/shop/cart/update'], type='http', auth="public", methods=['POST'], website=True, csrf=False)
+    def cart_update(self, product_id, add_qty=1, set_qty=0, **kw):
+        breadtype = None
+        if 'breadtype' in kw:
+            breadtype = kw['breadtype']
+        sizetag = None
+        if 'sizetag' in kw:
+            sizetag = kw['sizetag']
+        sides = []
+        for key in kw:
+            if key.startswith("sides-"):
+                sides.append(int(kw[key]))
+
+        _logger.debug("ABAKUS: breadtype:{}, sizetag:{} - sides:{}".format(breadtype, sizetag, sides))
+
+        request.website.sale_get_order(force_create=1)._cart_update(
+            product_id=int(product_id),
+            add_qty=add_qty,
+            set_qty=set_qty,
+            attributes=self._filter_attributes(**kw),
+            sizetag=sizetag,
+            breadtype=breadtype,
+            sides=sides,
+        )
+        return request.redirect("/shop/cart")
