@@ -5,7 +5,7 @@
         <field name="name">daily.pending.orders.tree</field>
         <field name="model">sale.order</field>
         <field name="arch" type="xml">
-            <tree string="Daily Pending Orders Tree">
+            <tree string="Daily Pending Orders Tree" create="false" import="false">
                 <field name="name" string="Order Number"/>
                 <field name="confirmation_date" />
                 <field name="partner_id"/>
