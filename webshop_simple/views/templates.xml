@@ -128,10 +128,7 @@
                                 </li>
                             </ol>
                         </div>
-                        <!-- search -->
-                        <div class="col-sm-3 mb8">
-                            <t t-call="website_sale.search"/>
-                        </div>
+                        <!-- search box is removed -->
                         <!-- currency -->
                         <div class="col-sm-2 text-right">
                             <t t-call="website_sale.pricelist_list"/>
