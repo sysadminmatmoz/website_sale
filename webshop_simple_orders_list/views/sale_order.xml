@@ -9,9 +9,61 @@
                 <field name="name" string="Order Number"/>
                 <field name="confirmation_date" />
                 <field name="partner_id"/>
-                <field name="invoice_status"/>
                 <field name="state" />
             </tree>
+        </field>
+    </record>
+
+    <!-- Form view -->
+    <record id="simple_sale_order_form" model="ir.ui.view">
+        <field name="name">simple.sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <!-- hide create and edit buttons -->
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">0</attribute>
+                </xpath>
+                <xpath expr="//form" position="attributes">
+                    <attribute name="edit">0</attribute>
+                </xpath>
+                <!-- hide SO info -->
+
+                <xpath expr="//sheet/group/group/field[@name='pricelist_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//sheet/group/group/field[@name='payment_term_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <!-- hide unused SOL fields -->
+                <xpath expr="//tree/field[@name='qty_delivered']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//tree/field[@name='qty_invoiced']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//tree/field[@name='price_unit']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//tree/field[@name='tax_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <!-- hide payment details -->
+                <xpath expr="//field[@name='payment_tx_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='payment_acquirer_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <!-- hide the chatter -->
+                <xpath expr="//field[@name='message_follower_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='message_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </data>
         </field>
     </record>
 

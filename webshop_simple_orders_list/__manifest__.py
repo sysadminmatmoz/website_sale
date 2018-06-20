@@ -11,6 +11,7 @@
     ],
     'data': [
         'views/sale_order.xml',
+        'views/sale_order_line.xml',
     ],
     'installable': True
 }
