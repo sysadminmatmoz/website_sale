@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree views -->
+    <record id="daily_pending_orders_tree" model="ir.ui.view">
+        <field name="name">daily.pending.orders.tree</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <tree string="Daily Pending Orders Tree">
+                <field name="name" string="Order Number"/>
+                <field name="confirmation_date" />
+                <field name="partner_id"/>
+                <field name="invoice_status"/>
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- actions -->
+    <record id="daily_pending_orders_action" model="ir.actions.act_window">
+        <field name="name">Daily Pending Orders</field>
+        <field name="res_model">sale.order</field>
+        <field name="domain">[('state', '=', 'sale'),('payment_state', '=', 'done'),('confirmation_date', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('confirmation_date', '&lt;=',datetime.datetime.now().strftime('%Y-%m-%d 23:23:59'))]</field>
+        <field name="view_id" ref="daily_pending_orders_tree" />
+    </record>
+
+    <record id="daily_processed_orders_action" model="ir.actions.act_window">
+        <field name="name">Daily Processed Orders</field>
+        <field name="res_model">sale.order</field>
+        <field name="domain">[('state', '=', 'done'),('payment_state', '=', 'done'),('confirmation_date', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('confirmation_date', '&lt;=',datetime.datetime.now().strftime('%Y-%m-%d 23:23:59'))]</field>
+        <field name="view_id" ref="daily_pending_orders_tree" />
+    </record>
+
+    <record id="todays_orders_action" model="ir.actions.act_window">
+        <field name="name">Today's Orders</field>
+        <field name="res_model">sale.order</field>
+        <field name="domain">[('state', 'in', ['sale','done']),('payment_state', '=', 'done'),('confirmation_date', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),('confirmation_date', '&lt;=',datetime.datetime.now().strftime('%Y-%m-%d 23:23:59'))]</field>
+        <field name="view_id" ref="daily_pending_orders_tree" />
+    </record>
+
+    <record id="closed_orders_action" model="ir.actions.act_window">
+        <field name="name">Closed Orders</field>
+        <field name="res_model">sale.order</field>
+        <field name="domain">[('state', '=', 'done'),('payment_state', '=', 'done')]</field>
+        <field name="view_id" ref="daily_pending_orders_tree" />
+    </record>
+
+    <!-- root simple order list -->
+    <menuitem id="menu_sale_simple_orders"
+              name="Orders"
+              parent="sales_team.menu_base_partner"
+              sequence="15"/>
+
+    <!-- sub menu: pending orders for today -->
+    <menuitem id="menu_daily_pending_orders"
+              name="Daily Pending Orders"
+              action="daily_pending_orders_action"
+              parent="menu_sale_simple_orders"
+              sequence="1"/>
+
+    <menuitem id="menu_daily_processed_orders"
+              name="Daily Processed Orders"
+              action="daily_processed_orders_action"
+              parent="menu_sale_simple_orders"
+              sequence="2"/>
+
+    <menuitem id="menu_next_orders"
+              name="Today's Orders"
+              action="todays_orders_action"
+              parent="menu_sale_simple_orders"
+              sequence="3"/>
+
+    <menuitem id="menu_closed_orders"
+              name="Closed Orders"
+              action="closed_orders_action"
+              parent="menu_sale_simple_orders"
+              sequence="4"/>
+
+</odoo>
