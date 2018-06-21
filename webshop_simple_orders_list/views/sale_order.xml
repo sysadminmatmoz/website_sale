@@ -56,6 +56,11 @@
                 <xpath expr="//field[@name='payment_acquirer_id']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
+                <!-- hide second notebook page -->
+                <xpath expr="//notebook/page[1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
                 <!-- hide the chatter -->
                 <xpath expr="//field[@name='message_follower_ids']" position="attributes">
                     <attribute name="invisible">1</attribute>
