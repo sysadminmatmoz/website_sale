@@ -24,4 +24,29 @@
             <attribute name="style">display:none</attribute>
         </xpath>
     </template>
+
+    <!-- remove fields from /shop/address form -->
+    <template id="address_simplified" inherit_id="website_sale.address">
+        <xpath expr="//form/t/div[contains(@t-attf-class, &quot;error.get(&apos;company_name&apos;)&quot;)]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//form/t/div[contains(@t-attf-class, &quot;error.get(&apos;vat&apos;)&quot;)]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//form/div[contains(@t-attf-class, &quot;error.get(&apos;street&apos;)&quot;)]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//form/div[contains(@t-attf-class, &quot;error.get(&apos;city&apos;)&quot;)]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//form/t/div[contains(@t-attf-class, &quot;error.get(&apos;zip&apos;)&quot;)]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//form/t/div[contains(@t-attf-class, 'div_zip')]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//form/div[contains(@t-attf-class, &quot;error.get(&apos;country_id&apos;)&quot;)]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+    </template>
 </odoo>
