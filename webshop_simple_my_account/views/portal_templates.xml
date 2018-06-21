@@ -49,4 +49,17 @@
             <attribute name="style">display:none</attribute>
         </xpath>
     </template>
+
+    <!-- remove fields from /shop/checkout form -->
+    <template id="checkout_simplified" inherit_id="website_sale.checkout">
+        <!-- shipping section -->
+        <xpath expr="//t[@t-if='not only_services']" position="replace" />
+    </template>
+
+    <!-- remove fields from /shop/payment form -->
+    <template id="checkout_simplified" inherit_id="website_sale.bill_to">
+        <!-- shipping section -->
+        <xpath expr="//t[@t-if='not order.only_services']" position="replace" />
+    </template>
+
 </odoo>
