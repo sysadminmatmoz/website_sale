@@ -146,14 +146,14 @@ class WebsiteSale(http.Controller):
     @http.route(['/shop/cart/update'], type='http', auth="public", methods=['POST'], website=True, csrf=False)
     def cart_update(self, product_id, add_qty=1, set_qty=0, **kw):
         breadtype = None
-        if 'breadtype' in kw:
-            breadtype = kw['breadtype']
+        if 'breadtype_' + str(product_id) in kw:
+            breadtype = kw['breadtype_' + str(product_id)]
         sizetag = None
-        if 'sizetag' in kw:
-            sizetag = kw['sizetag']
+        if 'sizetag_' + str(product_id) in kw:
+            sizetag = kw['sizetag_' + str(product_id)]
         sides = []
         for key in kw:
-            if key.startswith("sides-"):
+            if key.startswith("sides-" + str(product_id) + '-'):
                 sides.append(int(kw[key]))
 
         _logger.debug("ABAKUS: breadtype:{}, sizetag:{} - sides:{}".format(breadtype, sizetag, sides))
