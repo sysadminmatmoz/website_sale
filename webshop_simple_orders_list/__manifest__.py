@@ -10,8 +10,7 @@
         'webshop_simple',
     ],
     'data': [
-        'views/sale_order.xml',
-        'views/sale_order_line.xml',
+        'views/simplesale_order.xml',
     ],
     'installable': True
 }
