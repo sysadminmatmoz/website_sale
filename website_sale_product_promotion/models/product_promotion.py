@@ -81,8 +81,12 @@ class ProductPromotion(models.Model):
     @api.multi
     def cron_promotion_mailing(self):
         """ Send mass mailing to all registered portal user with the right flag on """
-        template = self.env.ref('website_sale_product_promotion.promotion_email_template')
-        self.env['mail.template'].browse(template.id).send_mail(self.id)
+        template = self.env.ref('website_sale_product_promotion.email_template_product_promotion')
+        # template = self.env.ref('promotion_email_template')
+        # template_id = self.env['mail.template'].search([("name", "=", "Promotion Email")])
+        for record in self:
+            _logger.debug("ABAKUS: Promotion email sent")
+            self.env['mail.template'].browse(template.id).send_mail(record.id)
         return
 
     @api.multi

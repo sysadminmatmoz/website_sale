@@ -7,11 +7,13 @@
     'category': 'Sale',
     'version': '10.0.1.0',
     'depends': [
-        'base'
+        'base',
+        'mail',
     ],
     'data': [
         'views/product_view.xml',
         'views/sale_order_views.xml',
+        'data/promotion_mail.xml',
 
         'data/ir_cron.xml',
 
