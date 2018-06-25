@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="details_simplified" inherit_id="website_portal.details">
+        <!-- Hide irrelevant fields (instead of removing them) -->
+        <xpath expr="//div[contains(@t-attf-class,'company_name')]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//div[contains(@t-attf-class,'vat')]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//div[contains(@t-attf-class,'street')]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//div[contains(@t-attf-class,'city')]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//div[contains(@t-attf-class,'zip')]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//div[contains(@t-attf-class,'country_id')]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//div[contains(@t-attf-class,'state_id')]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+    </template>
+
+    <!-- remove fields from /shop/address form -->
+    <template id="address_simplified" inherit_id="website_sale.address">
+        <xpath expr="//form/t/div[contains(@t-attf-class, &quot;error.get(&apos;company_name&apos;)&quot;)]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//form/t/div[contains(@t-attf-class, &quot;error.get(&apos;vat&apos;)&quot;)]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//form/div[contains(@t-attf-class, &quot;error.get(&apos;street&apos;)&quot;)]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//form/div[contains(@t-attf-class, &quot;error.get(&apos;city&apos;)&quot;)]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//form/t/div[contains(@t-attf-class, &quot;error.get(&apos;zip&apos;)&quot;)]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//form/t/div[contains(@t-attf-class, 'div_zip')]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//form/div[contains(@t-attf-class, &quot;error.get(&apos;country_id&apos;)&quot;)]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+    </template>
+
+    <!-- remove fields from /shop/checkout form -->
+    <template id="checkout_simplified" inherit_id="website_sale.checkout">
+        <!-- shipping section -->
+        <xpath expr="//t[@t-if='not only_services']" position="replace" />
+    </template>
+
+    <!-- remove fields from /shop/payment form -->
+    <template id="checkout_simplified" inherit_id="website_sale.bill_to">
+        <!-- shipping section -->
+        <xpath expr="//t[@t-if='not order.only_services']" position="replace" />
+    </template>
+
+</odoo>
