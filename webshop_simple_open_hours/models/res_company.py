@@ -27,7 +27,7 @@ class ResCompany(models.Model):
     openhours_close = fields.Float(string='Hour Opening to', help="Start time of shop availability.", store=True)
 
     def is_between_open_hours(self, a_daytime):
-        if self.openhours_open <= float(a_daytime.hour + a_daytime.minute/60) <= self.openhours_open:
+        if self.openhours_open <= float(a_daytime.hour + a_daytime.minute/60) <= self.openhours_close:
             return True
         else:
             return False

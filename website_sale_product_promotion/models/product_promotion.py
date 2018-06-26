@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
+from pprint import pformat
 from datetime import date
 from datetime import timedelta
 from odoo import api, fields, models, _
@@ -81,12 +82,28 @@ class ProductPromotion(models.Model):
     @api.multi
     def cron_promotion_mailing(self):
         """ Send mass mailing to all registered portal user with the right flag on """
+        # prepare promo data
+        context = {}
+        if self.env.context:
+            context.update(self.env.context)
+        promo_record = self.search([('state', '=', 'curr')], limit=1)
+        context['promo'] = {}
+        if promo_record:
+            context['promo'] = {
+                'description': promo_record.description,
+                'product_first': promo_record.product_first.name,
+                'product_second': promo_record.product_second.name,
+            }
+        self.env.context = context
+        _logger.debug("ABAKUS: passing context: {}".format(pformat(self.env.context, depth=4)))
+        # fetch email template
         template = self.env.ref('website_sale_product_promotion.email_template_product_promotion')
-        # template = self.env.ref('promotion_email_template')
-        # template_id = self.env['mail.template'].search([("name", "=", "Promotion Email")])
-        for record in self:
-            _logger.debug("ABAKUS: Promotion email sent")
-            self.env['mail.template'].browse(template.id).send_mail(record.id)
+        # get all public user that want a promotion notification
+        public_users = self.env['res.users'].search([])
+        for user in public_users:
+            if user.has_group('base.public_user'):
+                # self.env['mail.template'].browse(template.id).send_mail(user.id)
+                template.send_mail(user.id, force_send=True)
         return
 
     @api.multi
