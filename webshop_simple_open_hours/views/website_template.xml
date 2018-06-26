@@ -9,7 +9,13 @@
                 <div class="oe_structure"/>
                 <div class="container oe_website_sale">
                     <div class="row">
-                        WE ARE CLOSED
+                        <p>Request submitted <span t-esc="now"/></p>
+                        <p>Sorry, we are closed.</p>
+                        <div>
+                            <span>Our shop opening hours are:</span>
+                            <div>Open: <span t-esc="openhours_open" /></div>
+                            <div>Close: <span t-esc="openhours_close" /></div>
+                        </div>
                     </div>
                 </div>
             </div>

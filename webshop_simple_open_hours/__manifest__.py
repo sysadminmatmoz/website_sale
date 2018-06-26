@@ -10,7 +10,7 @@
         'webshop_simple',
     ],
     'data': [
-        'views/res_config_settings_views.xml',
+        'views/res_company.xml',
         'views/website_template.xml',
     ],
     'installable': True
