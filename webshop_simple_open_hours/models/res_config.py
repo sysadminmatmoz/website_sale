@@ -16,7 +16,7 @@ class WebsiteConfigSettings(models.TransientModel):
     openhours_close = fields.Float(string='Hour Opening to', help="Start time of shop availability.", store=True)
 
     def is_between_open_hours(self, a_daytime):
-        if self.get_hour(self.openhours_close) >=  a_daytime.hour >= self.get_hour(self.openhours_open):
+        if self.openhours_open <= float(a_daytime.hour + a_daytime.minute/60) <= self.openhours_open:
             return True
         else:
             return False
