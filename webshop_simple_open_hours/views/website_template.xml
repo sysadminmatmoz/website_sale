@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- /shop/simple/openhours page -->
+    <template id="open_hours" name="Open Hours">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Open Hours</t>
+            <div id="wrap" class="js_sale">
+                <div class="oe_structure"/>
+                <div class="container oe_website_sale">
+                    <div class="row">
+                        WE ARE CLOSED
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>
