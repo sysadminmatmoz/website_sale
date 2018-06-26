@@ -4,7 +4,7 @@
 
 This module is an add-on to ``website_sale``.
 
-It creates and sends an email to user who have their birthday today.
+It creates and sends a promotion reminder email to user on their birthday.
 
 
 Installation notes
