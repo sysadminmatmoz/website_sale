@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree view -->
+    <record id="product_promotion_view_tree" model="ir.ui.view">
+        <field name="name">website_sale_product_promotion.product.promotion.tree</field>
+        <field name="model">product.promotion</field>
+        <field name="arch" type="xml">
+            <tree string="Promotion">
+                <field name="sequence" widget="handle"/>
+                <field name="display_name"/>
+                <field name="date_beg"/>
+                <field name="date_end"/>
+                <field name="description"/>
+                <field name="product_first"/>
+                <field name="product_second"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form view -->
+    <record id="product_promotion_view_form" model="ir.ui.view">
+        <field name="name">website_sale_product_promotion.product.promotion.form</field>
+        <field name="model">product.promotion</field>
+        <field name="arch" type="xml">
+            <form string="Promotion">
+                <header>
+                    <button name="action_draft_to_next" states="draft" string="Set to next"
+                            class="btn btn-sm btn-primary" type="object"/>
+                    <button name="action_next_to_current" states="next" string="Set to current"
+                            class="btn btn-sm btn-primary" type="object"/>
+                    <button name="action_to_closed" states="draft,next,curr" string="Set to closed"
+                            class="btn btn-sm btn-primary" type="object"/>
+                    <button name="action_back_to_draft" states="next" string="Back To Draft"
+                            class="btn btn-sm btn-default" type="object"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,next,curr,closed" readonly="1"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label string="Promotion name"/>
+                        <h1>
+                            <field name="name" required="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="date_beg"/>
+                            <field name="date_end" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="product_first"/>
+                            <field name="product_second"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="product_promotion_template_action_website" model="ir.actions.act_window">
+        <field name="name">Promotion</field>
+        <field name="res_model">product.promotion</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>
