@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="email_template_product_promotion" model="mail.template">
+            <field name="name">Weekly Promotion Email</field>
+            <field name="email_from">${object.company_id.name|safe}</field>
+            <field name="subject">Our promotion for this week</field>
+            <field name="email_to">${object.email|safe}</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="auto_delete" eval="True"/>
+            <!--<field name="lang">${object.user_id.lang}</field>-->
+            <field name="body_html">
+            <![CDATA[
+                <p>
+                Dear ${(object.name)},
+                <br/>
+% if "promo" in ctx:
+                <br/>
+                Here is this week promotion:
+                <p>${ctx["promo"]["description"]}</p>
+                <p><b>Promoted items</b></p>
+                <ul>
+                        <li>${ctx["promo"]["product_first"]}</li>
+                        <li>${ctx["promo"]["product_second"]}</li>
+                </ul>
+% endif
+            ]]>
+            </field>
+    </record>
+</odoo>
