@@ -4,6 +4,7 @@ import logging
 import math
 
 from datetime import date, time
+from pprint import pformat
 from odoo import api, fields, models, _
 _logger = logging.getLogger(__name__)
 
@@ -34,3 +35,8 @@ class WebsiteConfigSettings(models.TransientModel):
 
     def get_hour(self, a_float):
         self.round_the_mnumbers(a_float % 1)
+
+    @api.model
+    def create(self, values):
+        _logger.debug("ABAKUS: dump res_config={}".format(pformat(values)))
+        return super(WebsiteConfigSettings, self).create(values)
