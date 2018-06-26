@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- /shop/simple/openhours page -->
+    <template id="open_hours" name="Open Hours">
+        <t t-call="website.layout">
+            <t t-set="additional_title">Open Hours</t>
+            <div id="wrap" class="js_sale">
+                <div class="oe_structure"/>
+                <div class="container oe_website_sale">
+                    <div class="row">
+                        <p>Request submitted <span t-esc="now"/></p>
+                        <p>Sorry, we are closed.</p>
+                        <div>
+                            <span>Our shop opening hours are:</span>
+                            <div>Open: <span t-esc="openhours_open" /></div>
+                            <div>Close: <span t-esc="openhours_close" /></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>
