@@ -14,29 +14,30 @@ class ResPartner(models.Model):
     bday = fields.Integer('Birthday Day')
     bmonth = fields.Integer('Birthday Month')
 
-    def send_birthday_email(self, ids=None, context=None):
+    def cron_birthday_promotion_mailing(self):
         partner_obj = self.env['res.partner']
         mail_mail = self.env['mail.mail']
         mail_ids = []
         today = datetime.datetime.now()
-        today_month_day = '%-' + today.strftime('%m') + '-' + today.strftime('%d')
-        par_id = partner_obj.search([('customer', '=', True), ('birthdate', 'like', today_month_day)])
+        par_id = partner_obj.search([
+            ('active', '=', True),
+            ('bday', '=', int(today.strftime('%d'))), ('bmonth', '=', int(today.strftime('%m')))])
         if par_id:
             try:
                 for val in partner_obj.browse(par_id):
-                    email_from = val.email
+                    email_to = val.email
                     name = val.name
-                    subject = "Birthday Wishes"
+                    subject = "Birthday Promotion"
                     body = _("Hello %s,\n" %(name))
                     body += _("\tWish you Happy Birthday\n")
                     footer = _("Kind regards.\n")
                     footer += _("%s\n\n" % val.company_id.name)
                     mail_ids.append(mail_mail.create({
-                        'email_to': email_from,
+                        'email_to': email_to,
                         'subject': subject,
                         'body_html': '<pre><span class="inner-pre" style="font-size: 15px">%s<br>%s</span></pre>' % (body, footer)
-                     }, context=context))
-                    mail_mail.send(mail_ids, context=context)
+                     }, context=None))
+                    mail_mail.send(mail_ids, context=None)
             except Exception, e:
                 print "Exception", e
         return None

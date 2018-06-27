@@ -13,6 +13,7 @@
         'data/birthday_email_template.xml',
 
         'views/portal_template.xml',
+        'views/res_company.xml',
     ],
     'installable': True
 }
