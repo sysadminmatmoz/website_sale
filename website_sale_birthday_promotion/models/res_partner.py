@@ -13,15 +13,16 @@ class ResPartner(models.Model):
 
     bday = fields.Integer('Birthday Day')
     bmonth = fields.Integer('Birthday Month')
+    is_bday_gift_available = fields.Boolean('is Birthday Gif Available', default=False)
 
     @api.multi
-    def cron_promotion_mailing(self):
+    def cron_birthday_promotion_mailing(self):
         """ Send mass mailing to all registered portal user with the right flag on """
         context = {}
         if self.env.context:
             context.update(self.env.context)
         context['promo'] = {}
-        company = self.env.res_user.company
+        company = self.env.user.company_id
         if not company.birthday_promotion_product_id:
             return
         context['promo'] = {
@@ -29,13 +30,16 @@ class ResPartner(models.Model):
         }
         self.env.context = context
         template = self.env.ref('website_sale_birthday_promotion.email_template_user_birthday')
-        today = datetime.datetime.now()
-        public_users = self.env['res.users'].search([
-            ('partner_id.bday', '=', int(today.strftime('%d'))),
-            ('partner_id.bmonth', '=', int(today.strftime('%m')))
-        ])
+        today = datetime.now()
+        public_users = self.env['res.users'].search([])
         for user in public_users:
             if user.has_group('base.public_user'):
-                _logger.debug("ABAKUS: Birthday omotion email sent")
-                template.send_mail(user.id, force_send=True)
+                if user.partner_id.bday == int(today.strftime('%d')) and user.partner_id.bmonth == int(today.strftime('%m')):
+                    _logger.debug("ABAKUS: Birthday promotion email sent to user: {}".format(user.name))
+                    template.send_mail(user.id, force_send=True)
+                    user.write({'is_bday_gift_available': True})
+                elif user.partner_id.is_bday_gift_available:
+                    # unset flag when promotion unused
+                    _logger.debug("ABAKUS: Birthday promotion flag reset for user: {}".format(user.name))
+                    user.write({'is_bday_gift_available': False})
         return

@@ -10,6 +10,7 @@
         'website_sale',
     ],
     'data': [
+        'data/ir_cron.xml',
         'data/birthday_email_template.xml',
 
         'views/portal_template.xml',
