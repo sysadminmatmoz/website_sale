@@ -15,6 +15,7 @@
 
         'views/portal_template.xml',
         'views/res_company.xml',
+        'views/res_partner.xml',
     ],
     'installable': True
 }

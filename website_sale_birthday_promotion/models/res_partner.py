@@ -33,13 +33,11 @@ class ResPartner(models.Model):
         today = datetime.now()
         public_users = self.env['res.users'].search([])
         for user in public_users:
-            if user.has_group('base.public_user'):
+            if user.has_group('base.group_portal'):
                 if user.partner_id.bday == int(today.strftime('%d')) and user.partner_id.bmonth == int(today.strftime('%m')):
-                    _logger.debug("ABAKUS: Birthday promotion email sent to user: {}".format(user.name))
                     template.send_mail(user.id, force_send=True)
                     user.write({'is_bday_gift_available': True})
                 elif user.partner_id.is_bday_gift_available:
                     # unset flag when promotion unused
-                    _logger.debug("ABAKUS: Birthday promotion flag reset for user: {}".format(user.name))
                     user.write({'is_bday_gift_available': False})
         return
