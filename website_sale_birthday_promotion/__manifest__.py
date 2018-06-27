@@ -10,7 +10,9 @@
         'website_sale',
     ],
     'data': [
-        'views/email_templates.xml',
+        'data/birthday_email_template.xml',
+
+        'views/portal_template.xml',
     ],
     'installable': True
 }

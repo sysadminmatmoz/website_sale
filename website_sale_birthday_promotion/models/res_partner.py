@@ -8,8 +8,11 @@ from odoo.exceptions import UserError, ValidationError
 _logger = logging.getLogger(__name__)
 
 
-class res_partner(models.Model):
+class ResPartner(models.Model):
     _inherit = 'res.partner'
+
+    bday = fields.Integer('Birthday Day')
+    bmonth = fields.Integer('Birthday Month')
 
     def send_birthday_email(self, ids=None, context=None):
         partner_obj = self.env['res.partner']
