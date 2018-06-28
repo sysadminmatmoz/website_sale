@@ -1,7 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_category_sizetag,access.category.sizetag,model_category_sizetag,base.group_public,1,0,0,0
-access_category_sizetag,access.category.sizetag,model_category_sizetag,base.group_portal,1,0,0,0
+access_category_sizetag_portal,access.category.sizetag,model_category_sizetag,base.group_portal,1,0,0,0
 access_category_sizetag_manager,access.category.sizetag.manager,model_category_sizetag,sales_team.group_sale_manager,1,1,1,1
 access_category_sizetag_line,access.category.sizetag.line,model_category_sizetag_line,base.group_public,1,0,0,0
-access_category_sizetag_line,access.category.sizetag.line,model_category_sizetag_line,base.group_portal,1,0,0,0
+access_category_sizetag_line_portal,access.category.sizetag.line,model_category_sizetag_line,base.group_portal,1,0,0,0
 access_category_sizetag_line_manager,access.category.sizetag.line.manager,model_category_sizetag_line,sales_team.group_sale_manager,1,1,1,1
