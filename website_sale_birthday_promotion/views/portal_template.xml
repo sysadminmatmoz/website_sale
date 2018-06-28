@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="birthday_ddmm" inherit_id="website_portal.details">
+        <xpath expr="//div[contains(@t-attf-class,'phone')]" position="after">
+            <div t-attf-class="form-group #{error.get('bday') and error.get('bmonth') and 'has-error' or ''} col-lg-6">
+<script>
+<![CDATA[
+$(document).ready(function(e) {
+
+function daysInMonth(month) {
+  return new Date(2000, month, 0).getDate();
+}
+
+$('#bmonth').change(function() {
+
+  if ($('#bmonth').val().length > 0) {
+    $('#bday').prop('disabled', false);
+    $('#bday').find('option').remove();
+
+    var daysInSelectedMonth = daysInMonth($('#bmonth').val());
+
+    for (var i = 1; i <= daysInSelectedMonth; i++) {
+      $('#bday').append($("<option></option>").attr("value", i).text(i));
+    }
+
+  } else {
+    $('#bday').prop('disabled', true);
+  }
+});
+
+});
+]]>
+</script>
+                <label class="control-label" for="birthday">Birthday</label>
+                <t t-if="partner.bday and partner.bmonth">
+                    <input type="text" class="form-control" t-attf-value="{{partner.bday}}/{{partner.bmonth}}"  disabled="1" />
+                </t>
+                <t t-else="1">
+                    <select id="bmonth" name="bmonth" class="form-control" required="1">
+                        <option value="">Select Month</option>
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">Novermber</option>
+                        <option value="12">December</option>
+                    </select>
+                    <select id="bday" name="bday" class="form-control" required="1" disabled="1">
+                        <option value="">Select Day</option>
+                    </select>
+                </t>
+            </div>
+        </xpath>
+    </template>
+</odoo>

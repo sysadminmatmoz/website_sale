@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="email_template_user_birthday" model="mail.template">
+        <field name="name">Public User Birthday Email</field>
+        <field name="email_from">${object.company_id and object.company_id.email or ''}</field>
+        <field name="subject">It's your birthday : ${object.name}</field>
+        <field name="partner_to">${object.partner_id.id}</field>
+        <field name="email_to">${object.email|safe}</field>
+        <field name="lang">${object.partner_id.lang}</field>
+        <field name="model_id" ref="base.model_res_users"/>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html">
+            <![CDATA[
+	          <p>Dear ${(object.name)},<br/>
+	          <br/>
+		  In order to celebrate you birthday here is promotion on today order !<br/>
+		  </p>
+		  <div>
+		    <b><span>${ctx["promo"]["product_gift"]}</span></b>
+		  </div>
+                  Regards,<br/>
+                  ${(object.company_id.name)}
+	    ]]>
+        </field>
+    </record>
+</odoo>

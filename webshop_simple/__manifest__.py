@@ -10,6 +10,7 @@
         'website_sale',
         'website_sale_category_bread',
         'website_sale_category_size',
+        'website_sale_birthday_promotion',
     ],
     'data': [
         'data/simple_categories.xml',

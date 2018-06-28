@@ -101,7 +101,7 @@ class ProductPromotion(models.Model):
         # get all public user that want a promotion notification
         public_users = self.env['res.users'].search([])
         for user in public_users:
-            if user.has_group('base.public_user'):
+            if user.has_group('base.group_portal'):
                 # self.env['mail.template'].browse(template.id).send_mail(user.id)
                 template.send_mail(user.id, force_send=True)
         return
