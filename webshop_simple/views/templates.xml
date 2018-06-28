@@ -113,7 +113,7 @@
             <t t-set="additional_title" t-value="category.name"/>
             <script type="text/javascript" src="/webshop_simple/static/src/js/webshop_simple.js"/>
             <link rel="stylesheet" type="text/css" href="/webshop_simple/static/src/css/webshop_simple.css" />
-            <div itemscope="itemscope" itemtype="http://schema.org/croduct" id="wrap" class="js_sale">
+            <div itemscope="itemscope" itemtype="http://schema.org/Product" id="wrap" class="js_sale">
                 <section t-attf-class="container mt8 oe_website_sale" id="category_detail">
                     <!-- action row -->
                     <div class="row">
@@ -142,6 +142,10 @@
                             <!-- ===============  Main Product Detail ==================  -->
                             <!-- images -->
                             <div class="col-sm-7">
+                                <t t-if="product_id == company.birthday_promotion_product_id.id">
+                                    <div style="position: absolute; width: 65px; height: 65px; border-radius: 50%; font-size: 12px; color: #fff; line-height: 65px; text-align: center; background: #39d;">Gift</div>
+                                </t>
+                                <div class="oe_product_image">
                                 <span itemprop="image"
                                       t-attf-content="{{request.httprequest.url_root}}web/image/product.template/{{product.id}}/image"
                                       t-field="product.image"
@@ -207,6 +211,7 @@
                                         </ol>
                                     </div>
                                 </t>
+                                </div>
                             </div>
                             <!-- product infos -->
                             <div class="col-sm-5 col-lg-4 col-lg-offset-1" id="product_details">

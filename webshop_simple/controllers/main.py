@@ -119,12 +119,14 @@ class WebsiteSale(http.Controller):
         from_currency = request.env.user.company_id.currency_id
         to_currency = pricelist.currency_id
         compute_currency = lambda price: from_currency.compute(price, to_currency)
+        company = request.env.user.sudo().company_id
 
         values = {
             'search': search,
             'attrib_values': attrib_values,
             'attrib_set': attrib_set,
             'keep': keep,
+            'company': company,
             'main_object': category,
             'category': category,
             'product_count': product_count,
