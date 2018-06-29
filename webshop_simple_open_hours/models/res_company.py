@@ -23,11 +23,12 @@ class ResCompany(models.Model):
 
     openhours_tz_offset = fields.Char(compute='_compute_tz_offset', string='Timezone offset', invisible=True)
     openhours_tz = fields.Selection(_tz_get, string='Timezone', default=pytz.timezone('Europe/Brussels'))
-    openhours_open = fields.Float(string='Hour Opening from', help="Start time of shop availability.", store=True)
-    openhours_close = fields.Float(string='Hour Opening to', help="Start time of shop availability.", store=True)
+    openhours_open = fields.Float(string='Tomorrow Orders Opening Hour', help="Opening hour for tomorrow's orders", store=True)
+    openhours_close = fields.Float(string='Day Orders Closing Hour', help="Closing hour for today's orders.", store=True)
 
     def is_between_open_hours(self, a_daytime):
-        if self.openhours_open <= float(a_daytime.hour + a_daytime.minute/60) <= self.openhours_close:
+        a_daytime_float = float(a_daytime.hour + a_daytime.minute/60)
+        if a_daytime_float <= self.openhours_close or a_daytime_float >= self.openhours_open:
             return True
         else:
             return False
