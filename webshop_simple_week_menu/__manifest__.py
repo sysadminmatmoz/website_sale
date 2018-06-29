@@ -1,21 +1,20 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Birthday promotion discount",
-    'summary': "Give a promotion on user birthday",
+    'name': "Week Menu for Simple Webshop",
+    'summary': "Mail Menu of The Week",
     'author': "AbAKUS it-solutions SARL",
     'website': "http://www.abakusitsolutions.eu",
     'category': 'Website',
     'version': '10.0.1.0.0',
     'depends': [
-        'website_sale',
+        'webshop_simple',
     ],
     'data': [
         'data/ir_cron.xml',
         'data/week_menu_email_template.xml',
 
-        'views/portal_template.xml',
-        'views/res_company.xml',
         'views/res_partner.xml',
+        'views/res_company.xml',
     ],
     'installable': True
 }

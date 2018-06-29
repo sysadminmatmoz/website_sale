@@ -7,7 +7,8 @@
     'category': 'Website',
     'version': '10.0.1.0.0',
     'depends': [
-        'website_portal'
+        'website_sale',
+        'website_portal',
     ],
     'data': [
         'views/portal_templates.xml',

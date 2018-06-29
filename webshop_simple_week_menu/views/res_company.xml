@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="res_company_birthday_gift_form" model="ir.ui.view">
+    <record id="res_company_week_menu_form" model="ir.ui.view">
         <field name="name">Company Form</field>
         <field name="model">res.company</field>
         <field name="inherit_id" ref="base.view_company_form"/>
         <field name="arch" type="xml">
         <xpath expr="//notebook/page[1]" position="after">
-            <page string="Birthday Gift">
+            <page string="Menu of the Week">
                 <group>
-                    <group string="Birthday Gift" name="birthday_gift">
-                        <field name="birthday_promotion_product_id" />
+                    <group string="Menu of the Week" name="week_menu">
+                        <field name="week_menu_product_id" />
                     </group>
                 </group>
             </page>
