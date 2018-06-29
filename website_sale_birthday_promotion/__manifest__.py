@@ -11,7 +11,7 @@
     ],
     'data': [
         'data/ir_cron.xml',
-        'data/week_menu_email_template.xml',
+        'data/birthday_email_template.xml',
 
         'views/portal_template.xml',
         'views/res_company.xml',
