@@ -62,4 +62,11 @@
         <xpath expr="//t[@t-if='not order.only_services']" position="replace" />
     </template>
 
+    <!-- remove fields from /shop/cart form -->
+    <template id="cart_simplified" inherit_id="website_sale.cart">
+        <xpath expr="//div[@id='right_column']" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+    </template>
+
 </odoo>
