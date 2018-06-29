@@ -60,7 +60,7 @@ $('#bmonth').change(function() {
         </xpath>
     </template>
 
-    <!-- -->
+    <!-- add info in "review order" -->
     <template id="birthday_ddmm_sol" inherit_id="website_sale.cart_lines">
         <xpath expr="//tbody/t" position="after">
             <t t-set="company" t-value="website_sale_order.company_id"/>
@@ -110,4 +110,5 @@ $('#bmonth').change(function() {
             </tr>
         </xpath>
     </template>
+
 </odoo>
