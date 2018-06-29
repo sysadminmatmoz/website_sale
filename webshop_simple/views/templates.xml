@@ -390,4 +390,12 @@
             </div>
         </t>
     </template>
+
+    <!-- reroute continue shopping to /shop/simple -->
+    <template id="shop_simple_continue_shopping" inherit_id="website_sale.continue_shopping">
+        <xpath expr="//a" position="attributes">
+            <attrbute name="href">/shop/simple</attrbute>
+        </xpath>
+    </template>
+
 </odoo>

@@ -41,4 +41,4 @@ class WebisteSaleBirthdayGift(WebsiteSale):
             # reset availability so he won't get it twice.
             partner_id.sudo().write({'is_bday_gift_available': False})
 
-        return super(WebisteSaleBirthdayGift, self).payment(post)
+        return super(WebisteSaleBirthdayGift, self).payment(**post)
