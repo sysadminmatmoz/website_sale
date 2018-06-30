@@ -12,11 +12,12 @@ Configuring open hours is done on the company level where you can set:
 
 - Timezone
 
-- Opening hour
+- Closing hour on J: an order passed before this our will be processed today
 
-- Closing hour
+- Opening hour on J+1: an order passed after this our will be processed the day after
 
-Adding to cart is only available each day between this interval set.
+Adding to cart is only available each day outside of this interval set.
+
 
 
 Installation notes

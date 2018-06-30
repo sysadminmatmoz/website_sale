@@ -12,9 +12,9 @@
                         <p>Request submitted <span t-esc="now"/></p>
                         <p>Sorry, we are closed.</p>
                         <div>
-                            <span>Our shop opening hours are:</span>
-                            <div>Open: <span t-esc="openhours_open" /></div>
-                            <div>Close: <span t-esc="openhours_close" /></div>
+                            <span>Our shop accepts order :</span>
+                            <div>Before (for today): <span t-esc="openhours_close" /></div>
+                            <div>After (for tomorrow): <span t-esc="openhours_open" /></div>
                         </div>
                     </div>
                 </div>

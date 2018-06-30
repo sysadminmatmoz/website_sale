@@ -11,8 +11,8 @@
                     <group string="Open Hours Parameters" name="preferences">
                         <field name="openhours_tz" widget="timezone_mismatch" options="{'tz_offset_field': 'openhours_tz_offset'}"/>
                         <field name="openhours_tz_offset" invisible="1"/>
-                        <field name="openhours_open" widget="float_time"/>
                         <field name="openhours_close" widget="float_time"/>
+                        <field name="openhours_open" widget="float_time"/>
                     </group>
                 </group>
             </page>

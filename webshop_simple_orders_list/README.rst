@@ -1,5 +1,5 @@
 =====================================
-  Webshop Simplified Landing Page
+  Order Lists for Simplified Webshop
 =====================================
 
 This module is an add-on to ``webshop_simple``.
