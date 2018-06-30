@@ -120,28 +120,20 @@
     </record>
 
     <!-- actions Current Orders -->
-    <record id="action_today_simple_orders" model="ir.actions.act_window">
+    <record id="action_today_simple_orders" model="ir.actions.server">
         <field name="name">Todays Orders</field>
-        <field name="res_model">sale.order</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="domain">[('state', 'in', ['sale','done']),('payment_state', '=', 'done'),
-            ('confirmation_date', '&gt;=', datetime.datetime.now().strftime('%Y-%m-%d 00:00:00')),
-            ('confirmation_date', '&lt;=', datetime.datetime.now().strftime('%Y-%m-%d 23:23:59'))]</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="search_view_id" ref="view_simple_order_filter" />
+        <field name="model_id" ref="sale.model_sale_order" />
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="code">action = env['sale.order'].filter_today_action()</field>
     </record>
 
-    <record id="today_orders_action_tree" model="ir.actions.act_window.view">
-        <field name="view_mode">tree</field>
-        <field name="view_id" ref="view_simple_orders_tree" />
-        <field name="act_window_id" ref="action_today_simple_orders" />
-    </record>
-
-     <record id="today_orders_action_form" model="ir.actions.act_window.view">
-        <field name="view_mode">form</field>
-        <field name="view_id" ref="view_simple_orders_form" />
-        <field name="act_window_id" ref="action_today_simple_orders" />
+    <record id="action_tomorrow_simple_orders" model="ir.actions.server">
+        <field name="name">Tomorrow's Orders</field>
+        <field name="model_id" ref="sale.model_sale_order" />
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="code">action = env['sale.order'].filter_tomorrow_action()</field>
     </record>
 
     <!-- actions Closed Orders -->
@@ -180,9 +172,15 @@
               parent="menu_sale_simple_orders"
               sequence="3"/>
 
+    <menuitem id="menu_tomorrow_orders"
+              name="Tomorrow's Orders"
+              action="action_tomorrow_simple_orders"
+              parent="menu_sale_simple_orders"
+              sequence="4"/>
+
     <menuitem id="menu_closed_orders"
               name="Closed Orders"
               action="action_simple_orders"
               parent="menu_sale_simple_orders"
-              sequence="4"/>
+              sequence="5"/>
 </odoo>

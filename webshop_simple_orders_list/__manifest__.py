@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Simple Webshop Orders List",
+    'name': "Order Lists for Simple Webshop",
     'summary': "Simplified orders list",
     'author': "AbAKUS it-solutions SARL",
     'website': "http://www.abakusitsolutions.eu",
