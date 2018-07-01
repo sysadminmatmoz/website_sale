@@ -393,8 +393,12 @@
 
     <!-- reroute continue shopping to /shop/simple -->
     <template id="shop_simple_continue_shopping" inherit_id="website_sale.continue_shopping">
-        <xpath expr="//a" position="attributes">
-            <attrbute name="href">/shop/simple</attrbute>
+        <xpath expr="//a[@href='/shop']" position="replace">
+            <a href="/shop/simple" class="btn btn-default mb32">
+                <span class="fa fa-long-arrow-left" />
+                <span class="hidden-xs">Continue Shopping</span>
+                <span class="visible-xs-inline">Continue</span>
+            </a>
         </xpath>
     </template>
 
