@@ -12,7 +12,7 @@ _logger = logging.getLogger(__name__)
 
 
 class WebsiteSaleDerived(main.WebsiteSale):
-    """ Overide method in order to check open hours first """
+    """ Override method in order to check open hours first """
     @http.route(['/shop/cart/update'], type='http', auth="public", methods=['POST'], website=True, csrf=False)
     def cart_update(self, product_id, add_qty=1, set_qty=0, **kw):
         company = request.env.user.company_id
