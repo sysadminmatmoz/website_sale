@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- modified shop product inner frame -->
+    <!-- remix product_price -->
     <template id="product_price">
         <div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price mt16">
             <!-- Actual price -->
@@ -58,6 +58,20 @@
             </h4>
             <!-- not available message -->
             <h4 class="hidden oe_not_available bg-warning">Product not available</h4>
+        </div>
+    </template>
+
+    <!-- special product_price for birthday gift product -->
+    <template id="birthday_product_price">
+        <div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price mt16">
+            <h4 class="oe_price_h4 css_editable_mode_hidden" style="color: red">
+                <span>Birthday Gift ................... </span>
+                <b class="oe_price"
+                   style="white-space: nowrap; color:red; text-decoration:line-through"
+                   t-attf-id="product_unit_price_{{product_id}}"
+                   t-options="{'widget': 'monetary', 'display_currency': website.currency_id}">0.00</b>
+                <b><![CDATA[&nbsp;&euro;]]></b>
+            </h4>
         </div>
     </template>
 
@@ -142,8 +156,9 @@
                             <!-- ===============  Main Product Detail ==================  -->
                             <!-- images -->
                             <div class="col-sm-7">
-                                <t t-if="product_id == company.birthday_promotion_product_id.id">
-                                    <div style="position: absolute; width: 65px; height: 65px; border-radius: 50%; font-size: 12px; color: #fff; line-height: 65px; text-align: center; background: #39d;">Gift</div>
+                                <!-- Menu if the week badge -->
+                                <t t-if="product_id == company.week_menu_product_id.id">
+                                    <div style="position: absolute; width: 65px; height: 65px; border-radius: 50%; font-size: 12px; padding-top: 15px; color: #fff; line-height: 15px; text-align: center; background: #39d;">Menu Of The Week</div>
                                 </t>
                                 <div class="oe_product_image">
                                 <span itemprop="image"
@@ -241,20 +256,26 @@
                                             </t>
                                         </t>
                                         <!-- set the main product price -->
-                                        <t t-call="webshop_simple.product_price"/>
-                                        <!-- quantity increment widget -->
-                                        <div class="css_quantity input-group oe_website_spinner"
-                                             contenteditable="false">
-                                            <a t-attf-href="#" class="mb8 input-group-addon js_add_cart_json">
-                                                <i class="fa fa-minus"></i>
-                                            </a>
-                                            <input type="text" class="form-control quantity" data-min="1"
-                                                   name="add_qty" value="1"/>
-                                            <a t-attf-href="#"
-                                               class="mb8 input-group-addon float_left js_add_cart_json">
-                                                <i class="fa fa-plus"></i>
-                                            </a>
-                                        </div>
+                                        <t t-if="(product_id == company.birthday_promotion_product_id.id) and request.env.user._is_portal() and request.env.user._has_birthday_gift()">
+                                            <t t-call="webshop_simple.birthday_product_price"/>
+                                            <input type="text" data-min="1" name="add_qty" value="1" hidden="1"/>
+                                        </t>
+                                        <t t-else="1">
+                                            <t t-call="webshop_simple.product_price"/>
+                                            <!-- quantity increment widget -->
+                                            <div class="css_quantity input-group oe_website_spinner"
+                                                 contenteditable="false">
+                                                <a t-attf-href="#" class="mb8 input-group-addon js_add_cart_json">
+                                                    <i class="fa fa-minus"></i>
+                                                </a>
+                                                <input type="text" class="form-control quantity" data-min="1"
+                                                       name="add_qty" value="1"/>
+                                                <a t-attf-href="#"
+                                                   class="mb8 input-group-addon float_left js_add_cart_json">
+                                                    <i class="fa fa-plus"></i>
+                                                </a>
+                                            </div>
+                                        </t>
 
                                         <!-- add to cart button -->
                                         <a id="add_to_cart"
@@ -280,14 +301,6 @@
                                     <p t-field="product.description_sale" class="text-muted"/>
                                 </div>
                                 <hr/>
-                                <!-- additional text regarding purchase and shipping: To be removed -->
-                                <!--p class="text-muted">
-                                    30-day money-back guarantee
-                                    <br/>
-                                    Free Shipping in U.S.
-                                    <br/>
-                                    Buy now, get in 2 days
-                                </p-->
                             </div>
                             <!-- ============================================================= -->
                     </div>
@@ -393,8 +406,12 @@
 
     <!-- reroute continue shopping to /shop/simple -->
     <template id="shop_simple_continue_shopping" inherit_id="website_sale.continue_shopping">
-        <xpath expr="//a" position="attributes">
-            <attrbute name="href">/shop/simple</attrbute>
+        <xpath expr="//a[@href='/shop']" position="replace">
+            <a href="/shop/simple" class="btn btn-default mb32">
+                <span class="fa fa-long-arrow-left" />
+                <span class="hidden-xs">Continue Shopping</span>
+                <span class="visible-xs-inline">Continue</span>
+            </a>
         </xpath>
     </template>
 

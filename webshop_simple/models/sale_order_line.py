@@ -17,7 +17,8 @@ class SaleOrderLine(models.Model):
     @api.depends('breadtype', 'sizetag', 'sides', 'product_id')
     def _compute_ppu(self):
         # main product
-        self.product_price_unit = self.product_id.website_price
+        #self.product_price_unit = self.product_id.website_price
+        self.product_price_unit = self.price_unit
         # sizetag if any
         if self.sizetag:
             self.product_price_unit += self.sizetag.sizetag_price
@@ -47,10 +48,3 @@ class SaleOrderLine(models.Model):
                 'price_total': taxes['total_included'],
                 'price_subtotal': taxes['total_excluded'],
             })
-
-    @api.model
-    def create(self, values):
-        if 'sides' in values:
-            sides = values.pop('sides')
-            values['sides'] = [(6, 0, sides)]
-        return super(SaleOrderLine, self).create(values)

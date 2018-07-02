@@ -8,14 +8,15 @@
             <div id="wrap" class="js_sale">
                 <div class="oe_structure"/>
                 <div class="container oe_website_sale">
-                    <div class="row">
-                        <p>Request submitted <span t-esc="now"/></p>
-                        <p>Sorry, we are closed.</p>
-                        <div>
-                            <span>Our shop accepts order :</span>
-                            <div>Before (for today): <span t-esc="openhours_close" /></div>
-                            <div>After (for tomorrow): <span t-esc="openhours_open" /></div>
-                        </div>
+                    <div class="row" style="margin: 20px; text-align: center; line-height: 1.4rem; font-family: inherit;">
+                        <h4>
+                            The web shop is closed for now and we're no longer taking orders.
+                            <br/>Our web shop accepts orders:
+                            <ul style="list-style-type: none;">
+                                <li>For the day: until <span t-esc="openhours_close" /></li>
+                                <li>For next day: after <span t-esc="openhours_open" /></li>
+                            </ul>
+                        </h4>
                     </div>
                 </div>
             </div>

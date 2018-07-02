@@ -12,7 +12,7 @@ _logger = logging.getLogger(__name__)
 
 
 class WebsiteSaleDerived(main.WebsiteSale):
-    """ Overide method in order to check open hours first """
+    """ Override method in order to check open hours first """
     @http.route(['/shop/cart/update'], type='http', auth="public", methods=['POST'], website=True, csrf=False)
     def cart_update(self, product_id, add_qty=1, set_qty=0, **kw):
         company = request.env.user.company_id
@@ -20,7 +20,7 @@ class WebsiteSaleDerived(main.WebsiteSale):
         # check if we are within open hours
         if company.is_between_open_hours(now):
             # redirect to original cart update
-            return super(WebsiteSaleDerived, self).cart_update(product_id, **kw)
+            return super(WebsiteSaleDerived, self).cart_update(product_id, add_qty=add_qty, set_qty=set_qty, **kw)
         else:
             # redirect to closure message page
             values = {

@@ -19,25 +19,23 @@ class SaleOrder(models.Model):
         product_context = dict(self.env.context)
         product_context.setdefault('lang', order.partner_id.lang)
         main_product = self.env['product.product'].with_context(product_context).browse(product_id)
-        _logger.debug("ABAKUS**: product_id:{} - main_product:{}".format(product_id, main_product))
         if breadtype:
             for bl in main_product.breadtype_line_ids:
                 if int(bl.id) == int(breadtype):
-                    extra_name += "\nBread: %s" % bl.breadtype_id.name
+                    extra_name += u"\nBread: %s" % bl.breadtype_id.name
         if sizetag:
             for sl in main_product.sizetags_line_ids:
                 if int(sl.id) == int(sizetag):
-                    extra_name += "\nSize: %s" % sl.sizetag_id.name
+                    extra_name += u"\nSize: %s" % sl.sizetag_id.name
         if sides and len(sides) > 0:
             for side in sides:
-                _logger.debug("ABAKUS**: side:{}".format(side))
                 side_product = self.env['product.template'].search([('id', '=', int(side))])
                 if side_product:
-                    _logger.debug("ABAKUS**: side_product.display_name:{}".format(pformat(side_product.display_name)))
                     extra_name += "\nSide: %s" % side_product.display_name
                 else:
-                    _logger.debug("ABAKUS**: can_t find side product_id:{}".format(int(side)))
-        _logger.debug("ABAKUS**: extra_name:{}".format(extra_name))
+                    # TODO: raise error
+                    _logger.debug(u"ABAKUS**: can_t find side product_id:{}".format(int(side)))
+                    return None
         return extra_name
 
     @api.multi
@@ -81,11 +79,19 @@ class SaleOrder(models.Model):
                 sides = kwargs['sides']
             values['breadtype'] = breadtype
             values['sizetag'] = sizetag
-            values['sides'] = sides
+            # make sur we create sides properly
+            values['sides'] = [(6, 0, sides)]
             values['name'] = self._get_line_description(self.id, product_id, attributes=attributes)
             # Extra infos
-            values['name'] += self._get_extra_line_description(self.id, product_id, breadtype=breadtype, sizetag=sizetag, sides=sides)
+            values['name'] += self._get_extra_line_description(self.id, product_id,
+                                                               breadtype=breadtype, sizetag=sizetag, sides=sides)
+            _logger.debug("ABAKUS: before create values = {}".format(pformat(values, depth=4)))
+            if 'has_birthday_gift' in kwargs and kwargs['has_birthday_gift']:
+                # This is a birthday gift so we give it for free
+                _logger.debug("ABAKUS: setting price_unit to 0.0")
+                values['price_unit'] = 0.0;
             order_line = SaleOrderLineSudo.create(values)
+            _logger.debug("ABAKUS: after create values = {}".format(pformat(values, depth=4)))
 
             try:
                 order_line._compute_tax_id()
@@ -102,32 +108,36 @@ class SaleOrder(models.Model):
             quantity = order_line.product_uom_qty + (add_qty or 0)
 
         # Remove zero of negative lines
+        _logger.debug("ABAKUS: Evaluate quantity: {}".format(quantity))
         if quantity <= 0:
             order_line.unlink()
         else:
             # update line
             values = self._website_product_id_change(self.id, product_id, qty=quantity)
+            _logger.debug("ABAKUS: before update values = {}".format(pformat(values, depth=4)))
+            _logger.debug("ABAKUS: discount_policy:{}, fixed_price {}".format(self.pricelist_id.discount_policy, self.env.context.get('fixed_price')))
+            _logger.debug("ABAKUS: has_birthday_gift ? kwargs = {}".format(pformat(kwargs, depth=4)))
+            if 'has_birthday_gift' in kwargs and kwargs['has_birthday_gift'] is True:
+                # shield against changing gift setting unit price to 0
+                values['price_unit'] = 0.0;
             if self.pricelist_id.discount_policy == 'with_discount' and not self.env.context.get('fixed_price'):
-                if 'is_bday_gift' in kwargs:
-                    # This is a birthday gift so we give it for free
-                    values['price_unit'] = 0.0;
-                else:
-                    order = self.sudo().browse(self.id)
-                    product_context = dict(self.env.context)
-                    product_context.setdefault('lang', order.partner_id.lang)
-                    product_context.update({
-                        'partner': order.partner_id.id,
-                        'quantity': quantity,
-                        'date': order.date_order,
-                        'pricelist': order.pricelist_id.id,
-                    })
-                    product = self.env['product.product'].with_context(product_context).browse(product_id)
-                    values['price_unit'] = self.env['account.tax']._fix_tax_included_price_company(
-                        order_line._get_display_price(product),
-                        order_line.product_id.taxes_id,
-                        order_line.tax_id,
-                        self.company_id
-                    )
+                order = self.sudo().browse(self.id)
+                product_context = dict(self.env.context)
+                product_context.setdefault('lang', order.partner_id.lang)
+                product_context.update({
+                    'partner': order.partner_id.id,
+                    'quantity': quantity,
+                    'date': order.date_order,
+                    'pricelist': order.pricelist_id.id,
+                })
+                product = self.env['product.product'].with_context(product_context).browse(product_id)
+                values['price_unit'] = self.env['account.tax']._fix_tax_included_price_company(
+                    order_line._get_display_price(product),
+                    order_line.product_id.taxes_id,
+                    order_line.tax_id,
+                    self.company_id
+                )
+            _logger.debug("ABAKUS: after update values = {}".format(pformat(values, depth=4)))
             order_line.write(values)
 
         return {'line_id': order_line.id, 'quantity': quantity}
