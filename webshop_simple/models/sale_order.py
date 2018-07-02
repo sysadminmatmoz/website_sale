@@ -85,13 +85,10 @@ class SaleOrder(models.Model):
             # Extra infos
             values['name'] += self._get_extra_line_description(self.id, product_id,
                                                                breadtype=breadtype, sizetag=sizetag, sides=sides)
-            _logger.debug("ABAKUS: before create values = {}".format(pformat(values, depth=4)))
             if 'has_birthday_gift' in kwargs and kwargs['has_birthday_gift']:
-                # This is a birthday gift so we give it for free
-                _logger.debug("ABAKUS: setting price_unit to 0.0")
-                values['price_unit'] = 0.0;
+                # This is a birthday gift so we give it for free by setting discount to 100 %
+                values['discount'] = 100
             order_line = SaleOrderLineSudo.create(values)
-            _logger.debug("ABAKUS: after create values = {}".format(pformat(values, depth=4)))
 
             try:
                 order_line._compute_tax_id()
@@ -108,18 +105,11 @@ class SaleOrder(models.Model):
             quantity = order_line.product_uom_qty + (add_qty or 0)
 
         # Remove zero of negative lines
-        _logger.debug("ABAKUS: Evaluate quantity: {}".format(quantity))
         if quantity <= 0:
             order_line.unlink()
         else:
             # update line
             values = self._website_product_id_change(self.id, product_id, qty=quantity)
-            _logger.debug("ABAKUS: before update values = {}".format(pformat(values, depth=4)))
-            _logger.debug("ABAKUS: discount_policy:{}, fixed_price {}".format(self.pricelist_id.discount_policy, self.env.context.get('fixed_price')))
-            _logger.debug("ABAKUS: has_birthday_gift ? kwargs = {}".format(pformat(kwargs, depth=4)))
-            if 'has_birthday_gift' in kwargs and kwargs['has_birthday_gift'] is True:
-                # shield against changing gift setting unit price to 0
-                values['price_unit'] = 0.0;
             if self.pricelist_id.discount_policy == 'with_discount' and not self.env.context.get('fixed_price'):
                 order = self.sudo().browse(self.id)
                 product_context = dict(self.env.context)
@@ -137,7 +127,6 @@ class SaleOrder(models.Model):
                     order_line.tax_id,
                     self.company_id
                 )
-            _logger.debug("ABAKUS: after update values = {}".format(pformat(values, depth=4)))
             order_line.write(values)
 
         return {'line_id': order_line.id, 'quantity': quantity}

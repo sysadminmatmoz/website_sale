@@ -67,7 +67,7 @@
             <h4 class="oe_price_h4 css_editable_mode_hidden" style="color: red">
                 <span>Birthday Gift ................... </span>
                 <b class="oe_price"
-                   style="white-space: nowrap; color:red; text-decoration:line-through"
+                   style="white-space: nowrap; color:red;"
                    t-attf-id="product_unit_price_{{product_id}}"
                    t-options="{'widget': 'monetary', 'display_currency': website.currency_id}">0.00</b>
                 <b><![CDATA[&nbsp;&euro;]]></b>

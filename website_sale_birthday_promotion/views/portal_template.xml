@@ -62,47 +62,17 @@ $('#bmonth').change(function() {
 
     <!-- add info in "review order" -->
     <template id="birthday_ddmm_sol" inherit_id="website_sale.cart_lines">
-        <xpath expr="//tbody/t" position="after">
+        <xpath expr="//a[contains(@class, 'js_delete_product')]" position="replace">
             <t t-set="company" t-value="website_sale_order.company_id"/>
-            <t t-if="company.birthday_promotion_product_id">
-            <!-- tr style="background-color: rgba(255, 192, 203, 0.3);">
-                <td colspan="2" t-if="not company.birthday_promotion_product_id"></td>
-                <td align="center" t-if="company.birthday_promotion_product_id.id">
-                    <span t-field="company.birthday_promotion_product_id.image_small"
-                          t-options="{'widget': 'image', 'class': 'img-rounded'}"/>
-                </td>
-                <td t-if="company.birthday_promotion_product_id">
-                    <div>
-                        <a t-attf-href="/shop/product/#{ slug(company.birthday_promotion_product_id) }">
-                            <strong t-esc="company.birthday_promotion_product_id.with_context(display_default_code=False).display_name"/>
-                        </a>
-                    </div>
-                    <div class="text-muted">
-                        <span>
-                            Free Birthday Gift
-                        </span>
-                        <br/>
-                    </div>
-                </td>
-                <td class="text-center" id="td-qty">
-                    <div class="input-group oe_website_spinner">
-                        <a t-attf-href="#" class="mb8 input-group-addon js_add_cart_json" data-no-instant="">
-                            <i class="fa fa-minus"></i>
-                        </a>
-                        <input type="text" class="js_quantity form-control quantity" data-line-id="-1"
-                               t-att-data-product-id="company.birthday_promotion_product_id.id"
-                               value="1" disabled="1"/>
-                        <a t-attf-href="#" class="mb8 input-group-addon float_left js_add_cart_json" data-no-instant="">
-                            <i class="fa fa-plus"></i>
-                        </a>
-                    </div>
-                </td>
-                <td class="text-center" id="td-price" name="price">
-                    <del t-attf-class="#{'text-danger mr8'}" style="white-space: nowrap;"
-                         t-esc="compute_currency(0)"
-                         t-options="{'widget': 'monetary', 'display_currency': website.get_current_pricelist().currency_id, 'from_currency': website.currency_id}"/>
-                </td>
-            </tr-->
+            <t t-if="(line.product_id.id == company.birthday_promotion_product_id.id) and request.env.user._is_portal() and request.env.user._has_birthday_gift()">
+                <a class="hidden-xs no-decoration" href="#">
+                    <small><i class="fa fa-gift"/> Birthday Gift</small>
+                </a>
+            </t>
+            <t t-else="1">
+                <a class="js_delete_product hidden-xs no-decoration" href="#">
+                    <small><i class="fa fa-trash-o"/> Remove</small>
+                </a>
             </t>
         </xpath>
     </template>
