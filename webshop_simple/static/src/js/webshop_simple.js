@@ -12,7 +12,7 @@ function compute_sizetag (product_id){
             if(price == "") {
                 price = "0.00"
             }
-            document.getElementById('sizetag_price_' + product_id).innerText = parseFloat(price).toFixed(2);
+            document.getElementById('sizetag_price_' + product_id).innerText = parseFloat(price.replace(',', '.')).toFixed(2);
         }
     };
     compute_unit_total(product_id);
@@ -31,7 +31,7 @@ function compute_breadtype (product_id){
             if(price == "") {
                 price = "0.00"
             }
-            document.getElementById('breadtype_price_' + product_id).innerText = parseFloat(price).toFixed(2);
+            document.getElementById('breadtype_price_' + product_id).innerText = parseFloat(price.replace(',', '.')).toFixed(2);
         }
     };
     compute_unit_total(product_id);
@@ -54,7 +54,7 @@ function compute_sides(product_id){
             if(price == "") {
                 price = "0.00"
             }
-            sides_price += parseFloat(price);
+            sides_price += parseFloat(price.replace(',', '.'));
         }
     }
     document.getElementById('sides_price_' + product_id).innerText = parseFloat(sides_price).toFixed(2);
@@ -74,16 +74,16 @@ function compute_unit_total(product_id){
     var sides_price = document.getElementById('sides_price_' + product_id);
     var product_unit_price = 0.00;
     if(base_price){
-        product_unit_price += parseFloat(base_price.innerText);
+        product_unit_price += parseFloat(base_price.innerText.replace(',', '.'));
     }
     if(sizetag_price){
-        product_unit_price += parseFloat(sizetag_price.innerText);
+        product_unit_price += parseFloat(sizetag_price.innerText.replace(',', '.'));
     }
     if(breadtype_price){
-        product_unit_price += parseFloat(breadtype_price.innerText);
+        product_unit_price += parseFloat(breadtype_price.innerText.replace(',', '.'));
     }
     if(sides_price){
-        product_unit_price += parseFloat(sides_price.innerText);
+        product_unit_price += parseFloat(sides_price.innerText.replace(',', '.'));
     }
     document.getElementById('product_unit_price_' + product_id).innerText = product_unit_price.toFixed(2);
 };
