@@ -145,7 +145,9 @@ class WebsiteSale(http.Controller):
     def _filter_attributes(self, **kw):
         return {k: v for k, v in kw.items() if "attribute" in k}
 
-    @http.route(['/shop/cart/update'], type='http', auth="public", methods=['POST'], website=True, csrf=False)
+    @http.route([
+        '/shop/cart/update'
+    ], type='http', auth="public", methods=['POST'], website=True, csrf=False)
     def cart_update(self, product_id, add_qty=1, set_qty=0, **kw):
         breadtype = None
         if 'breadtype_' + str(product_id) in kw:
@@ -158,7 +160,13 @@ class WebsiteSale(http.Controller):
             if key.startswith("sides-" + str(product_id) + '-'):
                 sides.append(int(kw[key]))
 
-        _logger.debug("ABAKUS: breadtype:{}, sizetag:{} - sides:{}".format(breadtype, sizetag, sides))
+        # check if it's a birthday gift
+        has_birthday_gift = False
+        company = request.env.user.sudo().company_id
+        if int(product_id) == company.birthday_promotion_product_id.id:
+            if request.env.user._is_portal():
+                if request.env.user._has_birthday_gift():
+                    has_birthday_gift = True
 
         request.website.sale_get_order(force_create=1)._cart_update(
             product_id=int(product_id),
@@ -168,5 +176,6 @@ class WebsiteSale(http.Controller):
             sizetag=sizetag,
             breadtype=breadtype,
             sides=sides,
+            has_birthday_gift=has_birthday_gift,
         )
         return request.redirect("/shop/cart")

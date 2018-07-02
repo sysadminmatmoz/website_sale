@@ -20,7 +20,7 @@ class WebsiteSaleDerived(main.WebsiteSale):
         # check if we are within open hours
         if company.is_between_open_hours(now):
             # redirect to original cart update
-            return super(WebsiteSaleDerived, self).cart_update(product_id, **kw)
+            return super(WebsiteSaleDerived, self).cart_update(product_id, add_qty=add_qty, set_qty=set_qty, **kw)
         else:
             # redirect to closure message page
             values = {

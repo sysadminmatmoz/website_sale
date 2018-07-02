@@ -95,7 +95,7 @@ class ProductPromotion(models.Model):
                 'product_second': promo_record.product_second.name,
             }
         self.env.context = context
-        _logger.debug("ABAKUS: passing context: {}".format(pformat(self.env.context, depth=4)))
+        _logger.debug(u"ABAKUS: passing context: {}".format(pformat(self.env.context, depth=4)))
         # fetch email template
         template = self.env.ref('website_sale_product_promotion.email_template_product_promotion')
         # get all public user that want a promotion notification

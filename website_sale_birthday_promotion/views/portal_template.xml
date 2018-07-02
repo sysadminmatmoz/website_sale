@@ -64,7 +64,8 @@ $('#bmonth').change(function() {
     <template id="birthday_ddmm_sol" inherit_id="website_sale.cart_lines">
         <xpath expr="//tbody/t" position="after">
             <t t-set="company" t-value="website_sale_order.company_id"/>
-            <tr style="background-color: rgba(255, 192, 203, 0.3);">
+            <t t-if="company.birthday_promotion_product_id">
+            <!-- tr style="background-color: rgba(255, 192, 203, 0.3);">
                 <td colspan="2" t-if="not company.birthday_promotion_product_id"></td>
                 <td align="center" t-if="company.birthday_promotion_product_id.id">
                     <span t-field="company.birthday_promotion_product_id.image_small"
@@ -82,12 +83,6 @@ $('#bmonth').change(function() {
                         </span>
                         <br/>
                     </div>
-                    <!--a href='#' class='js_delete_product no-decoration'>
-                        <small>
-                            <i class='fa fa-trash-o'></i>
-                            Remove
-                        </small>
-                    </a-->
                 </td>
                 <td class="text-center" id="td-qty">
                     <div class="input-group oe_website_spinner">
@@ -107,7 +102,8 @@ $('#bmonth').change(function() {
                          t-esc="compute_currency(0)"
                          t-options="{'widget': 'monetary', 'display_currency': website.get_current_pricelist().currency_id, 'from_currency': website.currency_id}"/>
                 </td>
-            </tr>
+            </tr-->
+            </t>
         </xpath>
     </template>
 
