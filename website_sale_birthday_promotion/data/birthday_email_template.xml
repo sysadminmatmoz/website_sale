@@ -16,7 +16,7 @@
 		  In order to celebrate you birthday here is promotion on today order !<br/>
 		  </p>
 		  <div>
-		    <b><span>${ctx["promo"]["product_gift"]}</span></b>
+		    <b><span><a href="${ctx["promo"]["product_url"]}">${ctx["promo"]["product_gift"]}</a></span></b>
 		  </div>
                   Regards,<br/>
                   ${(object.company_id.name)}
