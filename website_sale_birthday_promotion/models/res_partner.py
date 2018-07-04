@@ -43,18 +43,11 @@ class ResPartner(models.Model):
         today = datetime.now(pytz.timezone('Europe/Brussels'))
         public_users = self.env['res.users'].search([])
         for user in public_users:
-            _logger.debug(u"ABAKUS: handling user {} on {:02d}/{:02d}".format(user.name, int(today.strftime('%m')), int(today.strftime('%d'))))
             if user.has_group('base.group_portal'):
                 if user.partner_id.bday == int(today.strftime('%d')) and user.partner_id.bmonth == int(today.strftime('%m')):
-                    _logger.debug(u"ABAKUS: handling user {}: OK BIRTHDAY BOY".format(user.name))
                     template.send_mail(user.id, force_send=True)
                     user.write({'is_bday_gift_available': True})
                 elif user.partner_id.is_bday_gift_available:
-                    _logger.debug(u"ABAKUS: handling user {}: SKIP , DIDN'T USE YESTERDAY".format(user.name))
                     # unset flag when promotion unused
                     user.write({'is_bday_gift_available': False})
-                else:
-                    _logger.debug(u"ABAKUS: handling user {}: SKIP , NOT YOUR DAy".format(user.name))
-            else:
-                _logger.debug(u"ABAKUS: handling user {}: SKIP NOT PORTAL".format(user.name))
         return
