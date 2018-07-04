@@ -10,6 +10,7 @@
         'webshop_simple',
     ],
     'data': [
+        'data/notification_mail.xml',
         'views/simplesale_order.xml',
     ],
     'installable': True

@@ -74,3 +74,17 @@ class SaleOrder(models.Model):
             'target': 'current',
             'context': None,
         }
+
+    @api.multi
+    def action_done(self):
+        """ Send a confirmation email before setting to done """
+        context = {
+            'order': {
+                'name': self.name,
+                'description': self.display_name,
+            }
+        }
+        self.env.context = context
+        template = self.env.ref('webshop_simple_orders_list.email_order_is_ready')
+        template.send_mail(self.partner_id.id, force_send=True)
+        return super(SaleOrder, self).action_done()

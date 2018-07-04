@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="email_order_is_ready" model="mail.template">
+            <field name="name">Order Ready Email</field>
+            <field name="email_from">${object.company_id.name|safe}</field>
+            <field name="subject">Your order is ready !</field>
+            <field name="email_to">${object.email|safe}</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="auto_delete" eval="True"/>
+            <!--<field name="lang">${object.user_id.lang}</field>-->
+            <field name="body_html">
+            <![CDATA[
+                <p>
+                Dear ${(object.name)},
+                <br/>
+% if "order" in ctx:
+                <br/>
+                Your order <b>${ctx["order"]["name"]}</b> is complete and ready for pick up:
+                <p>${ctx["order"]["description"]}</p>
+% endif
+            ]]>
+            </field>
+    </record>
+</odoo>
