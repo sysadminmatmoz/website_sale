@@ -228,7 +228,7 @@
                                 </div>
                             </div>
                             <!-- product infos -->
-                            <div class="col-sm-5 col-lg-4 col-lg-offset-1" id="product_details">
+                            <div class="col-sm-5 col-lg-4 col-lg-offset-1" t-attf-id="product_details_{{product_id}}">
                                 <h1 itemprop="name" t-field="product.name">Product Name</h1>
                                 <span itemprop="url" style="display:none;"
                                       t-esc="'%sshop/product/%s' % (request.httprequest.url_root, slug(product))"/>
