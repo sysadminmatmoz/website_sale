@@ -3,7 +3,7 @@
 import pytz
 import logging
 from datetime import datetime, timedelta
-from odoo import models, api, fields
+from odoo import models, api, fields, _
 
 _logger = logging.getLogger(__name__)
 
@@ -78,13 +78,15 @@ class SaleOrder(models.Model):
     @api.multi
     def action_done(self):
         """ Send a confirmation email before setting to done """
-        context = {
-            'order': {
-                'name': self.name,
-                'description': self.display_name,
-            }
-        }
-        self.env.context = context
-        template = self.env.ref('webshop_simple_orders_list.email_order_is_ready')
-        template.send_mail(self.partner_id.id, force_send=True)
+        mail_mail = self.env['mail.mail']
+        mail_txt = _("Your order ({}) is ready !".format(self.name))
+        mail_id = mail_mail.create({
+            'body_html': mail_txt,
+            'subject': 'Order Ready Notification',
+            'email_to': self.partner_id.email,
+            'email_from': self.company_id.email,
+            'state': 'outgoing',
+            'auto_delete': True,
+        })
+        mail_mail.send([mail_id])
         return super(SaleOrder, self).action_done()

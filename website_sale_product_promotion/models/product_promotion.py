@@ -72,7 +72,6 @@ class ProductPromotion(models.Model):
                                     'email_to': manager.work_email,
                                     'email_from': "odoo@abakusitsolutions.eu",
                                     'state': 'outgoing',
-                                    'type': 'email',
                                     'auto_delete': True,
                                 })
                 mail_mail.send([mail_id])
