@@ -6,7 +6,7 @@
         <div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price mt16">
             <!-- Actual price -->
             <t t-if="product.categ_id.has_sizetag">
-                <h4 class="oe_price_h4 css_editable_mode_hidden">
+                <h4 class="oe_price_h4 css_editable_mode_hidden" style="display:none">
                     <span style="width:75%;">Size tag ................... </span>
                     <b class="oe_price" style="white-space: nowrap;" t-attf-id="sizetag_price_{{product_id}}"
                        t-options="{'widget': 'monetary', 'display_currency': website.currency_id}">0.00</b>
@@ -14,7 +14,7 @@
                 </h4>
             </t>
             <t t-if="product.categ_id.has_breadtype">
-                <h4 class="oe_price_h4 css_editable_mode_hidden">
+                <h4 class="oe_price_h4 css_editable_mode_hidden" style="display:none">
                     <span style="width:75%;">Bread type .............. </span>
                     <b class="oe_price" style="white-space: nowrap;" t-attf-id="breadtype_price_{{product_id}}"
                        t-options="{'widget': 'monetary', 'display_currency': website.currency_id}">0.00</b>
@@ -22,15 +22,14 @@
                 </h4>
             </t>
             <t t-if="sides_count>0">
-                <h4 class="oe_price_h4 css_editable_mode_hidden">
+                <h4 class="oe_price_h4 css_editable_mode_hidden" style="display:none">
                     <span style="width:75%;">Sides ....................... </span>
                     <b class="oe_price" style="white-space: nowrap;" t-attf-id="sides_price_{{product_id}}"
                        t-options="{'widget': 'monetary', 'display_currency': website.currency_id}">0.00</b>
                     <b><![CDATA[&nbsp;&euro;]]></b>
                 </h4>
             </t>
-            <h4 class="oe_price_h4 css_editable_mode_hidden"
-                t-att-style="'display:none' if (sides_count==0) and product.categ_id.has_breadtype is False and product.categ_id.has_sizetag is False else ''">
+            <h4 class="oe_price_h4 css_editable_mode_hidden" style="display:none">
                 <span><t t-esc="product.name"/>......... </span>
                 <span class="text-danger oe_default_price"
                       style="text-decoration: line-through; white-space: nowrap;"
