@@ -3,6 +3,7 @@ import logging
 from datetime import datetime
 from pprint import pformat
 from odoo import models, api, fields
+from odoo.addons.http_routing.models.ir_http import slug
 from odoo.http import request
 from odoo.exceptions import UserError, ValidationError
 
@@ -24,10 +25,19 @@ class ResPartner(models.Model):
             context.update(self.env.context)
         context['promo'] = {}
         company = self.env.user.company_id
+        # check if we actually have a product in promotion
         if not company.birthday_promotion_product_id:
             return
+        # construct product url
+        # <website_domain>/shop/simple/category/<category-slug>#product_id_<id>
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         context['promo'] = {
             'product_gift': company.birthday_promotion_product_id.name,
+            'product_url': u"{}/shop/simple/category/{}#product_id_{}".format(
+                base_url,
+                slug(company.birthday_promotion_product_id.category),
+                company.birthday_promotion_product_id.id
+            )
         }
         self.env.context = context
         template = self.env.ref('website_sale_birthday_promotion.email_template_user_birthday')
