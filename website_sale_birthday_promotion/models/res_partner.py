@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
+import pytz
 import logging
 from datetime import datetime
 from pprint import pformat
 from odoo import models, api, fields
-from odoo.addons.http_routing.models.ir_http import slug
-from odoo.http import request
-from odoo.exceptions import UserError, ValidationError
+from odoo.addons.website.models.website import slug
 
 _logger = logging.getLogger(__name__)
 
@@ -25,30 +24,37 @@ class ResPartner(models.Model):
             context.update(self.env.context)
         context['promo'] = {}
         company = self.env.user.company_id
+        product_id = company.birthday_promotion_product_id
         # check if we actually have a product in promotion
         if not company.birthday_promotion_product_id:
             return
         # construct product url
         # <website_domain>/shop/simple/category/<category-slug>#product_id_<id>
         base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        # NOTE: only the first public category is used in creating the slug
+        product_url = u"{}/shop/simple/category/{}#product_details_{}".format(base_url, slug(product_id.	public_categ_ids[0]), product_id.id)
         context['promo'] = {
-            'product_gift': company.birthday_promotion_product_id.name,
-            'product_url': u"{}/shop/simple/category/{}#product_id_{}".format(
-                base_url,
-                slug(company.birthday_promotion_product_id.category),
-                company.birthday_promotion_product_id.id
-            )
+            'product_gift': product_id.name,
+            'product_url': product_url,
         }
         self.env.context = context
         template = self.env.ref('website_sale_birthday_promotion.email_template_user_birthday')
-        today = datetime.now()
+        # TODO: get timezone from company
+        today = datetime.now(pytz.timezone('Europe/Brussels'))
         public_users = self.env['res.users'].search([])
         for user in public_users:
+            _logger.debug(u"ABAKUS: handling user {} on {:02d}/{:02d}".format(user.name, int(today.strftime('%m')), int(today.strftime('%d'))))
             if user.has_group('base.group_portal'):
                 if user.partner_id.bday == int(today.strftime('%d')) and user.partner_id.bmonth == int(today.strftime('%m')):
+                    _logger.debug(u"ABAKUS: handling user {}: OK BIRTHDAY BOY".format(user.name))
                     template.send_mail(user.id, force_send=True)
                     user.write({'is_bday_gift_available': True})
                 elif user.partner_id.is_bday_gift_available:
+                    _logger.debug(u"ABAKUS: handling user {}: SKIP , DIDN'T USE YESTERDAY".format(user.name))
                     # unset flag when promotion unused
                     user.write({'is_bday_gift_available': False})
+                else:
+                    _logger.debug(u"ABAKUS: handling user {}: SKIP , NOT YOUR DAy".format(user.name))
+            else:
+                _logger.debug(u"ABAKUS: handling user {}: SKIP NOT PORTAL".format(user.name))
         return
