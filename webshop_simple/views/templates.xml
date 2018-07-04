@@ -78,7 +78,6 @@
     <template id="sizetag" name="Size Tag">
         <t t-if="len(product.sizetags_line_ids)>0">
             <div class="row" id="sizetag_row">
-                <p style="padding-left:10px;">Size Tag</p>
                 <div class="radio-group">
                 <t t-foreach="product.sizetags_line_ids" t-as="sl">
                     <input type="radio" t-attf-id="sizetag_{{product_id}}_{{sl.id}}" t-attf-name="sizetag_{{product_id}}" t-att-value="sl.id" t-att-checked="'checked' if sl_index == 0 else None"  t-attf-onclick="compute_sizetag({{product_id}});"/>
@@ -93,7 +92,6 @@
     <template id="breadtype" name="Bread Type">
         <t t-if="len(product.breadtype_line_ids)>0">
             <div class="row" id="breadtype_row">
-                <p style="padding-left:10px;">Bread Type</p>
                 <div class="radio-group">
                 <t t-foreach="product.breadtype_line_ids" t-as="bl">
                     <input type="radio" t-attf-id="breadtype_{{product_id}}_{{bl.id}}" t-attf-name="breadtype_{{product_id}}" t-att-value="bl.id" t-att-checked="'checked' if bl_index == 0 else None" t-attf-onclick="compute_breadtype({{product_id}});"/>
