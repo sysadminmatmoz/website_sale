@@ -71,4 +71,23 @@
         </xpath>
     </template>
 
+    <!-- simplify /my/home -->
+    <template id="my_home_menu_simplified" inherit_id="website_portal_sale.portal_my_home_menu_sale">
+        <xpath expr="//li[1]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//li[3]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+    </template>
+
+    <template id="my_home_simplified" inherit_id="website_portal_sale.portal_my_home_sale">
+        <xpath expr="//h3[@class='page-header'][1]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+        <xpath expr="//h3[@class='page-header'][3]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+    </template>
+
 </odoo>
