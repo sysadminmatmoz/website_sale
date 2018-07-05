@@ -416,4 +416,129 @@
         </xpath>
     </template>
 
+    <!-- add eater alias label to /shop/cart line -->
+    <template id="eater_alias_cart_lines" inherit_id="website_sale.cart_lines">
+        <!-- add column to header -->
+        <xpath expr="//thead/tr/th[2]" position="after">
+            <th width="200" class="text-center">Alias</th>
+        </xpath>
+        <!-- add column to body -->
+        <xpath expr="//tbody/t/tr/td[@id='td-qty']" position="before">
+            <td class="text-center" id="td-alias">
+<style>
+input.js_alias {
+    min-width: 48px;
+    text-align: center;
+}
+input.alias {
+    padding: 0;
+}
+</style>
+<script>
+odoo.define('website_sale.alias', ['web.ajax'], function (require) {
+    "use strict";
+
+    $('.oe_cart').on('click', '.js_update_alias', function(e) {
+        e.preventDefault();
+        var $link = $(e.currentTarget);
+        var $input = $link.parent().find("input");
+        var product_id = parseInt($input.data('product-id'),10);;
+        var line_id = parseInt($input.data('line-id'),10);
+        var alias = $input.val();
+        var ajax = require('web.ajax');
+
+        var clickwatch = (function(){
+              var timer = 0;
+              return function(callback, ms){
+                clearTimeout(timer);
+                timer = setTimeout(callback, ms);
+              };
+        })();
+
+        $input.data('update_change', true);
+        clickwatch(function(){
+            ajax.jsonRpc("/shop/cart/update_alias_json", 'call', {
+                'product_id': product_id,
+                'line_id': line_id,
+                'alias': alias
+            }).then(function (data) {
+                $input.data('update_change', false);
+            });
+        }, 500);
+
+        return false;
+    });
+});
+</script>
+                <div class="input-group oe_website_spinner">
+                    <input type="text" class="js_alias form-control alias" t-att-data-line-id="line.id"
+                           t-att-data-product-id="line.product_id.id"
+                           t-att-value="line.alias or line.order_partner_id.name.split(' ', 1)[0]"/>
+                    <a t-attf-href="#" class="mb8 input-group-addon float_left js_update_alias" data-no-instant="">
+                        <i class="fa fa-floppy-o"></i>
+                    </a>
+                </div>
+            </td>
+        </xpath>
+
+    </template>
+
+    <!-- add eater alias label to /shop/payment line -->
+    <template id="eater_alias_payment" inherit_id="website_sale.payment">
+        <!-- add column to header -->
+        <xpath expr="//thead/tr/th[2]" position="after">
+            <th width="100">Alias</th>
+        </xpath>
+        <!-- add column to body -->
+        <xpath expr="//tbody/tr/td[3]" position="after">
+            <td>
+                <div>
+                    <strong t-esc="line.alias or line.order_partner_id.name.split(' ', 1)[0]"
+                        style="background-color: #777777; color: #fff;"/>
+                </div>
+            </td>
+        </xpath>
+    </template>
+
+    <!-- add eater alias label to /shop/confirmation line -->
+    <template id="eater_alias_confirmation" inherit_id="website_sale.confirmation">
+        <!-- add column to header -->
+        <xpath expr="//thead/tr/th[1]" position="after">
+            <th class="td-alias">Alias</th>
+        </xpath>
+        <!-- add column to body -->
+        <xpath expr="//tbody/tr/td[2]" position="after">
+            <td>
+                <div id="quote_alias">
+                    <strong  t-esc="line.alias or line.order_partner_id.name.split(' ', 1)[0]"
+                          style="background-color: #777777; color: #fff;"/>
+                </div>
+            </td>
+        </xpath>
+    </template>
+
+    <!-- add eater alias label to /my/orders -->
+    <template id="eater_alias_orders_followup" inherit_id="website_portal_sale.orders_followup">
+        <xpath expr="//div[@class='panel-body']/div[@class='row'][2]/div[1]" position="replace">
+            <div class="col-md-4">
+                <strong>Product</strong>
+            </div>
+        </xpath>
+        <xpath expr="//div[@class='panel-body']/div[@class='row'][2]/div[1]" position="after">
+            <div class="col-md-2">
+                <strong>Alias</strong>
+           </div>
+        </xpath>
+        <xpath expr="//div[@id='product_name']" position="replace">
+            <div id='product_name' class="col-md-3">
+                <span t-esc="ol.product_id.name"/>
+            </div>
+        </xpath>
+        <xpath expr="//div[@id='product_name']" position="after">
+            <div id='alias' class="col-md-2">
+                <span t-esc="ol.alias"/>
+            </div>
+        </xpath>
+    </template>
+
 </odoo>

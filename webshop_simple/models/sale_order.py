@@ -89,6 +89,9 @@ class SaleOrder(models.Model):
             if 'has_birthday_gift' in kwargs and kwargs['has_birthday_gift']:
                 # This is a birthday gift so we give it for free by setting discount to 100 %
                 values['discount'] = 100
+            # set default alias
+            if 'alias' not in values:
+                values['alias'] = self.partner_id.name.split(' ', 1)[0]
             order_line = SaleOrderLineSudo.create(values)
 
             try:

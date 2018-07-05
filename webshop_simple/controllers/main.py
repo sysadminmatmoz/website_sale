@@ -179,3 +179,16 @@ class WebsiteSale(http.Controller):
             has_birthday_gift=has_birthday_gift,
         )
         return request.redirect("/shop/cart")
+
+    @http.route(['/shop/cart/update_alias_json'],
+                type='json', auth="public", methods=['POST'], website=True, csrf=False)
+    def cart_update_alias_json(self, product_id, line_id, alias, **kw):
+        """ Custom endpoint to update SOL label """
+        order = request.website.sale_get_order()
+        order_lines = order._cart_find_product_line(product_id, line_id, **kw)
+        order_line = order_lines and order_lines[0]
+        values = {
+            'alias': alias
+        }
+        order_line.write(values)
+        return {}

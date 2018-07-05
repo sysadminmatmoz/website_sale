@@ -13,6 +13,7 @@ class SaleOrderLine(models.Model):
     sizetag = fields.Many2one('category.sizetag.line', string="Size Tag")
     sides = fields.Many2many('product.template', string="Sides")
     product_price_unit = fields.Float(string='Product Price', default=0.0, compute='_compute_ppu')
+    alias = fields.Char(string="Eater Alias")
 
     @api.depends('breadtype', 'sizetag', 'sides', 'product_id')
     def _compute_ppu(self):
