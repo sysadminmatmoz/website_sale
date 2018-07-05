@@ -435,15 +435,37 @@ input.alias {
 }
 </style>
 <script>
-$(document).ready(function() {
+odoo.define('website_sale.alias', ['web.ajax'], function (require) {
+    "use strict";
+
     $('.oe_cart').on('click', '.js_update_alias', function(e) {
         e.preventDefault();
         var $link = $(e.currentTarget);
         var $input = $link.parent().find("input");
-        var product_id = +$input.closest('*:has(input[name="product_id"])').find('input[name="product_id"]').val();
+        var product_id = parseInt($input.data('product-id'),10);;
+        var line_id = parseInt($input.data('line-id'),10);
         var alias = $input.val();
-        $input.change();
-        console.log('alias: ' + alias);
+        var ajax = require('web.ajax');
+
+        var clickwatch = (function(){
+              var timer = 0;
+              return function(callback, ms){
+                clearTimeout(timer);
+                timer = setTimeout(callback, ms);
+              };
+        })();
+
+        $input.data('update_change', true);
+        clickwatch(function(){
+            ajax.jsonRpc("/shop/cart/update_alias_json", 'call', {
+                'product_id': product_id,
+                'line_id': line_id,
+                'alias': alias
+            }).then(function (data) {
+                $input.data('update_change', false);
+            });
+        }, 500);
+
         return false;
     });
 });

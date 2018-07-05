@@ -180,27 +180,15 @@ class WebsiteSale(http.Controller):
         )
         return request.redirect("/shop/cart")
 
-    @http.route(['/shop/cart/update_json'], type='json', auth="public", methods=['POST'], website=True, csrf=False)
-    def cart_update_json(self, product_id, line_id=None, add_qty=None, set_qty=None, display=True):
-        _logger.debug("ABAKUS: updating cart with ")
-        order = request.website.sale_get_order(force_create=1)
-        if order.state != 'draft':
-            request.website.sale_reset()
-            return {}
-        value = order._cart_update(product_id=product_id, line_id=line_id, add_qty=add_qty, set_qty=set_qty)
-        if not order.cart_quantity:
-            request.website.sale_reset()
-            return {}
-        if not display:
-            return None
-
+    @http.route(['/shop/cart/update_alias_json'],
+                type='json', auth="public", methods=['POST'], website=True, csrf=False)
+    def cart_update_alias_json(self, product_id, line_id, alias, **kw):
+        """ Custom endpoint to update SOL label """
         order = request.website.sale_get_order()
-        value['cart_quantity'] = order.cart_quantity
-        from_currency = order.company_id.currency_id
-        to_currency = order.pricelist_id.currency_id
-        value['website_sale.cart_lines'] = request.env['ir.ui.view'].render_template("website_sale.cart_lines", {
-            'website_sale_order': order,
-            'compute_currency': lambda price: from_currency.compute(price, to_currency),
-            'suggested_products': order._cart_accessories()
-        })
-        return value
+        order_lines = order._cart_find_product_line(product_id, line_id, **kw)
+        order_line = order_lines and order_lines[0]
+        values = {
+            'alias': alias
+        }
+        order_line.write(values)
+        return {}
