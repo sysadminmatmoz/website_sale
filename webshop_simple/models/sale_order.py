@@ -2,7 +2,7 @@
 #
 import logging
 from pprint import pformat
-from odoo import models, api, fields
+from odoo import models, api, fields, _
 from odoo.http import request
 from odoo.exceptions import UserError, ValidationError
 _logger = logging.getLogger(__name__)
@@ -60,8 +60,9 @@ class SaleOrder(models.Model):
             request.session['sale_order_id'] = None
             raise UserError(_('It is forbidden to modify a sales order which is not in draft status'))
         if line_id is not False:
-            order_lines = self._cart_find_product_line(product_id, line_id, **kwargs)
-            order_line = order_lines and order_lines[0]
+            if line_id is not None:
+                order_lines = self._cart_find_product_line(product_id, line_id, **kwargs)
+                order_line = order_lines and order_lines[0]
 
         # Create line if no line with product_id can be located
         if not order_line:
