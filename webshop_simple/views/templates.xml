@@ -483,4 +483,37 @@ odoo.define('website_sale.alias', ['web.ajax'], function (require) {
 
     </template>
 
+    <!-- add eater alias label to /shop/payment line -->
+    <template id="eater_alias_payment" inherit_id="website_sale.payment">
+        <!-- add column to header -->
+        <xpath expr="//thead/tr/th[2]" position="after">
+            <th width="100">Alias</th>
+        </xpath>
+        <!-- add column to body -->
+        <xpath expr="//tbody/tr/td[3]" position="after">
+            <td>
+                <div>
+                    <strong t-esc="line.alias or line.order_partner_id.name.split(' ', 1)[0]"
+                        style="background-color: #777777; color: #fff;"/>
+                </div>
+            </td>
+        </xpath>
+    </template>
+
+    <!-- add eater alias label to /shop/confirmation line -->
+    <template id="eater_alias_confirmation" inherit_id="website_sale.confirmation">
+        <!-- add column to header -->
+        <xpath expr="//thead/tr/th[1]" position="after">
+            <th class="td-alias">Alias</th>
+        </xpath>
+        <!-- add column to body -->
+        <xpath expr="//tbody/tr/td[2]" position="after">
+            <td>
+                <div id="quote_alias">
+                    <strong  t-esc="line.alias or line.order_partner_id.name.split(' ', 1)[0]"
+                          style="background-color: #777777; color: #fff;"/>
+                </div>
+            </td>
+        </xpath>
+    </template>
 </odoo>
