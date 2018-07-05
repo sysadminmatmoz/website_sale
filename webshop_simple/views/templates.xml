@@ -516,4 +516,29 @@ odoo.define('website_sale.alias', ['web.ajax'], function (require) {
             </td>
         </xpath>
     </template>
+
+    <!-- add eater alias label to /my/orders -->
+    <template id="eater_alias_orders_followup" inherit_id="website_portal_sale.orders_followup">
+        <xpath expr="//div[@class='panel-body']/div[@class='row'][2]/div[1]" position="replace">
+            <div class="col-md-4">
+                <strong>Product</strong>
+            </div>
+        </xpath>
+        <xpath expr="//div[@class='panel-body']/div[@class='row'][2]/div[1]" position="after">
+            <div class="col-md-2">
+                <strong>Alias</strong>
+           </div>
+        </xpath>
+        <xpath expr="//div[@id='product_name']" position="replace">
+            <div id='product_name' class="col-md-3">
+                <span t-esc="ol.product_id.name"/>
+            </div>
+        </xpath>
+        <xpath expr="//div[@id='product_name']" position="after">
+            <div id='alias' class="col-md-2">
+                <span t-esc="ol.alias"/>
+            </div>
+        </xpath>
+    </template>
+
 </odoo>
