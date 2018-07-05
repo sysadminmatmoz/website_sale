@@ -15,6 +15,8 @@
     'data': [
         'data/simple_categories.xml',
 
+        'views/sale_order.xml',
+        'views/sale_order_line.xml',
         'views/templates.xml',
     ],
     'installable': True

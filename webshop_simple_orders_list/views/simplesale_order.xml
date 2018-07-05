@@ -54,10 +54,6 @@
                                 <form string="Sales Order Lines">
                                     <label for="name"/>
                                     <field name="name"/>
-                                    <div groups="base.group_no_one">
-                                        <label for="invoice_lines"/>
-                                        <field name="invoice_lines"/>
-                                    </div>
                                     <field name="state" invisible="1"/>
                                 </form>
                                 <tree>
@@ -69,6 +65,7 @@
                                        />
                                     <field name="layout_category_id" groups="sale.group_sale_layout"/>
                                     <field name="name"/>
+                                    <field name="alias"/>
                                     <field name="product_uom_qty"
                                         string="Ordered Qty"
                                         context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"
@@ -78,7 +75,7 @@
                                         context="{'company_id': parent.company_id}"
                                         groups="product.group_uom" options='{"no_open": True}'/>
                                     <field name="analytic_tag_ids" groups="analytic.group_analytic_accounting" widget="many2many_tags" options="{'color_field': 'color'}"/>
-                                    <field name="discount" groups="sale.group_discount_per_so_line"/>
+                                    <!-- field name="discount" groups="sale.group_discount_per_so_line"/-->
                                     <field name="price_subtotal" widget="monetary" groups="sale.group_show_price_subtotal"/>
                                     <field name="price_total" widget="monetary" groups="sale.group_show_price_total"/>
                                     <field name="qty_delivered_updateable" invisible="1"/>
