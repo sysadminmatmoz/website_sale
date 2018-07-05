@@ -416,4 +416,49 @@
         </xpath>
     </template>
 
+    <!-- add eater alias label to /shop/cart line -->
+    <template id="eater_alias_cart_lines" inherit_id="website_sale.cart_lines">
+        <!-- add column to header -->
+        <xpath expr="//thead/tr/th[2]" position="after">
+            <th width="200" class="text-center">Alias</th>
+        </xpath>
+        <!-- add column to body -->
+        <xpath expr="//tbody/t/tr/td[@id='td-qty']" position="before">
+            <td class="text-center" id="td-alias">
+<style>
+input.js_alias {
+    min-width: 48px;
+    text-align: center;
+}
+input.alias {
+    padding: 0;
+}
+</style>
+<script>
+$(document).ready(function() {
+    $('.oe_cart').on('click', '.js_update_alias', function(e) {
+        e.preventDefault();
+        var $link = $(e.currentTarget);
+        var $input = $link.parent().find("input");
+        var product_id = +$input.closest('*:has(input[name="product_id"])').find('input[name="product_id"]').val();
+        var alias = $input.val();
+        $input.change();
+        console.log('alias: ' + alias);
+        return false;
+    });
+});
+</script>
+                <div class="input-group oe_website_spinner">
+                    <input type="text" class="js_alias form-control alias" t-att-data-line-id="line.id"
+                           t-att-data-product-id="line.product_id.id"
+                           t-att-value="line.alias or line.order_partner_id.name.split(' ', 1)[0]"/>
+                    <a t-attf-href="#" class="mb8 input-group-addon float_left js_update_alias" data-no-instant="">
+                        <i class="fa fa-floppy-o"></i>
+                    </a>
+                </div>
+            </td>
+        </xpath>
+
+    </template>
+
 </odoo>
