@@ -51,14 +51,15 @@ class ProductPromotion(models.Model):
         self.date_end = (fields.Date.from_string(self.date_beg) + timedelta(weeks=1)).strftime('%Y-%m-%d')
 
     def cron_promotion_creation_check(self):
-        """ Check if we have a scheduled promotion for next week. If not notify managers """
+        """ Check if we have a scheduled promotion for next week. If not notify managers.
+        NOTE: promo is set to current manually by the admin """
         # monday = weekday #0
         days_ahead = 7 - date.today().weekday()
         next_monday = date.today() + timedelta(days_ahead)
         next_week_name = next_monday.strftime('%Yw%V')
         promo_count = self.env['product.promotion'].search([
             ('state', '=', 'next'),
-            ('name', '=', next_week_name) ])
+            ('name', '=', next_week_name)])
         res = 'PASSED'
         if promo_count == 0:
             res = 'FAILED'
@@ -70,7 +71,7 @@ class ProductPromotion(models.Model):
                                     'body_html': mail_txt,
                                     'subject': 'Odoo Promotion Creation Notification',
                                     'email_to': manager.work_email,
-                                    'email_from': "odoo@abakusitsolutions.eu",
+                                    'email_from': self.env.user.company_id.email,
                                     'state': 'outgoing',
                                     'auto_delete': True,
                                 })
@@ -93,6 +94,23 @@ class ProductPromotion(models.Model):
                 'product_first': promo_record.product_first.name,
                 'product_second': promo_record.product_second.name,
             }
+        else:
+            # No promo set as current notify the admin
+            user_manager_ids = self.env['hr.employee'].search([('manager', '=', True)])
+            mail_mail = self.env['mail.mail']
+            mail_txt = _("Please remember to set this week's promotion to CURRENT")
+            for manager in user_manager_ids:
+                mail_id = mail_mail.create({
+                                    'body_html': mail_txt,
+                                    'subject': 'Odoo Promotion Activation Notification',
+                                    'email_to': manager.work_email,
+                                    'email_from': self.env.user.company_id.email,
+                                    'state': 'outgoing',
+                                    'auto_delete': True,
+                                })
+                mail_mail.send([mail_id])
+            return
+
         self.env.context = context
         _logger.debug(u"ABAKUS: passing context: {}".format(pformat(self.env.context, depth=4)))
         # fetch email template
