@@ -12,7 +12,7 @@ _logger = logging.getLogger(__name__)
 
 class WebsiteAccount(website_account):
 
-    OPTIONAL_BILLING_FIELDS = website_account.OPTIONAL_BILLING_FIELDS + ["bday", "bmonth"]
+    OPTIONAL_BILLING_FIELDS = website_account.OPTIONAL_BILLING_FIELDS + ["birth_day", "birth_month"]
 
     def details_form_validate(self, data):
         """ Override this so we can add and use extra billing fields """
