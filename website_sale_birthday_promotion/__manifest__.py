@@ -8,6 +8,7 @@
     'version': '10.0.1.0.0',
     'depends': [
         'website_sale',
+        'website_sale_birthday_ddmm',
     ],
     'data': [
         'data/ir_cron.xml',
