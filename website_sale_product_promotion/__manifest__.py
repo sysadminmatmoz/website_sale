@@ -11,10 +11,11 @@
         'mail',
     ],
     'data': [
+        'views/res_partner.xml',
         'views/product_view.xml',
         'views/sale_order_views.xml',
-        'data/promotion_mail.xml',
 
+        'data/promotion_mail.xml',
         'data/ir_cron.xml',
 
         'security/ir.model.access.csv',
