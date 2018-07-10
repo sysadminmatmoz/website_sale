@@ -14,12 +14,6 @@ class SaleOrder(models.Model):
     payment_state = fields.Selection(related='payment_tx_id.state')
 
     @api.multi
-    def action_print(self):
-        """ Printing locks the SO and send a confirmation email"""
-        super(SaleOrder, self).action_print()
-        self.action_done()
-
-    @api.multi
     def action_done(self):
         """ Send a confirmation email before setting to done """
         mail_mail = self.env['mail.mail']
