@@ -189,28 +189,22 @@
         <field name="act_window_id" ref="action_simple_orders" />
     </record>
     
-    <!-- root simple order list -->
-    <menuitem id="menu_sale_simple_orders"
-              name="Orders"
-              parent="sales_team.menu_base_partner"
-              sequence="15"/>
-
-    <!-- sub menu: pending orders for today -->
+    <!-- All menus at root level next to Sales in Enterprise -->
     <menuitem id="menu_today_orders"
               name="Today's Orders"
               action="action_today_simple_orders"
-              parent="menu_sale_simple_orders"
-              sequence="1"/>
+              parent="sales_team.menu_base_partner"
+              sequence="15"/>
 
     <menuitem id="menu_tomorrow_orders"
               name="Tomorrow's Orders"
               action="action_tomorrow_simple_orders"
-              parent="menu_sale_simple_orders"
-              sequence="2"/>
+              parent="sales_team.menu_base_partner"
+              sequence="16"/>
 
     <menuitem id="menu_closed_orders"
               name="Closed Orders"
               action="action_simple_orders"
-              parent="menu_sale_simple_orders"
-              sequence="3"/>
+              parent="sales_team.menu_base_partner"
+              sequence="17"/>
 </odoo>
