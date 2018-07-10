@@ -50,6 +50,7 @@ class ProductPromotion(models.Model):
     def _compute_date_end(self):
         self.date_end = (fields.Date.from_string(self.date_beg) + timedelta(weeks=1)).strftime('%Y-%m-%d')
 
+    @api.multi
     def cron_promotion_creation_check(self):
         """ Check if we have a scheduled promotion for next week. If not notify managers.
         NOTE: promo is set to current manually by the admin """
@@ -63,19 +64,20 @@ class ProductPromotion(models.Model):
         res = 'PASSED'
         if promo_count == 0:
             res = 'FAILED'
-            user_manager_ids = self['hr.employee'].search([('manager', '=', True)])
+            user_manager_ids = self.env['res.users'].search([])
             for manager in user_manager_ids:
-                mail_mail = self.env['mail.mail']
-                mail_txt = _("Please remember to create a promotion for week {}".format(next_week_name))
-                mail_id = mail_mail.create({
+                if manager.has_group('sales_team.group_sale_manager'):
+                    mail_mail = self.env['mail.mail']
+                    mail_txt = _("Please remember to create a promotion for week {}".format(next_week_name))
+                    mail_id = mail_mail.create({
                                     'body_html': mail_txt,
                                     'subject': 'Odoo Promotion Creation Notification',
-                                    'email_to': manager.work_email,
+                                    'email_to': manager.partner_id.mail,
                                     'email_from': self.env.user.company_id.email,
                                     'state': 'outgoing',
                                     'auto_delete': True,
                                 })
-                mail_mail.send([mail_id])
+                    mail_mail.send([mail_id])
 
         _logger.debug('Promotion Creation Check: week {} - {}'.format(next_week_name, res))
 
@@ -96,23 +98,23 @@ class ProductPromotion(models.Model):
             }
         else:
             # No promo set as current notify the admin
-            user_manager_ids = self.env['hr.employee'].search([('manager', '=', True)])
+            user_manager_ids = self.env['res.users'].search([])
             mail_mail = self.env['mail.mail']
             mail_txt = _("Please remember to set this week's promotion to CURRENT")
-            for manager in user_manager_ids:
-                mail_id = mail_mail.create({
-                                    'body_html': mail_txt,
-                                    'subject': 'Odoo Promotion Activation Notification',
-                                    'email_to': manager.work_email,
-                                    'email_from': self.env.user.company_id.email,
-                                    'state': 'outgoing',
-                                    'auto_delete': True,
-                                })
-                mail_mail.send([mail_id])
+            for user in user_manager_ids:
+                if user.has_group('sales_team.group_sale_manager'):
+                    mail_id = mail_mail.create({
+                                'body_html': mail_txt,
+                                'subject': 'Odoo Promotion Activation Notification',
+                                'email_to': user.partner_id.email,
+                                'email_from': self.env.user.company_id.email,
+                                'state': 'outgoing',
+                                'auto_delete': True,
+                            })
+                    mail_mail.send([mail_id])
             return
 
         self.env.context = context
-        _logger.debug(u"ABAKUS: passing context: {}".format(pformat(self.env.context, depth=4)))
         # fetch email template
         template = self.env.ref('website_sale_product_promotion.email_template_product_promotion')
         # get all public user that want a promotion notification
