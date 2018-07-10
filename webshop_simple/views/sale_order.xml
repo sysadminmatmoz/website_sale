@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="sale_order_alias_sol_form" model="ir.ui.view">
-        <field name="name">SO Alias</field>
+        <field name="name">SO Alias and DD</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
+            <!-- delivery date -->
+            <xpath expr="//field[@name='date_order']" position="after">
+                <field name="delivery_date" widget="date"/>
+            </xpath>
+            <!-- alias in SOL -->
             <xpath expr="//notebook/page[1]/field/form/group/group/field[@name='product_id']" position="after">
                 <field name="alias" />
             </xpath>
