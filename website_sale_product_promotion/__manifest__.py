@@ -11,6 +11,7 @@
         'mail',
     ],
     'data': [
+        'views/portal_template.xml',
         'views/res_partner.xml',
         'views/product_view.xml',
         'views/sale_order_views.xml',
