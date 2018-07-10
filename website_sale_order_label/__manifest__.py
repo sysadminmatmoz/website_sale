@@ -11,6 +11,7 @@
 
     'depends': [
         'website_sale',
+        'webshop_simple',
     ],
     'data': [
         'views/res_company.xml',

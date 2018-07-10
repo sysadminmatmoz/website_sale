@@ -13,7 +13,7 @@ class SizeTag(models.Model):
     _description = 'Category Size tag'
 
     name = fields.Char()
-    active = fields.Boolean(default=False)
+    active = fields.Boolean(default=True)
 
 
 class SizeTageLine(models.Model):

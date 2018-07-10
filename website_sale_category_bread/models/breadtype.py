@@ -13,7 +13,7 @@ class BreadType(models.Model):
     _description = 'Category Bread Type'
 
     name = fields.Char()
-    active = fields.Boolean(default=False)
+    active = fields.Boolean(default=True)
 
 
 class BreadTypeLine(models.Model):
