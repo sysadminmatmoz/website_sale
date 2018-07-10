@@ -33,8 +33,6 @@
             <form string="Sales Order" class="o_sale_order" edit="0" create="0">
                 <header>
                     <button name="print_quotation" string="Print" type="object" states="sent,sale" class="o_sale_print"/>
-                    <button name="action_done" type="object" string="Lock" states="sent,sale"
-                        help="If the sale is locked, you can not modify it anymore. However, you will still be able to invoice or deliver."/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,sent,sale"/>
                 </header>
                 <sheet>
