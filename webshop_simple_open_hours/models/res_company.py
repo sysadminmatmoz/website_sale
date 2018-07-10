@@ -29,9 +29,11 @@ class ResCompany(models.Model):
     def is_between_open_hours(self, a_daytime):
         a_daytime_float = float(a_daytime.hour + a_daytime.minute/60)
         if self.openhours_close <= a_daytime_float < self.openhours_open:
-            return False
-        else:
-            return True
+            return 0
+        elif a_daytime_float >= self.openhours_open:
+            return 1
+        elif a_daytime_float <= self.openhours_close:
+            return 2
 
     @staticmethod
     def get_hh_mm_as_str(a_float):

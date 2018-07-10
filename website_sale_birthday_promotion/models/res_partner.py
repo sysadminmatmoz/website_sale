@@ -12,8 +12,6 @@ _logger = logging.getLogger(__name__)
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    bday = fields.Integer('Birthday Day')
-    bmonth = fields.Integer('Birthday Month')
     is_bday_gift_available = fields.Boolean('is Birthday Gif Available', default=False)
 
     @api.multi
@@ -44,7 +42,7 @@ class ResPartner(models.Model):
         public_users = self.env['res.users'].search([])
         for user in public_users:
             if user.has_group('base.group_portal'):
-                if user.partner_id.bday == int(today.strftime('%d')) and user.partner_id.bmonth == int(today.strftime('%m')):
+                if user.partner_id.birth_day == int(today.strftime('%d')) and user.partner_id.birth_month == int(today.strftime('%m')):
                     template.send_mail(user.id, force_send=True)
                     user.write({'is_bday_gift_available': True})
                 elif user.partner_id.is_bday_gift_available:
