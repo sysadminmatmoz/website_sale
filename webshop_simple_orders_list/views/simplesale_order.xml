@@ -9,6 +9,7 @@
                 <field name="name" string="Order Number"/>
                 <field name="confirmation_date" />
                 <field name="partner_id"/>
+                <field name="delivery_date"/>
                 <field name="state" />
             </tree>
         </field>
@@ -116,21 +117,56 @@
         </field>
     </record>
 
-    <!-- actions Current Orders -->
-    <record id="action_today_simple_orders" model="ir.actions.server">
-        <field name="name">Todays Orders</field>
-        <field name="model_id" ref="sale.model_sale_order" />
-        <field name="type">ir.actions.server</field>
-        <field name="state">code</field>
-        <field name="code">action = env['sale.order'].filter_today_action()</field>
+    <!-- action Today Orders -->
+    <record id="action_today_simple_orders" model="ir.actions.act_window">
+         <field name="name">Today's Orders</field>
+         <field name="res_model">sale.order</field>
+         <field name="type">ir.actions.act_window</field>
+         <field name="domain">[('state', '=', 'sale'),
+             ('payment_state', '=', 'done'),
+             ('delivery_date', '=', context_today().strftime('%Y-%m-%d 00:00:00'))]
+         </field>
+         <field name="view_type">form</field>
+         <field name="view_mode">tree,form</field>
+         <field name="search_view_id" ref="view_simple_order_filter"/>
     </record>
 
-    <record id="action_tomorrow_simple_orders" model="ir.actions.server">
-        <field name="name">Tomorrow's Orders</field>
-        <field name="model_id" ref="sale.model_sale_order" />
-        <field name="type">ir.actions.server</field>
-        <field name="state">code</field>
-        <field name="code">action = env['sale.order'].filter_tomorrow_action()</field>
+    <record id="today_orders_action_tree" model="ir.actions.act_window.view">
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_simple_orders_tree" />
+        <field name="act_window_id" ref="action_today_simple_orders" />
+    </record>
+
+    <record id="today_orders_action_form" model="ir.actions.act_window.view">
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_simple_orders_form" />
+        <field name="act_window_id" ref="action_today_simple_orders" />
+    </record>
+
+    <!-- action Tomorrow's Orders -->
+    <record id="action_tomorrow_simple_orders" model="ir.actions.act_window">
+         <field name="name">Tomorrow's Orders</field>
+         <field name="res_model">sale.order</field>
+         <field name="type">ir.actions.act_window</field>
+         <field name="domain">[('state', '=', 'sale'),
+             ('payment_state', '=', 'done'),
+             ('delivery_date', '=', (context_today()+datetime.timedelta(days=1)).strftime('%Y-%m-%d 00:00:00'))]
+         </field>
+         <field name="view_type">form</field>
+         <field name="view_mode">tree,form</field>
+         <field name="search_view_id" ref="view_simple_order_filter"/>
+    </record>
+
+    <record id="tomorrow_orders_action_tree" model="ir.actions.act_window.view">
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_simple_orders_tree" />
+        <field name="act_window_id" ref="action_tomorrow_simple_orders" />
+    </record>
+
+    <record id="tomorrow_orders_action_form" model="ir.actions.act_window.view">
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_simple_orders_form" />
+        <field name="act_window_id" ref="action_tomorrow_simple_orders" />
     </record>
 
     <!-- actions Closed Orders -->
@@ -167,17 +203,17 @@
               name="Today's Orders"
               action="action_today_simple_orders"
               parent="menu_sale_simple_orders"
-              sequence="3"/>
+              sequence="1"/>
 
     <menuitem id="menu_tomorrow_orders"
               name="Tomorrow's Orders"
               action="action_tomorrow_simple_orders"
               parent="menu_sale_simple_orders"
-              sequence="4"/>
+              sequence="2"/>
 
     <menuitem id="menu_closed_orders"
               name="Closed Orders"
               action="action_simple_orders"
               parent="menu_sale_simple_orders"
-              sequence="5"/>
+              sequence="3"/>
 </odoo>
