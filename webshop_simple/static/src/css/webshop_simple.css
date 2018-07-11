@@ -88,3 +88,35 @@
   overflow: hidden;
 }
 
+#product_row select {
+  width: 100%;
+  color: #9a929e;
+  display: block;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: normal;
+  padding: 5px 20px;
+  border:0px;
+  outline:0px;
+}
+
+#product_row option {
+  color: #9a929e;
+  display: block;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: normal;
+  padding: 5px 20px;
+}
+
+#product_row option:checked {
+  display: none;
+}
+
+#product_row .checkbox-group {
+  border: solid 3px #2e6da4;
+  margin: 5px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
