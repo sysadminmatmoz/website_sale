@@ -15,7 +15,6 @@
     'data': [
         'data/simple_categories.xml',
 
-        'views/product_template.xml',
         'views/sale_order.xml',
         'views/sale_order_line.xml',
         'views/templates.xml',

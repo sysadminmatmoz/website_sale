@@ -262,8 +262,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <t t-set="product_id" t-value="product.id"/>
-                                        <input type="hidden" class="product_id" name="product_id" t-att-value="product.id"/>
+                                        <!--t t-set="product_id" t-value="product.id"/-->
+                                        <t t-set="product_id" t-value="product.product_variant_id.id if len(product.product_variant_ids) == 1 else '0'"/>
+                                        <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
                                         <!-- Item Size -->
                                         <t t-if="product.categ_id.has_sizetag or product.categ_id.has_breadtype">
                                             <h4 itemprop="type">Type</h4>
@@ -282,7 +283,6 @@
                                         </t>
                                     </t>
                                     <!-- set the main product price -->
-                                    <!--t t-set="product_id" t-value="product.product_variant_id.id if len(product.product_variant_ids) == 1 else '0'"/-->
                                     <t t-if="(product_id == company.birthday_promotion_product_id.id) and request.env.user._is_portal() and request.env.user._has_birthday_gift()">
                                         <t t-call="webshop_simple.birthday_product_price"/>
                                         <input type="text" data-min="1" name="add_qty" value="1" hidden="1"/>

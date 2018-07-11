@@ -31,7 +31,8 @@ class SaleOrder(models.Model):
                     extra_name += u"\nSize: %s" % sl.sizetag_id.name
         if sides and len(sides) > 0:
             for side in sides:
-                side_product = self.env['product.template'].search([('id', '=', int(side))])
+                side_product_product = self.env['product.product'].search([('id', '=', int(side))])
+                side_product = self.env['product.template'].search([('id', '=', side_product_product.product_tmpl_id.id)])
                 if side_product:
                     extra_name += "\nSide: %s" % side_product.display_name
                 else:

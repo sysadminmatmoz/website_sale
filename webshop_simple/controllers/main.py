@@ -91,7 +91,6 @@ class WebsiteSale(http.Controller):
 
         # Get all products from this category that are base_sides
         domain = self._get_search_domain_simple(search, category, attrib_values)
-        domain += [('is_base_side', '=', True)]
         products = request.env['product.template'].search(domain)
         # set the default product to display
         product_count = len(products)
@@ -150,7 +149,6 @@ class WebsiteSale(http.Controller):
 
         # Get all products from this category that are base_sides
         domain = self._get_search_domain_simple(search, category, attrib_values)
-        domain += [('is_base_side', '=', True)]
         products = request.env['product.template'].search(domain)
         product_count = len(products)
 
@@ -217,7 +215,7 @@ class WebsiteSale(http.Controller):
             if request.env.user._is_portal():
                 if request.env.user._has_birthday_gift():
                     has_birthday_gift = True
-
+        _logger.debug("ABAKUS: Add to cart product_id={}".format(int(product_id)))
         request.website.sale_get_order(force_create=1)._cart_update(
             product_id=int(product_id),
             add_qty=add_qty,
