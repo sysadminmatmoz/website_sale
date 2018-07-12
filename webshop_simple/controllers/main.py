@@ -63,49 +63,102 @@ class WebsiteSale(http.Controller):
         return domain
 
     # ------------------------------------------------------
-    # Simple category grid page
+    # Simple Web Shop landing page
     # ------------------------------------------------------
-    @http.route([
-        '/shop/simple',
-        '/shop/simple/category/<model("product.public.category"):category>'
-    ], type='http', auth="public", website=True)
+    @http.route(['/shop/simple'], type='http', auth="public", website=True)
+    def shop_simple(self, category=None, search='', **kwargs):
+        simple_categories = ('sandwich', 'salad', 'meal', 'dessert')
+        # Build the /shop/simple endpoint
+        categories = request.env['product.public.category'].search([('name', 'in', simple_categories)])
+
+        values = {
+            'categories': categories,
+            'rows': PPR,
+            'post': kwargs,
+            'escape': lambda x: x.replace("'", r"\'")
+        }
+        return request.render("webshop_simple.shop_simple", values)
+
+    # ------------------------------------------------------
+    # Simple Web Shop category page
+    # ------------------------------------------------------
+    @http.route(['/shop/simple/category/<model("product.public.category"):category>'],
+                type='http', auth="public", website=True)
     def shop_simple_category(self, category=None, search='', **kwargs):
+        attrib_list = request.httprequest.args.getlist('attrib')
+        attrib_values = [map(int, v.split("-")) for v in attrib_list if v]
+        attrib_set = set([v[1] for v in attrib_values])
 
-        if not category:
-            simple_categories = ('sandwich', 'salad', 'meal', 'dessert')
-            # Build the /shop/simple endpoint
-            categories = request.env['product.public.category'].search([('name', 'in', simple_categories)])
+        # Get all products from this category that are base_sides
+        domain = self._get_search_domain_simple(search, category, attrib_values)
+        domain += [('active', '=', True)]
+        products = request.env['product.template'].search(domain)
+        # set the default product to display
+        product_count = len(products)
+        if product_count > 0:
+            product = products[0]
+        else:
+            return request.redirect('/shop/simple')
 
-            values = {
-                'categories': categories,
-                'rows': PPR,
-                'post': kwargs,
-                'escape': lambda x: x.replace("'", r"\'")
-            }
+        sides = []
+        for accessory in product.accessory_product_ids:
+            sides.extend(request.env['product.template'].search([('id', '=', accessory.product_tmpl_id.id)]))
+        sides_count = len(sides)
 
-            return request.render("webshop_simple.shop_simple", values)
+        pricelist_context = dict(request.env.context)
+        if not pricelist_context.get('pricelist'):
+            pricelist = request.website.get_current_pricelist()
+            pricelist_context['pricelist'] = pricelist.id
+        else:
+            pricelist = request.env['product.pricelist'].browse(pricelist_context['pricelist'])
+        from_currency = request.env.user.company_id.currency_id
+        to_currency = pricelist.currency_id
+        compute_currency = lambda price: from_currency.compute(price, to_currency)
+        company = request.env.user.sudo().company_id
 
+        values = {
+            'search': search,
+            'attrib_values': attrib_values,
+            'attrib_set': attrib_set,
+            'company': company,
+            'main_object': category,
+            'category': category,
+            'product_count': product_count,
+            'products': products,
+            'product': product,
+            'sides_count': sides_count,
+            'sides': sides,
+            'compute_currency': compute_currency,
+            'get_attribute_value_ids': self.get_attribute_value_ids,
+        }
+        return request.render("webshop_simple.category", values)
+
+    # ------------------------------------------------------
+    # Simple Web Shop category product page
+    # ------------------------------------------------------
+    @http.route(['/shop/simple/product/<model("product.template"):product>'], type='http', auth="public", website=True)
+    def shop_simple_category_product(self, product, category='', search='', **kwargs):
         # Build the /shop/simple/category/  endpoint
-        category_context = dict(request.env.context,
-                                active_id=category.id,
-                                partner=request.env.user.partner_id)
+        product_context = dict(request.env.context,
+                               active_id=product.id,
+                               partner=request.env.user.partner_id)
+        ProductCategory = request.env['product.public.category']
+        if category:
+            category = ProductCategory.browse(int(category)).exists()
 
         attrib_list = request.httprequest.args.getlist('attrib')
         attrib_values = [map(int, v.split("-")) for v in attrib_list if v]
         attrib_set = set([v[1] for v in attrib_values])
 
-        # Get all products from this category
+        # Get all products from this category that are base_sides
         domain = self._get_search_domain_simple(search, category, attrib_values)
         products = request.env['product.template'].search(domain)
         product_count = len(products)
 
         # Get all product sides if any
         sides = []
-        sides_categories = request.env['product.public.category'].search([('parent_id', '=', category.id)])
-        sides_categories_count = len(sides_categories)
-        for sides_category in sides_categories:
-            sides_domain = self._get_search_domain_simple(search, sides_category, attrib_values)
-            sides.extend(request.env['product.template'].search(sides_domain))
+        for accessory in product.accessory_product_ids:
+            sides.extend(request.env['product.template'].search([('id', '=', accessory.product_tmpl_id.id)]))
         sides_count = len(sides)
 
         keep = QueryURL('/shop/simple', category=category and category.id, search=search, attrib=attrib_list)
@@ -131,8 +184,8 @@ class WebsiteSale(http.Controller):
             'category': category,
             'product_count': product_count,
             'products': products,
+            'product': product,
             'sides_count': sides_count,
-            'sides_categories_count': sides_categories_count,
             'sides': sides,
             'compute_currency': compute_currency,
             'get_attribute_value_ids': self.get_attribute_value_ids,
@@ -167,7 +220,7 @@ class WebsiteSale(http.Controller):
             if request.env.user._is_portal():
                 if request.env.user._has_birthday_gift():
                     has_birthday_gift = True
-
+        _logger.debug("ABAKUS: Add to cart product_id={}".format(int(product_id)))
         request.website.sale_get_order(force_create=1)._cart_update(
             product_id=int(product_id),
             add_qty=add_qty,

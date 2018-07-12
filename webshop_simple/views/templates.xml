@@ -105,20 +105,20 @@
 
     <template id="sides" name="Sides">
         <div class="row" id="sides_row">
-            <p style="padding-left:10px;">Sides</p>
             <div>
                 <t t-foreach="sides" t-as="side_product">
+                    <t t-set="side_product_id" t-value="side_product.id"/>
                     <div class="checkbox-group">
-                        <input type="checkbox" t-attf-id="sides-{{product_id}}-{{side_product.id}}" t-attf-name="sides-{{product_id}}-{{side_product.id}}" t-att-value="side_product.id" t-attf-onclick="compute_sides({{product_id}});"/>
-                        <label t-attf-for="sides-{{product_id}}-{{side_product.id}}" ><t t-esc="side_product.name"/>  (<t t-esc="'{0:,.2f}'.format(side_product.lst_price)"/><![CDATA[&nbsp;&euro;]]>)</label>
-                        <input type="hidden" t-attf-id="side_price_{{product_id}}_{{side_product.id}}" t-att-value="side_product.lst_price" />
+                        <input type="checkbox" t-attf-id="sides-{{product_id}}-{{side_product_id}}" t-attf-name="sides-{{product_id}}-{{side_product_id}}" t-att-value="side_product.id" t-attf-onclick="compute_sides({{product_id}});"/>
+                        <label t-attf-for="sides-{{product_id}}-{{side_product_id}}" ><t t-esc="side_product.name"/>  (<t t-esc="'{0:,.2f}'.format(side_product.lst_price)"/><![CDATA[&nbsp;&euro;]]>)</label>
+                        <input type="hidden" t-attf-id="side_price_{{product_id}}_{{side_product_id}}" t-att-value="side_product.lst_price" />
                     </div>
                 </t>
             </div>
         </div>
     </template>
 
-    <!-- /shop/simple/category product page -->
+    <!-- /shop/simple/category page -->
     <template id="category" name="Category">
         <t t-call="website.layout">
             <t t-set="additional_title" t-value="category.name"/>
@@ -134,8 +134,11 @@
                                 <li>
                                     <a href="/shop/simple">Categories</a>
                                 </li>
+                                <li>
+                                    <a t-attf-href="/shop/simple/category/{{slug(category)}}"><span t-field="category.name"/></a>
+                                </li>
                                 <li class="active">
-                                    <span t-field="category.name"/>
+                                    <span t-field="product.name"/>
                                 </li>
                             </ol>
                         </div>
@@ -145,19 +148,17 @@
                             <t t-call="website_sale.pricelist_list"/>
                         </div>
                     </div>
-                    <!-- h1 itemprop="name" t-field="category.name">Category Name</h1 -->
-                    <t t-foreach="products" t-as="product">
-                        <t t-set="product_id"  t-value="product.product_variant_id.id if len(product.product_variant_ids) == 1 else '0'"/>
-                    <!-- category row -->
+                    <!-- ============== Base Product Selector ========================== -->
                     <div class="row">
-                            <!-- ===============  Main Product Detail ==================  -->
-                            <!-- images -->
-                            <div class="col-sm-7">
-                                <!-- Menu if the week badge -->
-                                <t t-if="product_id == company.week_menu_product_id.id">
-                                    <div style="position: absolute; width: 65px; height: 65px; border-radius: 50%; font-size: 12px; padding-top: 15px; color: #fff; line-height: 15px; text-align: center; background: #39d;">Menu Of The Week</div>
-                                </t>
-                                <div class="oe_product_image">
+                        <!-- images for currently selected product -->
+                        <div class="col-sm-7">
+                            <!-- Menu if the week badge -->
+                            <t t-if="product_id == company.week_menu_product_id.id">
+                                <div style="position: absolute; width: 65px; height: 65px; border-radius: 50%; font-size: 12px; padding-top: 15px; color: #fff; line-height: 15px; text-align: center; background: #39d;">
+                                    Menu Of The Week
+                                </div>
+                            </t>
+                            <div class="oe_product_image">
                                 <span itemprop="image"
                                       t-attf-content="{{request.httprequest.url_root}}web/image/product.template/{{product.id}}/image"
                                       t-field="product.image"
@@ -223,85 +224,94 @@
                                         </ol>
                                     </div>
                                 </t>
-                                </div>
                             </div>
-                            <!-- product infos -->
-                            <div class="col-sm-5 col-lg-4 col-lg-offset-1" t-attf-id="product_details_{{product_id}}">
-                                <h1 itemprop="name" t-field="product.name">Product Name</h1>
-                                <span itemprop="url" style="display:none;"
-                                      t-esc="'%sshop/product/%s' % (request.httprequest.url_root, slug(product))"/>
-                                <t t-set="attribute_value_ids" t-value="get_attribute_value_ids(product)"/>
-                                <form action="/shop/cart/update" class="js_add_cart_variants"
-                                      t-att-data-attribute_value_ids="attribute_value_ids"
-                                      method="POST">
-                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                                    <div class="js_product" t-if="product.product_variant_ids">
-                                        <t t-placeholder="select">
-                                            <input type="hidden" class="product_id" name="product_id"
-                                                   t-att-value="product.product_variant_id.id if len(product.product_variant_ids) == 1 else '0'"/>
-                                            <!-- Item Size -->
-                                            <t t-if="product.categ_id.has_sizetag">
-                                                <t t-call="webshop_simple.sizetag"/>
-                                            </t>
-                                            <!-- Sandwich Bread -->
-                                            <t t-if="product.categ_id.has_breadtype">
-                                                <t t-call="webshop_simple.breadtype"/>
-                                            </t>
-                                            <!-- Sides products -->
-                                            <t t-if="sides_count>0">
-                                                <t t-call="webshop_simple.sides"/>
-                                            </t>
-                                        </t>
-                                        <!-- set the main product price -->
-                                        <t t-if="(product_id == company.birthday_promotion_product_id.id) and request.env.user._is_portal() and request.env.user._has_birthday_gift()">
-                                            <t t-call="webshop_simple.birthday_product_price"/>
-                                            <input type="text" data-min="1" name="add_qty" value="1" hidden="1"/>
-                                        </t>
-                                        <t t-else="1">
-                                            <t t-call="webshop_simple.product_price"/>
-                                            <!-- quantity increment widget -->
-                                            <div class="css_quantity input-group oe_website_spinner"
-                                                 contenteditable="false">
-                                                <a t-attf-href="#" class="mb8 input-group-addon js_add_cart_json">
-                                                    <i class="fa fa-minus"></i>
-                                                </a>
-                                                <input type="text" class="form-control quantity" data-min="1"
-                                                       name="add_qty" value="1"/>
-                                                <a t-attf-href="#"
-                                                   class="mb8 input-group-addon float_left js_add_cart_json">
-                                                    <i class="fa fa-plus"></i>
-                                                </a>
-                                            </div>
-                                        </t>
+                        </div>
+                        <!-- Products details -->
+                        <div class="col-sm-5 col-lg-4 col-lg-offset-1">
+<script type="text/javascript">
+    function loadproduct(){
+        var f = document.getElementById('product_selector');
+        var s = document.getElementById('product_id_select');
 
-                                        <!-- add to cart button -->
-                                        <a id="add_to_cart"
-                                           class="btn btn-primary btn-lg mt8 js_check_product a-submit"
-                                           href="#">Add to Cart
-                                        </a>
-                                    </div>
-                                </form>
-                                <!-- additional info regarding sales and availability -->
-                                <hr t-if="product.availability != 'empty'"/>
-                                <div t-if="product.availability == 'in_stock'"
-                                     class="alert alert-success">
-                                    <span class="fa fa-check"/>
-                                    <span>In Stock</span>
+        f.setAttribute("action",s.options[s.selectedIndex].value) ;
+        f.submit();
+    };
+</script>
+                            <form id="product_selector" action="/shop/cart/update" class="js_add_cart_variants" method="POST">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <input type="hidden" name="category" t-att-value="category.id"/>
+                                <div class="js_product" >
+                                    <t t-placeholder="select">
+                                        <!-- Base Product Selection -->
+                                        <h4 itemprop="name">Base</h4>
+                                        <div class="row" id="product_row">
+                                            <div>
+                                                <div class="checkbox-group">
+                                                    <select id="product_id_select" onchange="loadproduct()">
+                                                        <t t-foreach="products" t-as="s_product">
+                                                            <t t-set="s_product_id"
+                                                               t-value="s_product.product_variant_id.id if len(s_product.product_variant_ids) == 1 else '0'"/>
+                                                            <option t-attf-value="/shop/simple/product/{{slug(s_product)}}"
+                                                                    t-att-selected="(s_product.id == product.id)">
+                                                                <t t-esc="s_product.name"/>
+                                                                (<span t-esc="s_product.website_price"
+                                                                       t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
+                                                                       t-attf-id="base_price_{{s_product_id}}"/>)
+                                                            </option>
+                                                        </t>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <t t-set="product_id" t-value="product.product_variant_id.id if len(product.product_variant_ids) == 1 else '0'"/>
+                                        <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                                        <!-- Item Size -->
+                                        <t t-if="product.categ_id.has_sizetag or product.categ_id.has_breadtype">
+                                            <h4 itemprop="type">Type</h4>
+                                        </t>
+                                        <t t-if="product.categ_id.has_sizetag">
+                                            <t t-call="webshop_simple.sizetag"/>
+                                        </t>
+                                        <!-- Sandwich Bread -->
+                                        <t t-if="product.categ_id.has_breadtype">
+                                            <t t-call="webshop_simple.breadtype"/>
+                                        </t>
+                                        <!-- Sides products -->
+                                        <t t-if="sides_count>0">
+                                            <h4 itemprop="sides">Sides</h4>
+                                            <t t-call="webshop_simple.sides"/>
+                                        </t>
+                                    </t>
+                                    <!-- set the main product price -->
+                                    <t t-if="(product_id == company.birthday_promotion_product_id.id) and request.env.user._is_portal() and request.env.user._has_birthday_gift()">
+                                        <t t-call="webshop_simple.birthday_product_price"/>
+                                        <input type="text" data-min="1" name="add_qty" value="1" hidden="1"/>
+                                    </t>
+                                    <t t-else="1">
+                                        <t t-call="webshop_simple.product_price"/>
+                                        <!-- quantity increment widget -->
+                                        <div class="css_quantity input-group oe_website_spinner"
+                                             contenteditable="false">
+                                            <a t-attf-href="#" class="mb8 input-group-addon js_add_cart_json">
+                                                <i class="fa fa-minus"></i>
+                                            </a>
+                                            <input type="text" class="form-control quantity" data-min="1"
+                                                   name="add_qty" value="1"/>
+                                            <a t-attf-href="#"
+                                               class="mb8 input-group-addon float_left js_add_cart_json">
+                                                <i class="fa fa-plus"></i>
+                                            </a>
+                                        </div>
+                                    </t>
+                                    <!-- add to cart button -->
+                                    <a id="add_to_cart"
+                                       class="btn btn-primary btn-lg mt8 js_check_product a-submit"
+                                       href="#">Add to Cart
+                                    </a>
                                 </div>
-                                <div t-if="product.availability == 'warning'"
-                                     class="alert alert-warning">
-                                    <span class="fa fa-warning"/>
-                                    <span t-field="product.availability_warning"/>
-                                </div>
-                                <hr t-if="product.description_sale"/>
-                                <div>
-                                    <p t-field="product.description_sale" class="text-muted"/>
-                                </div>
-                                <hr/>
-                            </div>
-                            <!-- ============================================================= -->
+                            </form>
+                        </div>
                     </div>
-                    </t>
                 </section>
             </div>
         </t>
@@ -480,7 +490,13 @@ odoo.define('website_sale.alias', ['web.ajax'], function (require) {
                 </div>
             </td>
         </xpath>
+    </template>
 
+    <!-- hide associated product widget -->
+    <template id="hide_suggested_products_list" inherit_id="website_sale.suggested_products_list">
+        <xpath expr="//table[@t-if='suggested_products']" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
     </template>
 
     <!-- add eater alias label to /shop/payment line -->

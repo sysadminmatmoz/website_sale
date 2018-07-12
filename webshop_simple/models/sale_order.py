@@ -86,8 +86,11 @@ class SaleOrder(models.Model):
             values['sides'] = [(6, 0, sides)]
             values['name'] = self._get_line_description(self.id, product_id, attributes=attributes)
             # Extra infos
+            _logger.debug("ABAKUS: BEF breadtype:{} sizetag:{} sides={}".format(breadtype, sizetag, sides))
             values['name'] += self._get_extra_line_description(self.id, product_id,
-                                                               breadtype=breadtype, sizetag=sizetag, sides=sides)
+                                                               breadtype=breadtype,
+                                                               sizetag=sizetag,
+                                                               sides=sides)
             if 'has_birthday_gift' in kwargs and kwargs['has_birthday_gift']:
                 # This is a birthday gift so we give it for free by setting discount to 100 %
                 values['discount'] = 100

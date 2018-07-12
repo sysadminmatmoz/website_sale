@@ -2,6 +2,7 @@
 // size tage event handler
 
 function compute_sizetag (product_id){
+    console.log("Computing Sizetag for product_id=" + product_id)
     if(product_id == undefined){
         return;
     }
