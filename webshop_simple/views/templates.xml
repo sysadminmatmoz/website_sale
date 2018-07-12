@@ -118,7 +118,95 @@
         </div>
     </template>
 
-    <!-- /shop/simple/category page -->
+    <!-- /shop/simple/category/<> page -->
+    <template id="category_image" name="Image for Category">
+        <!-- images for currently selected category -->
+        <div class="col-sm-7">
+            <div class="oe_product_image">
+                <span itemprop="image"
+                      t-attf-content="{{request.httprequest.url_root}}web/image/product.public.category/{{category.id}}/image"
+                      t-field="category.image"
+                      t-options="{'widget': 'image', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image'}"
+                      groups="!website_sale.group_website_multi_image"/>
+            </div>
+        </div>
+    </template>
+
+    <template id="category" name="Category">
+        <t t-call="website.layout">
+            <t t-set="additional_title" t-value="category.name"/>
+            <link rel="stylesheet" type="text/css" href="/webshop_simple/static/src/css/webshop_simple.css" />
+            <div itemscope="itemscope" itemtype="http://schema.org/PhysicalActivityCategory" id="wrap" class="js_sale">
+                <section t-attf-class="container mt8 oe_website_sale" id="category_detail">
+                    <!-- action row -->
+                    <div class="row">
+                        <!-- breadcrumbs -->
+                        <div class="col-sm-4">
+                            <ol class="breadcrumb">
+                                <li>
+                                    <a href="/shop/simple">Categories</a>
+                                </li>
+                                <li class="active">
+                                    <span t-field="category.name"/>
+                                </li>
+                            </ol>
+                        </div>
+                        <!-- search box is removed -->
+                        <!-- currency -->
+                        <div class="col-sm-2 text-right">
+                            <t t-call="website_sale.pricelist_list"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <t t-call="webshop_simple.category_image" />
+                        <!-- Products details -->
+                        <div class="col-sm-5 col-lg-4 col-lg-offset-1">
+<script type="text/javascript">
+    function loadproduct(){
+        var f = document.getElementById('product_selector');
+        var s = document.getElementById('product_id_select');
+
+        f.setAttribute("action",s.options[s.selectedIndex].value) ;
+        f.submit();
+    };
+</script>
+                            <form id="product_selector" action="/shop/cart/update" class="js_add_cart_variants" method="POST">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <input type="hidden" name="category" t-att-value="category.id"/>
+                                <div class="js_product" >
+                                    <t t-placeholder="select">
+                                        <!-- Base Product Selection -->
+                                        <h4 itemprop="name">Base</h4>
+                                        <div class="row" id="product_row">
+                                            <div>
+                                                <div class="checkbox-group">
+                                                    <select id="product_id_select" onchange="loadproduct()">
+                                                        <option value="" selected="True">Select an Item</option>
+                                                        <t t-foreach="products" t-as="s_product">
+                                                            <t t-set="s_product_id"
+                                                               t-value="s_product.product_variant_id.id if len(s_product.product_variant_ids) == 1 else '0'"/>
+                                                            <option t-attf-value="/shop/simple/product/{{slug(s_product)}}">
+                                                                <t t-esc="s_product.name"/>
+                                                                (<span t-esc="s_product.website_price"
+                                                                       t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
+                                                                       t-attf-id="base_price_{{s_product_id}}"/>)
+                                                            </option>
+                                                        </t>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+
+    <!-- /shop/simple/category/<>/product/<> page -->
     <template id="category_product_image" name="Image for Category Product">
         <!-- images for currently selected product -->
         <div class="col-sm-7">
@@ -198,13 +286,13 @@
         </div>
     </template>
 
-    <template id="category" name="Category">
+    <template id="category_product" name="Category Product">
         <t t-call="website.layout">
-            <t t-set="additional_title" t-value="category.name"/>
+            <t t-set="additional_title" t-value="product and product.name or category.name"/>
             <script type="text/javascript" src="/webshop_simple/static/src/js/webshop_simple.js"/>
             <link rel="stylesheet" type="text/css" href="/webshop_simple/static/src/css/webshop_simple.css" />
             <div itemscope="itemscope" itemtype="http://schema.org/Product" id="wrap" class="js_sale">
-                <section t-attf-class="container mt8 oe_website_sale" id="category_detail">
+                <section t-attf-class="container mt8 oe_website_sale" id="product_detail">
                     <!-- action row -->
                     <div class="row">
                         <!-- breadcrumbs -->
@@ -213,12 +301,19 @@
                                 <li>
                                     <a href="/shop/simple">Categories</a>
                                 </li>
+                                <t t-if="category.has_base_products">
                                 <li>
                                     <a t-attf-href="/shop/simple/category/{{slug(category)}}"><span t-field="category.name"/></a>
                                 </li>
                                 <li class="active">
                                     <span t-field="product.name"/>
                                 </li>
+                                </t>
+                                <t t-else="">
+                                    <li class="active">
+                                        <span t-field="category.name"/>
+                                    </li>
+                                </t>
                             </ol>
                         </div>
                         <!-- search box is removed -->
