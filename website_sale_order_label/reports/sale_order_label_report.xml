@@ -33,36 +33,159 @@
                     <t t-foreach="docs" t-as="o">
                         <t t-foreach="o.order_line" t-as="line">
                             <div class="page" t-foreach="int(round(line.product_uom_qty))" t-as="unit">
+                                <style type="text/css">
+                                    .label_table td {
+                                        vertical-align: top;
+                                    }
+
+                                    .label_logo {
+                                        margin-top: 2px;
+                                        width: 100%;
+                                        text-align: center;
+                                        max-height: 135px;
+                                    }
+
+                                    .title_h1 {
+                                        font-size: 12pt;
+                                        display: block;
+                                        text-align: center;
+                                        margin-top: 25px;
+                                    }
+
+                                    .title_h2 {
+                                        font-size: 11pt;
+                                        display: block;
+                                        text-align: center;
+                                    }
+
+                                    .title_h3 {
+                                        font-size: 13pt;
+                                        display: block;
+                                        text-align: center;
+                                        text-transform: uppercase;
+                                        font-weight: bolder;
+                                        border: 1px solid black;
+                                        width: 70%;
+                                        margin: 15px auto 0 auto;
+                                        border-radius: 50px;
+                                        padding: 2px;
+                                        background-color: black;
+                                        color: white;
+                                    }
+
+                                    .size_bread_panel {
+                                        width: 25%;
+                                        display: inline-block;
+                                        margin: 10px 10px 0 10px;
+                                        vertical-align: top;
+                                        background-color: gray;
+                                        padding: 5px;
+                                        border-radius: 10px;
+                                        text-align: center;
+                                    }
+
+                                    .sizetag {
+                                        font-size: 25pt;
+                                        font-size: 25pt;
+                                        font-weight: bold;
+                                    }
+
+                                    .breadtype {
+                                        font-size: 13pt;
+                                        text-transform: uppercase;
+                                    }
+
+                                    .all_info_panel {
+                                        width: 60%;
+                                        display: inline-block;
+                                    }
+
+                                    .title_h4 {
+                                        font-size: 15pt;
+                                        display: inline;
+                                        font-weight: bolder;
+                                    }
+
+                                    .sides_ul {
+                                        margin-left: 5px;
+                                        list-style-type: none;
+                                    }
+
+                                    .sides_ul li {
+                                        margin-top: -2px;
+                                        font-size: 14pt;
+                                        text-decoration: none;
+                                    }
+
+                                    .price_buble {
+                                        background-color: black;
+                                        width: 100px;
+                                        height: 100px;
+                                        border-radius: 50px;
+                                        text-align: center;
+                                    }
+
+                                    .price_buble_price {
+                                        color: white;
+                                        padding-top: 31px;
+                                        font-size: 22pt;
+                                    }
+
+                                    .paid_bubble {
+                                        color: white;
+                                        font-size: 9pt;
+                                        text-align: center;
+                                    }
+                                    
+                                </style>
                                 <div class="oe_structure"/>
                                 <div class="row">
-                                    <table width="100%" height="100%">
+                                    <table width="100%" height="100%" class="label_table">
                                         <tr>
                                             <td width="33%">
-                                                <img t-if="o.company_id.label_report_logo" t-att-src="'data:image/png;base64,%s' % o.company_id.label_report_logo" style="margin-top: 2px; height: 50px;"/>
+                                                <img t-if="o.company_id.label_report_logo" t-att-src="'data:image/png;base64,%s' % o.company_id.label_report_logo" class="label_logo" />
                                             </td>
                                             <td colspan="2" width="66%">
-                                                <h1>www.CafetSteCroix.be</h1>
-                                                <h2><span t-esc="time.strftime('%d.%m.%Y',time.strptime(o.date_order,'%Y-%m-%d %H:%M:%S'))"/> | <span t-esc="o.name"/></h2>
+                                                <div class="main_info_panel">
+                                                    <span class="title_h1" t-esc="o.company_id.website[7:]" />
+                                                    <span class="title_h2">
+                                                        <span t-esc="time.strftime('%d/%m/%Y',time.strptime(o.date_order,'%Y-%m-%d %H:%M:%S'))"/> | <i><span t-esc="o.name"/></i>
+                                                    </span>
+                                                    <span class="title_h3" t-esc="line.alias"/>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="3">
-                                                <h2><span t-esc="o.partner_id.name"/></h2>
+                                            <td width="33%" colspan="2">
+                                                <div class="size_bread_panel">
+                                                    <span class="sizetag" t-esc="line.sizetag.sizetag_id.name[0] if line.sizetag else ''" />
+                                                    <br />
+                                                    <span class="breadtype" t-esc="line.breadtype.breadtype_id.name if line.breadtype else ''" />
+                                                </div>
+                                                <div class="all_info_panel">
+                                                    <span class="title_h4" t-esc="line.product_id.name" />
+                                                    <ul class="sides_ul">
+                                                        <t t-foreach="line.sides" t-as="side">
+                                                            <li><span t-esc="side.name" /></li>
+                                                        </t>
+                                                    </ul>
+                                                </div>
                                             </td>
-                                        </tr>
-                                        <tr>
                                             <td width="33%">
-                                                <h4>PRODUCT CAT</h4>
-                                            </td>
-                                            <td width="33%">
-                                                SIZE
-                                                <br />
-                                                BREAD TYPE
-                                            </td>
-                                            <td width="33%">
-                                                PRICE
-                                                <br />
-                                                Paid/Not paid
+                                                <div class="price_buble">
+                                                    <p class="price_buble_price">
+                                                        <span t-esc="line.price_total" />
+                                                        <span t-esc="line.currency_id.symbol" />
+                                                    </p>
+                                                    <p class="paid_bubble">
+                                                        <t t-if="o.payment_tx_id">
+                                                            paid
+                                                        </t>
+                                                        <t t-if="not o.payment_tx_id">
+                                                            not paid
+                                                        </t>
+                                                    </p>
+                                                </div>
                                             </td>
                                         </tr>
                                     </table>
