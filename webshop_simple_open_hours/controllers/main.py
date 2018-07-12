@@ -20,12 +20,7 @@ class WebsiteSaleDerived(main.WebsiteSale):
         now = datetime.now(pytz.timezone(company.openhours_tz))
         # check if we are within open hours
         position = company.is_between_open_hours(now)
-        if position == 2:
-            kw['delivery_date'] = now + timedelta(days=1)
-            # redirect to original cart update
-            return super(WebsiteSaleDerived, self).cart_update(product_id, add_qty=add_qty, set_qty=set_qty, **kw)
-        elif position == 1:
-            kw['delivery_date'] = now
+        if position > 0:
             # redirect to original cart update
             return super(WebsiteSaleDerived, self).cart_update(product_id, add_qty=add_qty, set_qty=set_qty, **kw)
         else:
