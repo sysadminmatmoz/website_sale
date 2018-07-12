@@ -1,0 +1,33 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* webshop_simple_my_account
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e-20180529\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-12 15:15+0000\n"
+"PO-Revision-Date: 2018-07-12 17:17+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: fr_BE\n"
+"X-Generator: Poedit 2.0.7\n"
+
+#. module: webshop_simple_my_account
+#: model:ir.ui.view,arch_db:webshop_simple_my_account.portal_my_orders_smart_flags
+msgid "<span class=\"label label-danger\"><i class=\"fa fa-fw fa-warning\"/> Problem</span>"
+msgstr "<span class=\"label label-danger\"><i class=\"fa fa-fw fa-warning\"/> Problème</span>"
+
+#. module: webshop_simple_my_account
+#: model:ir.ui.view,arch_db:webshop_simple_my_account.portal_my_orders_smart_flags
+msgid "<span class=\"label label-default\"><i class=\"fa fa-fw fa-check\"/> Done</span>"
+msgstr "<span class=\"label label-default\"><i class=\"fa fa-fw fa-check\"/> Terminé</span>"
+
+#. module: webshop_simple_my_account
+#: model:ir.ui.view,arch_db:webshop_simple_my_account.portal_my_orders_smart_flags
+msgid "<span class=\"label label-info\"><i class=\"fa fa-fw fa-clock-o\"/> In preparation</span>"
+msgstr "<span class=\"label label-info\"><i class=\"fa fa-fw fa-clock-o\"/> En cours de préparation</span>"
