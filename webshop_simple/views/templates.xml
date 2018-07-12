@@ -343,13 +343,13 @@
 
 /* Create 3 equal columns that sits next to each other */
 .sandwich_column {
-  max-width: 33%;
+  width: 33%;
   padding: 0 4px;
 }
 
 .dessert_column {
   flex: 100%;
-  max-width: 100%;
+  max-width: 99%;
   padding: 0 4px;
 }
 
