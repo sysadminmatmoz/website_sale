@@ -15,6 +15,7 @@
     ],
     "data": [
         'views/res_partner.xml',
+        'views/portal_template.xml',
     ],
     'demo': [
     ],
