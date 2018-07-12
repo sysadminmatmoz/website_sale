@@ -118,13 +118,25 @@
         </div>
     </template>
 
-    <!-- /shop/simple/category page -->
+    <!-- /shop/simple/category/<> page -->
+    <template id="category_image" name="Image for Category">
+        <!-- images for currently selected category -->
+        <div class="col-sm-7">
+            <div class="oe_product_image">
+                <span itemprop="image"
+                      t-attf-content="{{request.httprequest.url_root}}web/image/product.public.category/{{category.id}}/image"
+                      t-field="category.image"
+                      t-options="{'widget': 'image', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image'}"
+                      groups="!website_sale.group_website_multi_image"/>
+            </div>
+        </div>
+    </template>
+
     <template id="category" name="Category">
         <t t-call="website.layout">
             <t t-set="additional_title" t-value="category.name"/>
-            <script type="text/javascript" src="/webshop_simple/static/src/js/webshop_simple.js"/>
             <link rel="stylesheet" type="text/css" href="/webshop_simple/static/src/css/webshop_simple.css" />
-            <div itemscope="itemscope" itemtype="http://schema.org/Product" id="wrap" class="js_sale">
+            <div itemscope="itemscope" itemtype="http://schema.org/PhysicalActivityCategory" id="wrap" class="js_sale">
                 <section t-attf-class="container mt8 oe_website_sale" id="category_detail">
                     <!-- action row -->
                     <div class="row">
@@ -134,11 +146,8 @@
                                 <li>
                                     <a href="/shop/simple">Categories</a>
                                 </li>
-                                <li>
-                                    <a t-attf-href="/shop/simple/category/{{slug(category)}}"><span t-field="category.name"/></a>
-                                </li>
                                 <li class="active">
-                                    <span t-field="product.name"/>
+                                    <span t-field="category.name"/>
                                 </li>
                             </ol>
                         </div>
@@ -148,84 +157,175 @@
                             <t t-call="website_sale.pricelist_list"/>
                         </div>
                     </div>
-                    <!-- ============== Base Product Selector ========================== -->
                     <div class="row">
-                        <!-- images for currently selected product -->
-                        <div class="col-sm-7">
-                            <!-- Menu if the week badge -->
-                            <t t-if="product_id == company.week_menu_product_id.id">
-                                <div style="position: absolute; width: 65px; height: 65px; border-radius: 50%; font-size: 12px; padding-top: 15px; color: #fff; line-height: 15px; text-align: center; background: #39d;">
-                                    Menu Of The Week
-                                </div>
-                            </t>
-                            <div class="oe_product_image">
-                                <span itemprop="image"
-                                      t-attf-content="{{request.httprequest.url_root}}web/image/product.template/{{product.id}}/image"
-                                      t-field="product.image"
-                                      t-options="{'widget': 'image', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image'}"
-                                      groups="!website_sale.group_website_multi_image"/>
-                                <t groups="website_sale.group_website_multi_image">
-                                    <t t-set="variant_img"
-                                       t-value="product.product_variant_id.image_variant"/>
-                                    <t t-set="image_ids" t-value="product.product_image_ids"/>
-                                    <div id="o-carousel-product" class="carousel slide" data-ride="carousel"
-                                         data-interval="0">
-                                        <div class="carousel-outer">
-                                            <div class="carousel-inner">
-                                                <div t-if="variant_img" class="item active" itemprop="image"
-                                                     t-field="product.product_variant_id.image"
-                                                     t-options="{'widget': 'image', 'class': 'product_detail_img js_variant_img', 'alt-field': 'name', 'zoom': 'image', 'unique': product['__last_update'] + (product.product_variant_id['__last_update'] or '')}"/>
-                                                <div t-attf-class="item#{'' if variant_img else ' active'}"
-                                                     itemprop="image" t-field="product.image"
-                                                     t-options="{'widget': 'image', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image', 'unique': product['__last_update']}"/>
-                                                <t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
-                                                    <div class="item" t-field="pimg.image"
-                                                         t-options='{"widget": "image", "class": "product_detail_img", "alt-field": "name", "zoom": "image" }'/>
-                                                </t>
+                        <t t-call="webshop_simple.category_image" />
+                        <!-- Products details -->
+                        <div class="col-sm-5 col-lg-4 col-lg-offset-1">
+<script type="text/javascript">
+    function loadproduct(){
+        var f = document.getElementById('product_selector');
+        var s = document.getElementById('product_id_select');
+
+        f.setAttribute("action",s.options[s.selectedIndex].value) ;
+        f.submit();
+    };
+</script>
+                            <form id="product_selector" action="/shop/cart/update" class="js_add_cart_variants" method="POST">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <input type="hidden" name="category" t-att-value="category.id"/>
+                                <div class="js_product" >
+                                    <t t-placeholder="select">
+                                        <!-- Base Product Selection -->
+                                        <h4 itemprop="name">Base</h4>
+                                        <div class="row" id="product_row">
+                                            <div>
+                                                <div class="checkbox-group">
+                                                    <select id="product_id_select" onchange="loadproduct()">
+                                                        <option value="" selected="True">Select an Item</option>
+                                                        <t t-foreach="products" t-as="s_product">
+                                                            <t t-set="s_product_id"
+                                                               t-value="s_product.product_variant_id.id if len(s_product.product_variant_ids) == 1 else '0'"/>
+                                                            <option t-attf-value="/shop/simple/product/{{slug(s_product)}}">
+                                                                <t t-esc="s_product.name"/>
+                                                                (<span t-esc="s_product.website_price"
+                                                                       t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
+                                                                       t-attf-id="base_price_{{s_product_id}}"/>)
+                                                            </option>
+                                                        </t>
+                                                    </select>
+                                                </div>
                                             </div>
-
-                                            <t t-if="len(image_ids) or variant_img">
-                                                <a class="carousel-control left" href="#o-carousel-product"
-                                                   role="button" data-slide="prev">
-                                                    <span class="fa fa-chevron-left" aria-hidden="true"/>
-                                                    <span class="sr-only">Previous</span>
-                                                </a>
-                                                <a class="carousel-control right" href="#o-carousel-product"
-                                                   role="button" data-slide="next">
-                                                    <span class="fa fa-chevron-right" aria-hidden="true"/>
-                                                    <span class="sr-only">Next</span>
-                                                </a>
-                                            </t>
                                         </div>
+                                    </t>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
 
-                                        <ol class="carousel-indicators"
-                                            t-if="len(image_ids) or variant_img">
-                                            <li t-if="variant_img" data-target="#o-carousel-product"
-                                                data-slide-to="0" class="active">
-                                                <img class="img img-responsive js_variant_img_small"
-                                                     t-attf-src="/website/image/product.product/{{product.product_variant_id.id}}/image/90x90"
-                                                     t-att-alt="product.name"/>
-                                            </li>
-                                            <li data-target="#o-carousel-product"
-                                                t-att-data-slide-to="1 if variant_img else 0"
-                                                t-att-class="'' if variant_img else 'active'">
-                                                <img class="img img-responsive"
-                                                     t-attf-src="/website/image/product.template/{{product.id}}/image/90x90"
-                                                     t-att-alt="product.name"/>
-                                            </li>
-                                            <t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
-                                                <li data-target="#o-carousel-product"
-                                                    t-att-data-slide-to="pimg_index + (variant_img and 2 or 1)">
-                                                    <img class="img img-responsive"
-                                                         t-attf-src="/website/image/product.image/{{pimg.id}}/image/90x90"
-                                                         t-att-alt="pimg.name"/>
-                                                </li>
-                                            </t>
-                                        </ol>
-                                    </div>
+    <!-- /shop/simple/category/<>/product/<> page -->
+    <template id="category_product_image" name="Image for Category Product">
+        <!-- images for currently selected product -->
+        <div class="col-sm-7">
+            <!-- Menu if the week badge -->
+            <t t-if="product_id == company.week_menu_product_id.id">
+                <div style="position: absolute; width: 65px; height: 65px; border-radius: 50%; font-size: 12px; padding-top: 15px; color: #fff; line-height: 15px; text-align: center; background: #39d;">
+                    Menu Of The Week
+                </div>
+            </t>
+            <div class="oe_product_image">
+                <span itemprop="image"
+                      t-attf-content="{{request.httprequest.url_root}}web/image/product.template/{{product.id}}/image"
+                      t-field="product.image"
+                      t-options="{'widget': 'image', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image'}"
+                      groups="!website_sale.group_website_multi_image"/>
+                <t groups="website_sale.group_website_multi_image">
+                    <t t-set="variant_img"
+                       t-value="product.product_variant_id.image_variant"/>
+                    <t t-set="image_ids" t-value="product.product_image_ids"/>
+                    <div id="o-carousel-product" class="carousel slide" data-ride="carousel"
+                         data-interval="0">
+                        <div class="carousel-outer">
+                            <div class="carousel-inner">
+                                <div t-if="variant_img" class="item active" itemprop="image"
+                                     t-field="product.product_variant_id.image"
+                                     t-options="{'widget': 'image', 'class': 'product_detail_img js_variant_img', 'alt-field': 'name', 'zoom': 'image', 'unique': product['__last_update'] + (product.product_variant_id['__last_update'] or '')}"/>
+                                <div t-attf-class="item#{'' if variant_img else ' active'}"
+                                     itemprop="image" t-field="product.image"
+                                     t-options="{'widget': 'image', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image', 'unique': product['__last_update']}"/>
+                                <t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
+                                    <div class="item" t-field="pimg.image"
+                                         t-options='{"widget": "image", "class": "product_detail_img", "alt-field": "name", "zoom": "image" }'/>
                                 </t>
                             </div>
+
+                            <t t-if="len(image_ids) or variant_img">
+                                <a class="carousel-control left" href="#o-carousel-product"
+                                   role="button" data-slide="prev">
+                                    <span class="fa fa-chevron-left" aria-hidden="true"/>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control right" href="#o-carousel-product"
+                                   role="button" data-slide="next">
+                                    <span class="fa fa-chevron-right" aria-hidden="true"/>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </t>
                         </div>
+
+                        <ol class="carousel-indicators"
+                            t-if="len(image_ids) or variant_img">
+                            <li t-if="variant_img" data-target="#o-carousel-product"
+                                data-slide-to="0" class="active">
+                                <img class="img img-responsive js_variant_img_small"
+                                     t-attf-src="/website/image/product.product/{{product.product_variant_id.id}}/image/90x90"
+                                     t-att-alt="product.name"/>
+                            </li>
+                            <li data-target="#o-carousel-product"
+                                t-att-data-slide-to="1 if variant_img else 0"
+                                t-att-class="'' if variant_img else 'active'">
+                                <img class="img img-responsive"
+                                     t-attf-src="/website/image/product.template/{{product.id}}/image/90x90"
+                                     t-att-alt="product.name"/>
+                            </li>
+                            <t t-if="len(image_ids)" t-foreach="image_ids" t-as="pimg">
+                                <li data-target="#o-carousel-product"
+                                    t-att-data-slide-to="pimg_index + (variant_img and 2 or 1)">
+                                    <img class="img img-responsive"
+                                         t-attf-src="/website/image/product.image/{{pimg.id}}/image/90x90"
+                                         t-att-alt="pimg.name"/>
+                                </li>
+                            </t>
+                        </ol>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </template>
+
+    <template id="category_product" name="Category Product">
+        <t t-call="website.layout">
+            <t t-set="additional_title" t-value="product and product.name or category.name"/>
+            <script type="text/javascript" src="/webshop_simple/static/src/js/webshop_simple.js"/>
+            <link rel="stylesheet" type="text/css" href="/webshop_simple/static/src/css/webshop_simple.css" />
+            <div itemscope="itemscope" itemtype="http://schema.org/Product" id="wrap" class="js_sale">
+                <section t-attf-class="container mt8 oe_website_sale" id="product_detail">
+                    <!-- action row -->
+                    <div class="row">
+                        <!-- breadcrumbs -->
+                        <div class="col-sm-4">
+                            <ol class="breadcrumb">
+                                <li>
+                                    <a href="/shop/simple">Categories</a>
+                                </li>
+                                <t t-if="category.has_base_products">
+                                <li>
+                                    <a t-attf-href="/shop/simple/category/{{slug(category)}}"><span t-field="category.name"/></a>
+                                </li>
+                                <li class="active">
+                                    <span t-field="product.name"/>
+                                </li>
+                                </t>
+                                <t t-else="">
+                                    <li class="active">
+                                        <span t-field="category.name"/>
+                                    </li>
+                                </t>
+                            </ol>
+                        </div>
+                        <!-- search box is removed -->
+                        <!-- currency -->
+                        <div class="col-sm-2 text-right">
+                            <t t-call="website_sale.pricelist_list"/>
+                        </div>
+                    </div>
+                    <t t-if="category.has_base_products">
+                        <!-- ============== Base Product Selector ========================== -->
+                    <div class="row">
+                        <t t-call="webshop_simple.category_product_image" />
                         <!-- Products details -->
                         <div class="col-sm-5 col-lg-4 col-lg-offset-1">
 <script type="text/javascript">
@@ -309,6 +409,71 @@
                             </form>
                         </div>
                     </div>
+                    </t>
+                    <t t-else="">
+                        <!-- ============== No Base Product ================================ -->
+                        <t t-foreach="products" t-as="product">
+                    <div class="row">
+                        <t t-call="webshop_simple.category_product_image" />
+                        <!-- Products details -->
+                        <div class="col-sm-5 col-lg-4 col-lg-offset-1">
+                            <form id="product_selector" action="/shop/cart/update"
+                                  class="js_add_cart_variants"
+                                  method="POST">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <input type="hidden" name="category" t-att-value="category.id"/>
+                                <div class="js_product" >
+                                    <t t-placeholder="select">
+                                        <!-- Product Name -->
+                                        <h1 itemprop="name"><t t-esc="product.name"/></h1>
+                                        <t t-set="product_id" t-value="product.product_variant_id.id if len(product.product_variant_ids) == 1 else '0'"/>
+                                        <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                                        <!-- Item Size -->
+                                        <t t-if="product.categ_id.has_sizetag">
+                                            <t t-call="webshop_simple.sizetag"/>
+                                        </t>
+                                        <!-- Sandwich Bread -->
+                                        <t t-if="product.categ_id.has_breadtype">
+                                            <t t-call="webshop_simple.breadtype"/>
+                                        </t>
+                                        <!-- Sides products -->
+                                        <t t-if="sides_count>0">
+                                            <h4 itemprop="sides">Sides</h4>
+                                            <t t-call="webshop_simple.sides"/>
+                                        </t>
+                                    </t>
+                                    <!-- set the main product price -->
+                                    <t t-if="(product_id == company.birthday_promotion_product_id.id) and request.env.user._is_portal() and request.env.user._has_birthday_gift()">
+                                        <t t-call="webshop_simple.birthday_product_price"/>
+                                        <input type="text" data-min="1" name="add_qty" value="1" hidden="1"/>
+                                    </t>
+                                    <t t-else="1">
+                                        <t t-call="webshop_simple.product_price"/>
+                                        <!-- quantity increment widget -->
+                                        <div class="css_quantity input-group oe_website_spinner"
+                                             contenteditable="false">
+                                            <a t-attf-href="#" class="mb8 input-group-addon js_add_cart_json">
+                                                <i class="fa fa-minus"></i>
+                                            </a>
+                                            <input type="text" class="form-control quantity" data-min="1"
+                                                   name="add_qty" value="1"/>
+                                            <a t-attf-href="#"
+                                               class="mb8 input-group-addon float_left js_add_cart_json">
+                                                <i class="fa fa-plus"></i>
+                                            </a>
+                                        </div>
+                                    </t>
+                                    <!-- add to cart button -->
+                                    <a id="add_to_cart"
+                                       class="btn btn-primary btn-lg mt8 js_check_product a-submit"
+                                       href="#">Add to Cart
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                        </t>
+                    </t>
                 </section>
             </div>
         </t>
@@ -506,8 +671,8 @@ odoo.define('website_sale.alias', ['web.ajax'], function (require) {
         <xpath expr="//tbody/tr/td[3]" position="after">
             <td>
                 <div>
-                    <strong t-esc="line.alias or line.order_partner_id.name.split(' ', 1)[0]"
-                        style="background-color: #777777; color: #fff;"/>
+                    <span t-esc="line.alias or line.order_partner_id.name.split(' ', 1)[0]"
+                          class="label label-default"/>
                 </div>
             </td>
         </xpath>

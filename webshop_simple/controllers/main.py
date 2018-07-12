@@ -95,15 +95,8 @@ class WebsiteSale(http.Controller):
         products = request.env['product.template'].search(domain)
         # set the default product to display
         product_count = len(products)
-        if product_count > 0:
-            product = products[0]
-        else:
+        if product_count == 0:
             return request.redirect('/shop/simple')
-
-        sides = []
-        for accessory in product.accessory_product_ids:
-            sides.extend(request.env['product.template'].search([('id', '=', accessory.product_tmpl_id.id)]))
-        sides_count = len(sides)
 
         pricelist_context = dict(request.env.context)
         if not pricelist_context.get('pricelist'):
@@ -125,13 +118,14 @@ class WebsiteSale(http.Controller):
             'category': category,
             'product_count': product_count,
             'products': products,
-            'product': product,
-            'sides_count': sides_count,
-            'sides': sides,
             'compute_currency': compute_currency,
             'get_attribute_value_ids': self.get_attribute_value_ids,
         }
-        return request.render("webshop_simple.category", values)
+        if category.has_base_products:
+            return request.render("webshop_simple.category", values)
+        else:
+            return request.render("webshop_simple.category_product", values)
+
 
     # ------------------------------------------------------
     # Simple Web Shop category product page
@@ -190,7 +184,7 @@ class WebsiteSale(http.Controller):
             'compute_currency': compute_currency,
             'get_attribute_value_ids': self.get_attribute_value_ids,
         }
-        return request.render("webshop_simple.category", values)
+        return request.render("webshop_simple.category_product", values)
 
     # ------------------------------------------------------
     # Handle cart
