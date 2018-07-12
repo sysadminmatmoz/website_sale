@@ -13,4 +13,8 @@ class WebsiteAccountPromoNotification(website_account):
 
     def details_form_validate(self, data):
         """ Override this so we can add and use extra billing fields """
+        if 'product_promotion_notification' in data:
+            data['product_promotion_notification'] = True
+        else:
+            data['product_promotion_notification'] = False
         return super(WebsiteAccountPromoNotification, self).details_form_validate(data)

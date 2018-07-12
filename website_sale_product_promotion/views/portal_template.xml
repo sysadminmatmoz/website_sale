@@ -5,7 +5,12 @@
         <xpath expr="//div[contains(@t-attf-class,'phone')]" position="after">
             <div t-attf-class="form-group #{error.get('product_promotion_notification') and 'has-error' or ''} col-lg-6">
                 <label class="control-label" for="birthday">Promotion Notification</label>
-                <input type="checkbox" name="product_promotion_notification" t-att-checked="partner.product_promotion_notification"/>
+                <t t-if="partner.product_promotion_notification">
+                    <input type="checkbox" name="product_promotion_notification" checked="checked"/>
+                </t>
+                <t t-else="">
+                    <input type="checkbox" name="product_promotion_notification"/>
+                </t>
             </div>
         </xpath>
     </template>
