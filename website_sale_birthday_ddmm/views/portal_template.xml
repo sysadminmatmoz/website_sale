@@ -61,4 +61,30 @@ $('#birth_month').change(function() {
         </xpath>
     </template>
 
+    <!-- add birthday dd/mm to contact widget  -->
+    <template id="birth_contact" inherit_id="base.contact">
+        <xpath expr="//address/div" position="after">
+            <div t-if="object.birth_day and object.birth_month and 'birth_day' in fields and 'birth_month' in fields"
+                 class='css_editable_mode_hidden'>
+                <div itemprop="birth_day" t-esc="'{:02d}/{:02d}'.format(object.birth_day,object.birth_month)"
+                     style="margin-top:4px;margin-bottom:2px;font-size:14px;"/>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- birthday and phone in address kanban -->
+    <template id="birthday_in_address_kanban" inherit_id="website_sale.address_kanban">
+        <!-- change redirection -->
+        <xpath expr="//a[@class='btn btn-link pull-right fa fa-edit js_edit_address no-decoration']" position="replace">
+            <a t-if="not actual_partner or (ship.id in actual_partner.ids + actual_partner.child_ids.ids)"
+               href="/my/account" class='btn btn-link pull-right fa fa-edit no-decoration'
+               title="Edit this address"></a>
+        </xpath>
+        <!-- add birthday -->
+        <xpath expr="//div[@class='panel-body']/t" position="replace">
+            <t t-esc="contact"
+               t-options="dict(widget='contact', fields=['name', 'phone', 'birth_day', 'birth_month'], no_marker=True)"/>
+        </xpath>
+    </template>
+
 </odoo>
