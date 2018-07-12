@@ -119,37 +119,7 @@
     </template>
 
     <!-- /shop/simple/category page -->
-    <template id="category" name="Category">
-        <t t-call="website.layout">
-            <t t-set="additional_title" t-value="category.name"/>
-            <script type="text/javascript" src="/webshop_simple/static/src/js/webshop_simple.js"/>
-            <link rel="stylesheet" type="text/css" href="/webshop_simple/static/src/css/webshop_simple.css" />
-            <div itemscope="itemscope" itemtype="http://schema.org/Product" id="wrap" class="js_sale">
-                <section t-attf-class="container mt8 oe_website_sale" id="category_detail">
-                    <!-- action row -->
-                    <div class="row">
-                        <!-- breadcrumbs -->
-                        <div class="col-sm-4">
-                            <ol class="breadcrumb">
-                                <li>
-                                    <a href="/shop/simple">Categories</a>
-                                </li>
-                                <li>
-                                    <a t-attf-href="/shop/simple/category/{{slug(category)}}"><span t-field="category.name"/></a>
-                                </li>
-                                <li class="active">
-                                    <span t-field="product.name"/>
-                                </li>
-                            </ol>
-                        </div>
-                        <!-- search box is removed -->
-                        <!-- currency -->
-                        <div class="col-sm-2 text-right">
-                            <t t-call="website_sale.pricelist_list"/>
-                        </div>
-                    </div>
-                    <!-- ============== Base Product Selector ========================== -->
-                    <div class="row">
+    <template id="category_product_image" name="Image for Category Product">
                         <!-- images for currently selected product -->
                         <div class="col-sm-7">
                             <!-- Menu if the week badge -->
@@ -226,6 +196,41 @@
                                 </t>
                             </div>
                         </div>
+    </template>
+
+    <template id="category" name="Category">
+        <t t-call="website.layout">
+            <t t-set="additional_title" t-value="category.name"/>
+            <script type="text/javascript" src="/webshop_simple/static/src/js/webshop_simple.js"/>
+            <link rel="stylesheet" type="text/css" href="/webshop_simple/static/src/css/webshop_simple.css" />
+            <div itemscope="itemscope" itemtype="http://schema.org/Product" id="wrap" class="js_sale">
+                <section t-attf-class="container mt8 oe_website_sale" id="category_detail">
+                    <!-- action row -->
+                    <div class="row">
+                        <!-- breadcrumbs -->
+                        <div class="col-sm-4">
+                            <ol class="breadcrumb">
+                                <li>
+                                    <a href="/shop/simple">Categories</a>
+                                </li>
+                                <li>
+                                    <a t-attf-href="/shop/simple/category/{{slug(category)}}"><span t-field="category.name"/></a>
+                                </li>
+                                <li class="active">
+                                    <span t-field="product.name"/>
+                                </li>
+                            </ol>
+                        </div>
+                        <!-- search box is removed -->
+                        <!-- currency -->
+                        <div class="col-sm-2 text-right">
+                            <t t-call="website_sale.pricelist_list"/>
+                        </div>
+                    </div>
+                    <t t-if="category.has_base_products">
+                        <!-- ============== Base Product Selector ========================== -->
+                    <div class="row">
+                        <t t-call="webshop_simple.category_product_image" />
                         <!-- Products details -->
                         <div class="col-sm-5 col-lg-4 col-lg-offset-1">
 <script type="text/javascript">
@@ -309,6 +314,15 @@
                             </form>
                         </div>
                     </div>
+                    </t>
+                    <t t-else="">
+                        <!-- ============== No Base Product ================================ -->
+                        <t t-foreach="products" t-as="product">
+                    <div class="row">
+                        <t t-call="webshop_simple.category_product_image" />
+                    </div>
+                        </t>
+                    </t>
                 </section>
             </div>
         </t>
