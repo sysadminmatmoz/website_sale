@@ -14,7 +14,7 @@ class SaleOrder(models.Model):
     payment_state = fields.Selection(related='payment_tx_id.state')
 
     @api.multi
-    def action_done(self):
+    def action_print_and_done(self):
         """ Send a confirmation email before setting to done """
         mail_mail = self.env['mail.mail']
         mail_txt = _("Your order ({}) is ready !".format(self.name))
@@ -27,4 +27,9 @@ class SaleOrder(models.Model):
             'auto_delete': True,
         })
         mail_mail.send([mail_id])
-        return super(SaleOrder, self).action_done()
+
+        # Set to done
+        super(SaleOrder, self).action_done()
+        
+        # Print the labels
+        return self.action_print_labels()
