@@ -490,7 +490,13 @@ odoo.define('website_sale.alias', ['web.ajax'], function (require) {
                 </div>
             </td>
         </xpath>
+    </template>
 
+    <!-- hide associated product widget -->
+    <template id="hide_suggested_products_list" inherit_id="website_sale.suggested_products_list">
+        <xpath expr="//table[@t-if='suggested_products']" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
     </template>
 
     <!-- add eater alias label to /shop/payment line -->
