@@ -506,8 +506,8 @@ odoo.define('website_sale.alias', ['web.ajax'], function (require) {
         <xpath expr="//tbody/tr/td[3]" position="after">
             <td>
                 <div>
-                    <strong t-esc="line.alias or line.order_partner_id.name.split(' ', 1)[0]"
-                        style="background-color: #777777; color: #fff;"/>
+                    <span t-esc="line.alias or line.order_partner_id.name.split(' ', 1)[0]"
+                          class="label label-default"/>
                 </div>
             </td>
         </xpath>
