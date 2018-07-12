@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 #
+import pytz
 import logging
 from pprint import pformat
+from datetime import datetime, timedelta
 from odoo import models, api, fields, _
 from odoo.http import request
 from odoo.exceptions import UserError, ValidationError
@@ -86,7 +88,6 @@ class SaleOrder(models.Model):
             values['sides'] = [(6, 0, sides)]
             values['name'] = self._get_line_description(self.id, product_id, attributes=attributes)
             # Extra infos
-            _logger.debug("ABAKUS: BEF breadtype:{} sizetag:{} sides={}".format(breadtype, sizetag, sides))
             values['name'] += self._get_extra_line_description(self.id, product_id,
                                                                breadtype=breadtype,
                                                                sizetag=sizetag,
@@ -139,3 +140,4 @@ class SaleOrder(models.Model):
             order_line.write(values)
 
         return {'line_id': order_line.id, 'quantity': quantity}
+
