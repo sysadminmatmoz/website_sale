@@ -1,0 +1,135 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* website_sale_category_bread
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e-20180529\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-12 15:29+0000\n"
+"PO-Revision-Date: 2018-07-12 17:33+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: fr_BE\n"
+"X-Generator: Poedit 2.0.7\n"
+
+#. module: website_sale_category_bread
+#: model:ir.model.fields,field_description:website_sale_category_bread.field_category_breadtype_active
+msgid "Active"
+msgstr "Actif"
+
+#. module: website_sale_category_bread
+#: model:ir.model.fields,field_description:website_sale_category_bread.field_category_breadtype_line_breadtype_id
+#: model:ir.ui.view,arch_db:website_sale_category_bread.product_template_form_view
+msgid "Bread Type"
+msgstr "Type de pain"
+
+#. module: website_sale_category_bread
+#: model:ir.model.fields,field_description:website_sale_category_bread.field_category_breadtype_line_breadtype_price
+msgid "Bread Type Price"
+msgstr "Prix du type de pain"
+
+#. module: website_sale_category_bread
+#: model:ir.model,name:website_sale_category_bread.model_category_breadtype
+#: model:ir.ui.menu,name:website_sale_category_bread.menu_category_breadtype_action
+msgid "Category Bread Type"
+msgstr "Catégorie de type de pain"
+
+#. module: website_sale_category_bread
+#: model:ir.model,name:website_sale_category_bread.model_category_breadtype_line
+msgid "Category Bread Type Line"
+msgstr "Ligne de catégorie de type de pain"
+
+#. module: website_sale_category_bread
+#: model:ir.model.fields,field_description:website_sale_category_bread.field_category_breadtype_create_uid
+#: model:ir.model.fields,field_description:website_sale_category_bread.field_category_breadtype_line_create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: website_sale_category_bread
+#: model:ir.model.fields,field_description:website_sale_category_bread.field_category_breadtype_create_date
+#: model:ir.model.fields,field_description:website_sale_category_bread.field_category_breadtype_line_create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: website_sale_category_bread
+#: model:ir.model.fields,field_description:website_sale_category_bread.field_category_breadtype_display_name
+#: model:ir.model.fields,field_description:website_sale_category_bread.field_category_breadtype_line_display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: website_sale_category_bread
+#: model:ir.model.fields,field_description:website_sale_category_bread.field_product_category_has_breadtype
+#: model:ir.model.fields,field_description:website_sale_category_bread.field_product_product_has_breadtype
+#: model:ir.model.fields,field_description:website_sale_category_bread.field_product_template_has_breadtype
+msgid "Has breadtype"
+msgstr "Type de pain géré"
+
+#. module: website_sale_category_bread
+#: model:ir.model.fields,field_description:website_sale_category_bread.field_category_breadtype_id
+#: model:ir.model.fields,field_description:website_sale_category_bread.field_category_breadtype_line_id
+msgid "ID"
+msgstr "ID"
+
+#. module: website_sale_category_bread
+#: model:ir.model.fields,field_description:website_sale_category_bread.field_category_breadtype___last_update
+#: model:ir.model.fields,field_description:website_sale_category_bread.field_category_breadtype_line___last_update
+msgid "Last Modified on"
+msgstr "Dernière Modification le"
+
+#. module: website_sale_category_bread
+#: model:ir.model.fields,field_description:website_sale_category_bread.field_category_breadtype_line_write_uid
+#: model:ir.model.fields,field_description:website_sale_category_bread.field_category_breadtype_write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: website_sale_category_bread
+#: model:ir.model.fields,field_description:website_sale_category_bread.field_category_breadtype_line_write_date
+#: model:ir.model.fields,field_description:website_sale_category_bread.field_category_breadtype_write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: website_sale_category_bread
+#: model:ir.model.fields,field_description:website_sale_category_bread.field_category_breadtype_name
+msgid "Name"
+msgstr "Nom"
+
+#. module: website_sale_category_bread
+#: model:ir.model.fields,field_description:website_sale_category_bread.field_category_breadtype_line_product_id
+msgid "Product"
+msgstr "Article"
+
+#. module: website_sale_category_bread
+#: model:ir.model,name:website_sale_category_bread.model_product_category
+msgid "Product Category"
+msgstr "Catégorie d'article"
+
+#. module: website_sale_category_bread
+#: model:ir.model,name:website_sale_category_bread.model_product_template
+msgid "Product Template"
+msgstr "Modèle d'article"
+
+#. module: website_sale_category_bread
+#: model:ir.model.fields,field_description:website_sale_category_bread.field_product_product_breadtype_line_ids
+#: model:ir.model.fields,field_description:website_sale_category_bread.field_product_template_breadtype_line_ids
+msgid "Size Tag Lines"
+msgstr "Ligne de tag de taille"
+
+#. module: website_sale_category_bread
+#: model:ir.actions.act_window,name:website_sale_category_bread.category_breadtype_action
+msgid "category Bread Type"
+msgstr "Catégorie de type de pain"
+
+#. module: website_sale_category_bread
+#: model:ir.ui.view,arch_db:website_sale_category_bread.category_breadtype_view_form
+msgid "category breadtype Form"
+msgstr "Formulaire de type de pain"
+
+#. module: website_sale_category_bread
+#: model:ir.ui.view,arch_db:website_sale_category_bread.category_breadtype_view_tree
+msgid "category breadtype Tree"
+msgstr "Liste de types de pain"
