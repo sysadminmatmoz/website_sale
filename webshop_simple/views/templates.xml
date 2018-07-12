@@ -107,10 +107,11 @@
         <div class="row" id="sides_row">
             <div>
                 <t t-foreach="sides" t-as="side_product">
+                    <t t-set="side_product_id" t-value="side_product.id"/>
                     <div class="checkbox-group">
-                        <input type="checkbox" t-attf-id="sides-{{product_id}}-{{side_product.id}}" t-attf-name="sides-{{product_id}}-{{side_product.id}}" t-att-value="side_product.id" t-attf-onclick="compute_sides({{product_id}});"/>
-                        <label t-attf-for="sides-{{product_id}}-{{side_product.id}}" ><t t-esc="side_product.name"/>  (<t t-esc="'{0:,.2f}'.format(side_product.lst_price)"/><![CDATA[&nbsp;&euro;]]>)</label>
-                        <input type="hidden" t-attf-id="side_price_{{product_id}}_{{side_product.id}}" t-att-value="side_product.lst_price" />
+                        <input type="checkbox" t-attf-id="sides-{{product_id}}-{{side_product_id}}" t-attf-name="sides-{{product_id}}-{{side_product_id}}" t-att-value="side_product.id" t-attf-onclick="compute_sides({{product_id}});"/>
+                        <label t-attf-for="sides-{{product_id}}-{{side_product_id}}" ><t t-esc="side_product.name"/>  (<t t-esc="'{0:,.2f}'.format(side_product.lst_price)"/><![CDATA[&nbsp;&euro;]]>)</label>
+                        <input type="hidden" t-attf-id="side_price_{{product_id}}_{{side_product_id}}" t-att-value="side_product.lst_price" />
                     </div>
                 </t>
             </div>
@@ -262,7 +263,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--t t-set="product_id" t-value="product.id"/-->
                                         <t t-set="product_id" t-value="product.product_variant_id.id if len(product.product_variant_ids) == 1 else '0'"/>
                                         <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
                                         <!-- Item Size -->

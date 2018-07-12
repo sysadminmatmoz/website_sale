@@ -91,6 +91,7 @@ class WebsiteSale(http.Controller):
 
         # Get all products from this category that are base_sides
         domain = self._get_search_domain_simple(search, category, attrib_values)
+        domain += [('active', '=', True)]
         products = request.env['product.template'].search(domain)
         # set the default product to display
         product_count = len(products)
@@ -99,7 +100,9 @@ class WebsiteSale(http.Controller):
         else:
             return request.redirect('/shop/simple')
 
-        sides = product.accessory_product_ids
+        sides = []
+        for accessory in product.accessory_product_ids:
+            sides.extend(request.env['product.template'].search([('id', '=', accessory.product_tmpl_id.id)]))
         sides_count = len(sides)
 
         pricelist_context = dict(request.env.context)
@@ -153,7 +156,9 @@ class WebsiteSale(http.Controller):
         product_count = len(products)
 
         # Get all product sides if any
-        sides = product.accessory_product_ids
+        sides = []
+        for accessory in product.accessory_product_ids:
+            sides.extend(request.env['product.template'].search([('id', '=', accessory.product_tmpl_id.id)]))
         sides_count = len(sides)
 
         keep = QueryURL('/shop/simple', category=category and category.id, search=search, attrib=attrib_list)
