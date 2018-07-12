@@ -107,4 +107,11 @@
         </xpath>
     </template>
 
+    <!-- Hide addresses in /my/orders/<> page -->
+    <template id="hide_addresses_orders_followup" inherit_id="website_portal_sale.orders_followup">
+        <xpath expr="//div[@class='panel-body']/div[2]" position="attributes">
+            <attribute name="style">display:none</attribute>
+        </xpath>
+    </template>
+
 </odoo>
