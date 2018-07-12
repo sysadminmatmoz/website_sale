@@ -1,0 +1,83 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* webshop_simple_open_hours
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e-20180529\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-12 13:40+0000\n"
+"PO-Revision-Date: 2018-07-12 15:44+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: fr_BE\n"
+"X-Generator: Poedit 2.0.7\n"
+
+#. module: webshop_simple_open_hours
+#: model:ir.model.fields,help:webshop_simple_open_hours.field_res_company_openhours_close
+msgid "Closing hour for today's orders."
+msgstr "Heure de fermeture pour les commandes du jour."
+
+#. module: webshop_simple_open_hours
+#: model:ir.model,name:webshop_simple_open_hours.model_res_company
+msgid "Companies"
+msgstr "Sociétés"
+
+#. module: webshop_simple_open_hours
+#: model:ir.model.fields,field_description:webshop_simple_open_hours.field_res_company_openhours_close
+msgid "Day Orders Closing Hour"
+msgstr "Heure de fermeture des commandes du jour"
+
+#. module: webshop_simple_open_hours
+#: model:ir.ui.view,arch_db:webshop_simple_open_hours.open_hours
+msgid "For next day: after"
+msgstr "Pour le jour suivant: après:"
+
+#. module: webshop_simple_open_hours
+#: model:ir.ui.view,arch_db:webshop_simple_open_hours.open_hours
+msgid "For the day: until"
+msgstr "Pour ce jour-ci: jusqu'à"
+
+#. module: webshop_simple_open_hours
+#: model:ir.ui.view,arch_db:webshop_simple_open_hours.open_hours
+#: model:ir.ui.view,arch_db:webshop_simple_open_hours.res_company_opeconfign_hours_form
+msgid "Open Hours"
+msgstr "Heures d'ouverture"
+
+#. module: webshop_simple_open_hours
+#: model:ir.ui.view,arch_db:webshop_simple_open_hours.res_company_opeconfign_hours_form
+msgid "Open Hours Parameters"
+msgstr "Paramètres des heures d'ouverture"
+
+#. module: webshop_simple_open_hours
+#: model:ir.model.fields,help:webshop_simple_open_hours.field_res_company_openhours_open
+msgid "Opening hour for tomorrow's orders"
+msgstr "Heure d'ouverture pour les commandes du lendemain."
+
+#. module: webshop_simple_open_hours
+#: model:ir.ui.view,arch_db:webshop_simple_open_hours.open_hours
+msgid ""
+"The web shop is closed for now and we're no longer taking orders.\n"
+"                            <br/>Our web shop accepts orders:"
+msgstr ""
+"Le magasin est actuellement fermé pour aujourd'hui. Nous ne prenons plus de commandes du jour.\n"
+"                            <br/>Le magasin accepte les commandes"
+
+#. module: webshop_simple_open_hours
+#: model:ir.model.fields,field_description:webshop_simple_open_hours.field_res_company_openhours_tz
+msgid "Timezone"
+msgstr "Fuseau horaire"
+
+#. module: webshop_simple_open_hours
+#: model:ir.model.fields,field_description:webshop_simple_open_hours.field_res_company_openhours_tz_offset
+msgid "Timezone offset"
+msgstr "Décalage horaire"
+
+#. module: webshop_simple_open_hours
+#: model:ir.model.fields,field_description:webshop_simple_open_hours.field_res_company_openhours_open
+msgid "Tomorrow Orders Opening Hour"
+msgstr "Heures d'ouverture pour les commandes du lendemain"

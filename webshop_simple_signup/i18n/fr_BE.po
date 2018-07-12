@@ -1,0 +1,120 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* webshop_simple_signup
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e-20180529\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-12 13:48+0000\n"
+"PO-Revision-Date: 2018-07-12 15:52+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: fr_BE\n"
+"X-Generator: Poedit 2.0.7\n"
+
+#. module: webshop_simple_signup
+#: model:ir.ui.view,arch_db:webshop_simple_signup.birthday_phone_fields
+msgid "April"
+msgstr "Avril"
+
+#. module: webshop_simple_signup
+#: model:ir.ui.view,arch_db:webshop_simple_signup.birthday_phone_fields
+msgid "August"
+msgstr "Août"
+
+#. module: webshop_simple_signup
+#: model:ir.ui.view,arch_db:webshop_simple_signup.birthday_phone_fields
+msgid "December"
+msgstr "Décembre"
+
+#. module: webshop_simple_signup
+#: model:ir.ui.view,arch_db:webshop_simple_signup.birthday_phone_fields
+msgid "February"
+msgstr "Février"
+
+#. module: webshop_simple_signup
+#: model:ir.ui.view,arch_db:webshop_simple_signup.birthday_phone_fields
+msgid "January"
+msgstr "Janvier"
+
+#. module: webshop_simple_signup
+#: model:ir.ui.view,arch_db:webshop_simple_signup.birthday_phone_fields
+msgid "July"
+msgstr "Juillet"
+
+#. module: webshop_simple_signup
+#: model:ir.ui.view,arch_db:webshop_simple_signup.birthday_phone_fields
+msgid "June"
+msgstr "Juin"
+
+#. module: webshop_simple_signup
+#: model:ir.ui.view,arch_db:webshop_simple_signup.birthday_phone_fields
+msgid "March"
+msgstr "Mars"
+
+#. module: webshop_simple_signup
+#: model:ir.ui.view,arch_db:webshop_simple_signup.birthday_phone_fields
+msgid "May"
+msgstr "Mai"
+
+#. module: webshop_simple_signup
+#: model:ir.ui.view,arch_db:webshop_simple_signup.birthday_phone_fields
+msgid "November"
+msgstr "Novembre"
+
+#. module: webshop_simple_signup
+#: model:ir.ui.view,arch_db:webshop_simple_signup.birthday_phone_fields
+msgid "October"
+msgstr "Octobre"
+
+#. module: webshop_simple_signup
+#: code:addons/webshop_simple_signup/controllers/main.py:24
+#, python-format
+msgid "Passwords do not match; please retype them."
+msgstr "Les mots de passe ne correspondent pas, merci de réessayer."
+
+#. module: webshop_simple_signup
+#: model:ir.ui.view,arch_db:webshop_simple_signup.birthday_phone_fields
+msgid "Select Day"
+msgstr "Choisissez un jour"
+
+#. module: webshop_simple_signup
+#: model:ir.ui.view,arch_db:webshop_simple_signup.birthday_phone_fields
+msgid "Select Month"
+msgstr "Choisissez un mois"
+
+#. module: webshop_simple_signup
+#: model:ir.ui.view,arch_db:webshop_simple_signup.birthday_phone_fields
+msgid "September"
+msgstr "Septembre"
+
+#. module: webshop_simple_signup
+#: code:addons/webshop_simple_signup/controllers/main.py:22
+#, python-format
+msgid "The form was not properly filled in."
+msgstr "The formulaire n'est pas complet."
+
+#. module: webshop_simple_signup
+#: model:ir.ui.view,arch_db:webshop_simple_signup.birthday_phone_fields
+msgid "Your Birth Date"
+msgstr "Votre anniversaire"
+
+#. module: webshop_simple_signup
+#: model:ir.ui.view,arch_db:webshop_simple_signup.birthday_phone_fields
+msgid "Your Phone Number"
+msgstr "Votre numéro de téléphone"
+
+#. module: webshop_simple_signup
+#: model:ir.ui.view,arch_db:webshop_simple_signup.birthday_phone_fields
+msgid "e.g. +32477354199"
+msgstr "ex: +32477354199"
+
+#. module: webshop_simple_signup
+#: model:ir.ui.view,arch_db:webshop_simple_signup.birthday_phone_fields
+msgid "e.g. 07"
+msgstr "ex: 07"
