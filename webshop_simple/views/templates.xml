@@ -81,7 +81,7 @@
                 <div class="radio-group">
                 <t t-foreach="product.sizetags_line_ids" t-as="sl">
                     <input type="radio" t-attf-id="sizetag_{{product_id}}_{{sl.id}}" t-attf-name="sizetag_{{product_id}}" t-att-value="sl.id" t-att-checked="'checked' if sl_index == 0 else None"  t-attf-onclick="compute_sizetag({{product_id}});"/>
-                    <label t-attf-for="sizetag_{{product_id}}_{{sl.id}}"><t t-esc="sl.sizetag_id.name"/> (<t t-esc="'{0:,.2f}'.format(sl.sizetag_price)"/><![CDATA[&nbsp;&euro;]]>)</label>
+                    <label t-attf-for="sizetag_{{product_id}}_{{sl.id}}"><t t-esc="sl.sizetag_id.name"/> (<t t-esc="'+{0:,.2f}'.format(sl.sizetag_price)"/><![CDATA[&nbsp;&euro;]]>)</label>
                     <input type="hidden" t-attf-id="sizetag_price_{{product_id}}_{{sl.id}}" t-att-value="sl.sizetag_price" />
                 </t>
                 </div>
@@ -95,7 +95,7 @@
                 <div class="radio-group">
                 <t t-foreach="product.breadtype_line_ids" t-as="bl">
                     <input type="radio" t-attf-id="breadtype_{{product_id}}_{{bl.id}}" t-attf-name="breadtype_{{product_id}}" t-att-value="bl.id" t-att-checked="'checked' if bl_index == 0 else None" t-attf-onclick="compute_breadtype({{product_id}});"/>
-                    <label t-attf-for="breadtype_{{product_id}}_{{bl.id}}"><t t-esc="bl.breadtype_id.name"/> (<t t-esc="'{0:,.2f}'.format(bl.breadtype_price)"/><![CDATA[&nbsp;&euro;]]>)</label>
+                    <label t-attf-for="breadtype_{{product_id}}_{{bl.id}}"><t t-esc="bl.breadtype_id.name"/> (<t t-esc="'+{0:,.2f}'.format(bl.breadtype_price)"/><![CDATA[&nbsp;&euro;]]>)</label>
                     <input type="hidden" t-attf-id="breadtype_price_{{product_id}}_{{bl.id}}" t-att-value="bl.breadtype_price" />
                 </t>
                 </div>
@@ -110,7 +110,7 @@
                     <t t-set="side_product_id" t-value="side_product.id"/>
                     <div class="checkbox-group">
                         <input type="checkbox" t-attf-id="sides-{{product_id}}-{{side_product_id}}" t-attf-name="sides-{{product_id}}-{{side_product_id}}" t-att-value="side_product.id" t-attf-onclick="compute_sides({{product_id}});"/>
-                        <label t-attf-for="sides-{{product_id}}-{{side_product_id}}" ><t t-esc="side_product.name"/>  (<t t-esc="'{0:,.2f}'.format(side_product.lst_price)"/><![CDATA[&nbsp;&euro;]]>)</label>
+                        <label t-attf-for="sides-{{product_id}}-{{side_product_id}}" ><t t-esc="side_product.name"/>  (<t t-esc="'+{0:,.2f}'.format(side_product.lst_price)"/><![CDATA[&nbsp;&euro;]]>)</label>
                         <input type="hidden" t-attf-id="side_price_{{product_id}}_{{side_product_id}}" t-att-value="side_product.lst_price" />
                     </div>
                 </t>
@@ -266,9 +266,6 @@
                                         <t t-set="product_id" t-value="product.product_variant_id.id if len(product.product_variant_ids) == 1 else '0'"/>
                                         <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
                                         <!-- Item Size -->
-                                        <t t-if="product.categ_id.has_sizetag or product.categ_id.has_breadtype">
-                                            <h4 itemprop="type">Type</h4>
-                                        </t>
                                         <t t-if="product.categ_id.has_sizetag">
                                             <t t-call="webshop_simple.sizetag"/>
                                         </t>

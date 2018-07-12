@@ -1,0 +1,139 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* website_sale_category_size
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e-20180529\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-12 15:32+0000\n"
+"PO-Revision-Date: 2018-07-12 17:36+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: fr_BE\n"
+"X-Generator: Poedit 2.0.7\n"
+
+#. module: website_sale_category_size
+#: model:ir.model.fields,field_description:website_sale_category_size.field_category_sizetag_active
+msgid "Active"
+msgstr "Actif"
+
+#. module: website_sale_category_size
+#: model:ir.model,name:website_sale_category_size.model_category_sizetag
+#: model:ir.ui.menu,name:website_sale_category_size.menu_category_sizetag_action
+msgid "Category Size tag"
+msgstr "Tag de catégorie de taille"
+
+#. module: website_sale_category_size
+#: model:ir.model,name:website_sale_category_size.model_category_sizetag_line
+msgid "Category Size tag Line"
+msgstr "Ligne de tag de catégorie de taille"
+
+#. module: website_sale_category_size
+#: model:ir.model.fields,field_description:website_sale_category_size.field_category_sizetag_create_uid
+#: model:ir.model.fields,field_description:website_sale_category_size.field_category_sizetag_line_create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: website_sale_category_size
+#: model:ir.model.fields,field_description:website_sale_category_size.field_category_sizetag_create_date
+#: model:ir.model.fields,field_description:website_sale_category_size.field_category_sizetag_line_create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: website_sale_category_size
+#: model:ir.model.fields,field_description:website_sale_category_size.field_category_sizetag_display_name
+#: model:ir.model.fields,field_description:website_sale_category_size.field_category_sizetag_line_display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: website_sale_category_size
+#: model:ir.model.fields,field_description:website_sale_category_size.field_product_category_has_sizetag
+#: model:ir.model.fields,field_description:website_sale_category_size.field_product_product_has_sizetag
+#: model:ir.model.fields,field_description:website_sale_category_size.field_product_template_has_sizetag
+msgid "Has sizetag"
+msgstr "Taille gérée"
+
+#. module: website_sale_category_size
+#: model:ir.model.fields,field_description:website_sale_category_size.field_category_sizetag_id
+#: model:ir.model.fields,field_description:website_sale_category_size.field_category_sizetag_line_id
+msgid "ID"
+msgstr "ID"
+
+#. module: website_sale_category_size
+#: model:ir.model.fields,field_description:website_sale_category_size.field_category_sizetag___last_update
+#: model:ir.model.fields,field_description:website_sale_category_size.field_category_sizetag_line___last_update
+msgid "Last Modified on"
+msgstr "Dernière Modification le"
+
+#. module: website_sale_category_size
+#: model:ir.model.fields,field_description:website_sale_category_size.field_category_sizetag_line_write_uid
+#: model:ir.model.fields,field_description:website_sale_category_size.field_category_sizetag_write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: website_sale_category_size
+#: model:ir.model.fields,field_description:website_sale_category_size.field_category_sizetag_line_write_date
+#: model:ir.model.fields,field_description:website_sale_category_size.field_category_sizetag_write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: website_sale_category_size
+#: model:ir.model.fields,field_description:website_sale_category_size.field_category_sizetag_name
+msgid "Name"
+msgstr "Nom"
+
+#. module: website_sale_category_size
+#: model:ir.model.fields,field_description:website_sale_category_size.field_category_sizetag_line_product_id
+msgid "Product"
+msgstr "Article"
+
+#. module: website_sale_category_size
+#: model:ir.model,name:website_sale_category_size.model_product_category
+msgid "Product Category"
+msgstr "Catégorie d'article"
+
+#. module: website_sale_category_size
+#: model:ir.model,name:website_sale_category_size.model_product_template
+msgid "Product Template"
+msgstr "Modèle d'article"
+
+#. module: website_sale_category_size
+#: model:ir.model.fields,field_description:website_sale_category_size.field_category_sizetag_line_sizetag_id
+msgid "Size Tag"
+msgstr "Tag de taille"
+
+#. module: website_sale_category_size
+#: model:ir.model.fields,field_description:website_sale_category_size.field_product_product_sizetags_line_ids
+#: model:ir.model.fields,field_description:website_sale_category_size.field_product_template_sizetags_line_ids
+msgid "Size Tag Lines"
+msgstr "Ligne de tag de taille"
+
+#. module: website_sale_category_size
+#: model:ir.model.fields,field_description:website_sale_category_size.field_category_sizetag_line_sizetag_price
+msgid "Size Tag Price"
+msgstr "Tag de prix de taille"
+
+#. module: website_sale_category_size
+#: model:ir.ui.view,arch_db:website_sale_category_size.product_template_form_view
+msgid "Size Tags"
+msgstr "Tags de taille"
+
+#. module: website_sale_category_size
+#: model:ir.actions.act_window,name:website_sale_category_size.category_sizetag_action
+msgid "category size tag"
+msgstr "Tag de catégorie de taille"
+
+#. module: website_sale_category_size
+#: model:ir.ui.view,arch_db:website_sale_category_size.category_sizetag_view_form
+msgid "category sizetag Form"
+msgstr "Formulaire de tag de catégorie de taille"
+
+#. module: website_sale_category_size
+#: model:ir.ui.view,arch_db:website_sale_category_size.category_sizetag_view_tree
+msgid "category sizetag Tree"
+msgstr "Liste de tag de catégorie de taille"
