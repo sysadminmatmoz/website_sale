@@ -295,3 +295,12 @@ class WebsiteSaleSimple(WebsiteSale):
             order.write(values)
 
         return super(WebsiteSaleSimple, self).payment_validate(transaction_id, sale_order_id, **post)
+
+    # If total is = 0 we do not allow checkout
+    @http.route(['/shop/checkout'], type='http', auth="public", website=True)
+    def checkout(self, **post):
+        order = request.website.sale_get_order()
+        if order and order.amount_total == 0:
+            return request.redirect('/shop/cart')
+        else:
+            return super(WebsiteSaleSimple, self).checkout(**post)

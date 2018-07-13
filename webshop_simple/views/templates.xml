@@ -719,4 +719,34 @@ odoo.define('website_sale.alias', ['web.ajax'], function (require) {
         </xpath>
     </template>
 
+    <!-- Hide got to checkout if website_sale_order.amount_total > 0 -->
+    <template id="no_free_stuff" inherit_id="website_sale.cart">
+        <xpath expr="//a[@href='/shop/checkout']" position="attributes">
+            <attribute name="t-att-style">(website_sale_order.amount_total == 0) and 'display:none' or ''</attribute>
+        </xpath>
+    </template>
+    <template id="no_free_stuff_js" inherit_id="website_sale.cart">
+        <xpath expr="//div[@id='wrap']/div[1]" position="before">
+            <script>
+<![CDATA[
+window.onload = function(){
+ $('order_total').each(function() {
+   var elem = $(this);
+
+   // Save current value of element
+   // elem.data('oldVal', elem.val());
+
+   // Look for changes in the value
+   elem.bind("propertychange change click keyup input paste", function(event){
+      // If value has changed...
+      if ( elem.val() == 0) {
+       console.log("Hide This Shit");
+     }
+   });
+ });
+};
+]]>
+            </script>
+        </xpath>
+    </template>
 </odoo>
