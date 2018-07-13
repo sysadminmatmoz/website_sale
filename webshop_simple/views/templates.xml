@@ -123,11 +123,11 @@
         <!-- images for currently selected category -->
         <div class="col-sm-7">
             <div class="oe_product_image">
-                <!--span itemprop="image"
+                <span itemprop="image"
                       t-attf-content="{{request.httprequest.url_root}}web/image/product.category/{{category.id}}/image"
                       t-field="category.image"
                       t-options="{'widget': 'image', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image'}"
-                      groups="!website_sale.group_website_multi_image"/-->
+                      groups="!website_sale.group_website_multi_image"/>
             </div>
         </div>
     </template>
