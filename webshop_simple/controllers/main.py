@@ -7,13 +7,13 @@ from datetime import datetime, timedelta
 from odoo import http, tools, _
 from odoo.http import request
 from odoo.addons.website.controllers.main import QueryURL
-from odoo.addons.website_sale.controllers.main import PPR
+from odoo.addons.website_sale.controllers.main import PPR, WebsiteSale
 from odoo.addons.website.models.website import slug
 
 _logger = logging.getLogger(__name__)
 
 
-class WebsiteSale(http.Controller):
+class WebsiteSaleSimple(WebsiteSale):
 
     def get_attribute_value_ids(self, product):
         """ list of selectable attributes of a product
@@ -255,6 +255,7 @@ class WebsiteSale(http.Controller):
         order_line.write(values)
         return {}
 
+    # When everything goes on the app side we go through this code
     @http.route(['/shop/confirmation'], type='http', auth="public", website=True)
     def payment_confirmation(self, **post):
         """ Let set the SO delivery date here since we are now sure SO is paid """
@@ -268,4 +269,29 @@ class WebsiteSale(http.Controller):
             if position == 1:
                 values['delivery_date'] = (now + timedelta(days=1)).strftime("%Y-%m-%d")
             order.write(values)
-        return super(WebsiteSale, self).payment_confirmation(**post)
+        return super(WebsiteSaleSimple, self).payment_confirmation(**post)
+
+    # If Somehow the app crashes we can't reach confirmation so we have to set the delivery date here
+    @http.route('/shop/payment/validate', type='http', auth="public", website=True)
+    def payment_validate(self, transaction_id=None, sale_order_id=None, **post):
+        if transaction_id is None:
+            tx = request.website.sale_get_transaction()
+        else:
+            tx = request.env['payment.transaction'].browse(transaction_id)
+
+        if sale_order_id is None:
+            order = request.website.sale_get_order()
+        else:
+            order = request.env['sale.order'].sudo().browse(sale_order_id)
+            assert order.id == request.session.get('sale_last_order_id')
+
+        if order and tx:
+            company = order.company_id
+            now = datetime.now(pytz.timezone(company.openhours_tz))
+            position = company.is_between_open_hours(now)
+            values = {'delivery_date': now.strftime("%Y-%m-%d")}
+            if position == 1:
+                values['delivery_date'] = (now + timedelta(days=1)).strftime("%Y-%m-%d")
+            order.write(values)
+
+        return super(WebsiteSaleSimple, self).payment_validate(transaction_id, sale_order_id, **post)
