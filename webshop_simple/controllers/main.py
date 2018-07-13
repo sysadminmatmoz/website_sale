@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+import pytz
 import logging
 
 from pprint import pformat
+from datetime import datetime, timedelta
 from odoo import http, tools, _
 from odoo.http import request
 from odoo.addons.website.controllers.main import QueryURL
@@ -252,3 +254,18 @@ class WebsiteSale(http.Controller):
         }
         order_line.write(values)
         return {}
+
+    @http.route(['/shop/confirmation'], type='http', auth="public", website=True)
+    def payment_confirmation(self, **post):
+        """ Let set the SO delivery date here since we are now sure SO is paid """
+        sale_order_id = request.session.get('sale_last_order_id')
+        if sale_order_id:
+            order = request.env['sale.order'].sudo().browse(sale_order_id)
+            company = order.company_id
+            now = datetime.now(pytz.timezone(company.openhours_tz))
+            position = company.is_between_open_hours(now)
+            values = {'delivery_date': now.strftime("%Y-%m-%d")}
+            if position == 1:
+                values['delivery_date'] = (now + timedelta(days=1)).strftime("%Y-%m-%d")
+            order.write(values)
+        return super(WebsiteSale, self).payment_confirmation(**post)
