@@ -1,0 +1,215 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* webshop_simple
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e-20180529\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-13 10:37+0000\n"
+"PO-Revision-Date: 2018-07-13 12:42+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: fr_BE\n"
+"X-Generator: Poedit 2.0.7\n"
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.breadtype
+#: model:ir.ui.view,arch_db:webshop_simple.sides
+#: model:ir.ui.view,arch_db:webshop_simple.sizetag
+msgid "&amp;nbsp;&amp;euro;)"
+msgstr "&amp;nbsp;&amp;euro;)"
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.birthday_product_price
+#: model:ir.ui.view,arch_db:webshop_simple.product_price
+msgid "0.00"
+msgstr "0.00"
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.birthday_product_price
+#: model:ir.ui.view,arch_db:webshop_simple.product_price
+msgid "<b>&amp;nbsp;&amp;euro;</b>"
+msgstr "<b>&amp;nbsp;&amp;euro;</b>"
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.category
+msgid ""
+"<span class=\"fa fa-chevron-left\" aria-hidden=\"true\"/>\n"
+"                                                    <span class=\"sr-only\">Previous</span>"
+msgstr ""
+"<span class=\"fa fa-chevron-left\" aria-hidden=\"true\"/>\n"
+"                                                    <span class=\"sr-only\">Précédent</span>"
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.category
+msgid ""
+"<span class=\"fa fa-chevron-right\" aria-hidden=\"true\"/>\n"
+"                                                    <span class=\"sr-only\">Next</span>"
+msgstr ""
+"<span class=\"fa fa-chevron-right\" aria-hidden=\"true\"/>\n"
+"                                                    <span class=\"sr-only\">Suivant</span>"
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.shop_simple_continue_shopping
+msgid ""
+"<span class=\"fa fa-long-arrow-left\"/>\n"
+"                <span class=\"hidden-xs\">Continue Shopping</span>\n"
+"                <span class=\"visible-xs-inline\">Continue</span>"
+msgstr ""
+"<span class=\"fa fa-long-arrow-left\"></span>\n"
+"                <span class=\"hidden-xs\">Retourner à la boutique</span>\n"
+"                <span class=\"visible-xs-inline\">Continuer</span>"
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.product_price
+msgid "<span style=\"width:75%;\">Bread type .............. </span>"
+msgstr "<span style=\"width:75%;\">Type de pain .............. </span>"
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.product_price
+msgid "<span style=\"width:75%;\">Sides ....................... </span>"
+msgstr "<span style=\"width:75%;\">Accompagnements ....................... </span>"
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.product_price
+msgid "<span style=\"width:75%;\">Size tag ................... </span>"
+msgstr "<span style=\"width:75%;\">Taille ................... </span>"
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.birthday_product_price
+msgid "<span>Birthday Gift ................... </span>"
+msgstr "<span>Cadeau d'anniversaire ................... </span>"
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.product_price
+msgid "<span>Total price ................... </span>"
+msgstr "<span>Prix total ................... </span>"
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.eater_alias_orders_followup
+msgid "<strong>Alias</strong>"
+msgstr "<strong>Nom sur l'éttiquette</strong>"
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.eater_alias_orders_followup
+msgid "<strong>Product</strong>"
+msgstr "<strong>Article</strong>"
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.category
+msgid "Add to Cart"
+msgstr "Ajouter au panier"
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.eater_alias_cart_lines
+#: model:ir.ui.view,arch_db:webshop_simple.eater_alias_confirmation
+#: model:ir.ui.view,arch_db:webshop_simple.eater_alias_payment
+msgid "Alias"
+msgstr "Nom sur étiquette"
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.category
+msgid "Base"
+msgstr "Base"
+
+#. module: webshop_simple
+#: model:ir.model.fields,field_description:webshop_simple.field_sale_order_line_breadtype
+msgid "Bread Type"
+msgstr "Type de pain"
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.category
+msgid "Categories"
+msgstr "Categories"
+
+#. module: webshop_simple
+#: model:ir.model.fields,field_description:webshop_simple.field_sale_order_delivery_date
+msgid "Delivery date"
+msgstr "Date de livraison"
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.shop_simple
+msgid "Deserts"
+msgstr "Desserts"
+
+#. module: webshop_simple
+#: model:ir.model.fields,field_description:webshop_simple.field_sale_order_line_alias
+msgid "Eater Alias"
+msgstr "Nom sur étiquette"
+
+#. module: webshop_simple
+#: code:addons/webshop_simple/models/sale_order.py:65
+#, python-format
+msgid "It is forbidden to modify a sales order which is not in draft status"
+msgstr "Il est interdit de modifier une vente qui n'est pas dans l'état brouillon."
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.category
+msgid "Menu Of The Week"
+msgstr "Menu de la semaine"
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.shop_simple
+msgid "Menus"
+msgstr "Menus"
+
+#. module: webshop_simple
+#: model:ir.model.fields,field_description:webshop_simple.field_sale_order_line_product_price_unit
+msgid "Product Price"
+msgstr "Prix du produit"
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.product_price
+msgid "Product not available"
+msgstr "Article non disponible"
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.shop_simple
+msgid "Salades"
+msgstr "Salades"
+
+#. module: webshop_simple
+#: model:ir.model,name:webshop_simple.model_sale_order
+msgid "Sales Order"
+msgstr "Bon de commande"
+
+#. module: webshop_simple
+#: model:ir.model,name:webshop_simple.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Ligne de bons de commande"
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.shop_simple
+msgid "Sandwiches"
+msgstr "Sandwiches"
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.shop_simple
+msgid "Shop"
+msgstr "Magasin"
+
+#. module: webshop_simple
+#: model:ir.model.fields,field_description:webshop_simple.field_sale_order_line_sides
+#: model:ir.ui.view,arch_db:webshop_simple.category
+msgid "Sides"
+msgstr "Accompagnements"
+
+#. module: webshop_simple
+#: model:ir.model.fields,field_description:webshop_simple.field_sale_order_line_sizetag
+msgid "Size Tag"
+msgstr "Tag de taille"
+
+#. module: webshop_simple
+#: model:ir.ui.view,arch_db:webshop_simple.category
+msgid "Type"
+msgstr "Type"
+
+#. module: webshop_simple
+#: model:ir.model,name:webshop_simple.model_res_users
+msgid "Users"
+msgstr "Utilisateurs"
