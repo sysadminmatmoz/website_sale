@@ -166,7 +166,7 @@
                                                     <span class="title_h4" t-esc="line.product_id.name" />
                                                     <ul class="sides_ul">
                                                         <t t-foreach="line.sides" t-as="side">
-                                                            <li><span t-esc="side.name" /></li>
+                                                            <li>+ <span t-esc="side.name" /></li>
                                                         </t>
                                                     </ul>
                                                 </div>
