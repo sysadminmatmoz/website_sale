@@ -45,7 +45,8 @@ class WebsiteSaleSimple(WebsiteSale):
                     ('description_sale', 'ilike', srch), ('product_variant_ids.default_code', 'ilike', srch)]
 
         if category:
-            domain += [('public_categ_ids', '=', int(category))]
+            # here we use internal categories instead of public (public_categ_ids)
+            domain += [('categ_id', '=', int(category))]
 
         if attrib_values:
             attrib = None
@@ -71,8 +72,8 @@ class WebsiteSaleSimple(WebsiteSale):
     @http.route(['/shop/simple'], type='http', auth="public", website=True)
     def shop_simple(self, category=None, search='', **kwargs):
         simple_categories = ('sandwich', 'salad', 'meal', 'dessert')
-        # Build the /shop/simple endpoint
-        categories = request.env['product.public.category'].search([('name', 'in', simple_categories)])
+        # Build the /shop/simple endpoint using internal categories
+        categories = request.env['product.category'].search([('name', 'in', simple_categories)])
 
         values = {
             'categories': categories,
@@ -89,17 +90,16 @@ class WebsiteSaleSimple(WebsiteSale):
         '/shop/category/<model("product.public.category"):category>/page/<int:page>'
     ], type='http', auth="public", website=True)
     def shop(self, page=0, category=None, search='', ppg=False, **post):
-        """ We don't want this endpoint to be accessible anymore """
-        if category:
-            category = request.env['product.public.category'].search([('id', '=', int(category))], limit=1)
-            if category:
-                request.redirect("/shop/simple/category/%s" % slug(category))
+        """ We don't want this endpoint to be accessible anymore.
+            We can't no longer do a smart redirect based on category since we use internal ones in
+            /shop/simple.
+         """
         return request.redirect('/shop/simple')
 
     # ------------------------------------------------------
     # Simple Web Shop category page
     # ------------------------------------------------------
-    @http.route(['/shop/simple/category/<model("product.public.category"):category>'],
+    @http.route(['/shop/simple/category/<model("product.category"):category>'],
                 type='http', auth="public", website=True)
     def shop_simple_category(self, category=None, search='', **kwargs):
         attrib_list = request.httprequest.args.getlist('attrib')
@@ -152,7 +152,7 @@ class WebsiteSaleSimple(WebsiteSale):
         product_context = dict(request.env.context,
                                active_id=product.id,
                                partner=request.env.user.partner_id)
-        ProductCategory = request.env['product.public.category']
+        ProductCategory = request.env['product.category']
         if category:
             category = ProductCategory.browse(int(category)).exists()
 
