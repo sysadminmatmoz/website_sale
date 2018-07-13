@@ -11,6 +11,7 @@
         'website_sale_category_bread',
         'website_sale_category_size',
         'website_sale_birthday_ddmm',
+        'webshop_simple_category_image',
     ],
     'data': [
         'data/simple_categories.xml',

@@ -6,6 +6,7 @@
             <field name="type">normal</field>
             <field name="has_breadtype">True</field>
             <field name="has_sizetag">True</field>
+            <field name="has_base_products">True</field>
             <field name="parent_id">2</field>
         </record>
         <record model="product.category" id="product.product_category_salad">
@@ -13,13 +14,15 @@
             <field name="type">normal</field>
             <field name="has_breadtype">False</field>
             <field name="has_sizetag">True</field>
+            <field name="has_base_products">True</field>
             <field name="parent_id">2</field>
         </record>
         <record model="product.category" id="product.product_category_meal">
-            <field name="name">Meal</field>
+            <field name="name">Menus</field>
             <field name="type">normal</field>
             <field name="has_breadtype">False</field>
             <field name="has_sizetag">False</field>
+            <field name="has_base_products">False</field>
             <field name="parent_id">2</field>
         </record>
         <record model="product.category" id="product.product_category_dessert">
@@ -27,6 +30,7 @@
             <field name="type">normal</field>
             <field name="has_breadtype">False</field>
             <field name="has_sizetag">False</field>
+            <field name="has_base_products">False</field>
             <field name="parent_id">2</field>
         </record>
     </data>

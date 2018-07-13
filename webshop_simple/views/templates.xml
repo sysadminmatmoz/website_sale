@@ -124,7 +124,7 @@
         <div class="col-sm-7">
             <div class="oe_product_image">
                 <span itemprop="image"
-                      t-attf-content="{{request.httprequest.url_root}}web/image/product.public.category/{{category.id}}/image"
+                      t-attf-content="{{request.httprequest.url_root}}web/image/product.category/{{category.id}}/image"
                       t-field="category.image"
                       t-options="{'widget': 'image', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image'}"
                       groups="!website_sale.group_website_multi_image"/>
@@ -544,19 +544,19 @@
                         </style>
                         <div class="sandwich_row">
                             <div class="sandwich_column">
-                                <a href="/shop/simple/category/sandwich-18">
+                                <a href="/shop/simple/category/sandwich-7">
                                     <h2 data-original-title="Sandwiches" title="Sandwiches" style="text-align: center; ">Sandwiches</h2>
                                     <img class="fillwidth" src="/webshop_simple/static/src/img/cat_sandwich.jpg"/>
                                 </a>
                             </div>
                             <div class="sandwich_column">
-                                <a href="/shop/simple/category/salades-19">
+                                <a href="/shop/simple/category/salades-9">
                                     <h2 data-original-title="Salades" title="Salades" style="text-align: center; ">Salades</h2>
                                     <img class="fillwidth" src="/webshop_simple/static/src/img/cat_salade.jpg"/>
                                 </a>
                             </div>
                             <div class="sandwich_column">
-                                <a href="/shop/simple/category/menus-20">
+                                <a href="/shop/simple/category/menus-10">
                                     <h2 data-original-title="Menus" title="Menus" style="text-align: center; ">Menus</h2>
                                     <img class="fillwidth" src="/webshop_simple/static/src/img/cat_plat.jpg"/>
                                 </a>
@@ -564,7 +564,7 @@
                         </div>
                         <div class="sandwich_row">
                             <div class="dessert_column">
-                                <a href="/shop/simple/category/desert-21">
+                                <a href="/shop/simple/category/desert-11">
                                     <h2 data-original-title="Deserts" title="Deserts" style="text-align: center; ">Deserts</h2>
                                     <img class="fillheight" src="/webshop_simple/static/src/img/cat_dessert.jpg"/>
                                 </a>

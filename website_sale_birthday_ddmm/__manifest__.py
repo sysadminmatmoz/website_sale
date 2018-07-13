@@ -4,6 +4,7 @@
 {
     "name": "Partner fields birth Day and birth Month",
     "summary": "Allow Birth Day and Month Fields to Partner",
+    "description": "Add birth day and month fields to a Partner",
     "version": "10.0.1.0.0",
     "category": "Website",
     "website": "http://www.abakusitsolutions.eu",
