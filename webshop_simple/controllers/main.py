@@ -300,8 +300,7 @@ class WebsiteSaleSimple(WebsiteSale):
     @http.route(['/shop/checkout'], type='http', auth="public", website=True)
     def checkout(self, **post):
         order = request.website.sale_get_order()
-        if order:
-            if order.amount_total == 0:
-                return request.redirect('/shop/cart')
+        if order and order.amount_total == 0:
+            return request.redirect('/shop/cart')
         else:
             return super(WebsiteSaleSimple, self).checkout(**post)
