@@ -21,6 +21,3 @@ class SaleOrder(models.Model):
             if position == 1:
                 vals['delivery_date'] = (now + timedelta(days=1)).strftime("%Y-%m-%d")
         return super(SaleOrder, self).create(vals)
-
-
-
