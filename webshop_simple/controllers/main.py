@@ -6,6 +6,7 @@ from odoo import http, tools, _
 from odoo.http import request
 from odoo.addons.website.controllers.main import QueryURL
 from odoo.addons.website_sale.controllers.main import PPR
+from odoo.addons.website.models.website import slug
 
 _logger = logging.getLogger(__name__)
 
@@ -79,6 +80,20 @@ class WebsiteSale(http.Controller):
         }
         return request.render("webshop_simple.shop_simple", values)
 
+    @http.route([
+        '/shop',
+        '/shop/page/<int:page>',
+        '/shop/category/<model("product.public.category"):category>',
+        '/shop/category/<model("product.public.category"):category>/page/<int:page>'
+    ], type='http', auth="public", website=True)
+    def shop(self, page=0, category=None, search='', ppg=False, **post):
+        """ We don't want this endpoint to be accessible anymore """
+        if category:
+            category = request.env['product.public.category'].search([('id', '=', int(category))], limit=1)
+            if category:
+                request.redirect("/shop/simple/category/%s" % slug(category))
+        return request.redirect('/shop/simple')
+
     # ------------------------------------------------------
     # Simple Web Shop category page
     # ------------------------------------------------------
@@ -125,7 +140,6 @@ class WebsiteSale(http.Controller):
             return request.render("webshop_simple.category", values)
         else:
             return request.render("webshop_simple.category_product", values)
-
 
     # ------------------------------------------------------
     # Simple Web Shop category product page
@@ -192,9 +206,8 @@ class WebsiteSale(http.Controller):
     def _filter_attributes(self, **kw):
         return {k: v for k, v in kw.items() if "attribute" in k}
 
-    @http.route([
-        '/shop/cart/update'
-    ], type='http', auth="public", methods=['POST'], website=True, csrf=False)
+    @http.route(['/shop/cart/update'],
+                type='http', auth="public", methods=['POST'], website=True, csrf=False)
     def cart_update(self, product_id, add_qty=1, set_qty=0, **kw):
         breadtype = None
         if 'breadtype_' + str(product_id) in kw:
