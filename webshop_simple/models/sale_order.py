@@ -13,7 +13,7 @@ _logger = logging.getLogger(__name__)
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    delivery_date = fields.Date(default=fields.Date.today)
+    delivery_date = fields.Date()
 
     @api.multi
     def _get_extra_line_description(self, order_id, product_id, breadtype=None, sizetag=None, sides=None):

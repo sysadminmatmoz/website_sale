@@ -1,0 +1,253 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* website_sale_product_promotion
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e-20180529\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-13 10:28+0000\n"
+"PO-Revision-Date: 2018-07-13 12:33+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: fr_BE\n"
+"X-Generator: Poedit 2.0.7\n"
+
+#. module: website_sale_product_promotion
+#: model:mail.template,body_html:website_sale_product_promotion.email_template_product_promotion
+msgid ""
+"\n"
+"            \n"
+"                <p>\n"
+"                Dear ${(object.name)},\n"
+"                <br/>\n"
+"% if \"promo\" in ctx:\n"
+"                <br/>\n"
+"                Here is this week promotion:\n"
+"                <p>${ctx[\"promo\"][\"description\"]}</p>\n"
+"                <p><b>Promoted items</b></p>\n"
+"                <ul>\n"
+"                        <li>${ctx[\"promo\"][\"product_first\"]}</li>\n"
+"                        <li>${ctx[\"promo\"][\"product_second\"]}</li>\n"
+"                </ul>\n"
+"% endif\n"
+"            \n"
+"            "
+msgstr ""
+"\n"
+"            \n"
+"                <p>\n"
+"                Cher\\Chère ${(object.name)},\n"
+"                <br/>\n"
+"% if \"promo\" in ctx:\n"
+"                <br/>\n"
+"                Vous trouverez ci-bas les promotions de la semaine :\n"
+"                <p>${ctx[\"promo\"][\"description\"]}</p>\n"
+"                <p><b>Produits en promo :</b></p>\n"
+"                <ul>\n"
+"                        <li>${ctx[\"promo\"][\"product_first\"]}</li>\n"
+"                        <li>${ctx[\"promo\"][\"product_second\"]}</li>\n"
+"                </ul>\n"
+"% endif\n"
+"            \n"
+"            "
+
+#. module: website_sale_product_promotion
+#: model:ir.model.fields,help:website_sale_product_promotion.field_product_promotion_description
+msgid "A description of the promotion"
+msgstr "Une description pour la promotion"
+
+#. module: website_sale_product_promotion
+#: model:ir.ui.view,arch_db:website_sale_product_promotion.product_promotion_view_form
+msgid "Back To Draft"
+msgstr "Remettrer en brouillon"
+
+#. module: website_sale_product_promotion
+#: code:addons/website_sale_product_promotion/models/product_promotion.py:27
+#: selection:product.promotion,state:0
+#, python-format
+msgid "Closed"
+msgstr "Fermée"
+
+#. module: website_sale_product_promotion
+#: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: website_sale_product_promotion
+#: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: website_sale_product_promotion
+#: code:addons/website_sale_product_promotion/models/product_promotion.py:26
+#: selection:product.promotion,state:0
+#, python-format
+msgid "Current"
+msgstr "Actuelle"
+
+#. module: website_sale_product_promotion
+#: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_date_beg
+msgid "Date beg"
+msgstr "Date de début"
+
+#. module: website_sale_product_promotion
+#: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_date_end
+msgid "Date end"
+msgstr "Date de fin"
+
+#. module: website_sale_product_promotion
+#: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_description
+msgid "Description"
+msgstr "Description"
+
+#. module: website_sale_product_promotion
+#: code:addons/website_sale_product_promotion/models/product_promotion.py:24
+#: selection:product.promotion,state:0
+#, python-format
+msgid "Draft"
+msgstr "Brouillon"
+
+#. module: website_sale_product_promotion
+#: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_product_first
+msgid "First product"
+msgstr "Premier produit"
+
+#. module: website_sale_product_promotion
+#: model:ir.model.fields,help:website_sale_product_promotion.field_product_promotion_sequence
+msgid "Gives the sequence order when displaying promotions"
+msgstr "Donne un ordre lors de l'affichage des promotions"
+
+#. module: website_sale_product_promotion
+#: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_id
+msgid "ID"
+msgstr "ID"
+
+#. module: website_sale_product_promotion
+#: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion___last_update
+msgid "Last Modified on"
+msgstr "Dernière Modification le"
+
+#. module: website_sale_product_promotion
+#: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: website_sale_product_promotion
+#: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: website_sale_product_promotion
+#: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_display_name
+#: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_name
+msgid "Name"
+msgstr "Nom"
+
+#. module: website_sale_product_promotion
+#: code:addons/website_sale_product_promotion/models/product_promotion.py:15
+#: code:addons/website_sale_product_promotion/models/product_promotion.py:35
+#, python-format
+msgid "New"
+msgstr "Nouveau"
+
+#. module: website_sale_product_promotion
+#: code:addons/website_sale_product_promotion/models/product_promotion.py:25
+#: selection:product.promotion,state:0
+#, python-format
+msgid "Next"
+msgstr "Suivant"
+
+#. module: website_sale_product_promotion
+#: model:mail.template,subject:website_sale_product_promotion.email_template_product_promotion
+msgid "Our promotion for this week"
+msgstr "Notre promotion de cette semaine"
+
+#. module: website_sale_product_promotion
+#: model:ir.model,name:website_sale_product_promotion.model_res_partner
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: website_sale_product_promotion
+#: code:addons/website_sale_product_promotion/models/product_promotion.py:71
+#, python-format
+msgid "Please remember to create a promotion for week {}"
+msgstr "Svp, veuillez encoder une promotion pour la semaine {}"
+
+#. module: website_sale_product_promotion
+#: code:addons/website_sale_product_promotion/models/product_promotion.py:103
+#, python-format
+msgid "Please remember to set this week's promotion to CURRENT"
+msgstr "Svp, veuillez marquer la promotion de cette semaine comme \"ACTUELLE\""
+
+#. module: website_sale_product_promotion
+#: model:ir.model.fields,field_description:website_sale_product_promotion.field_res_partner_product_promotion_notification
+#: model:ir.model.fields,field_description:website_sale_product_promotion.field_res_users_product_promotion_notification
+msgid "Product promotion notification"
+msgstr "Notification des promotions"
+
+#. module: website_sale_product_promotion
+#: model:ir.actions.act_window,name:website_sale_product_promotion.product_promotion_template_action_website
+#: model:ir.ui.view,arch_db:website_sale_product_promotion.product_promotion_view_form
+#: model:ir.ui.view,arch_db:website_sale_product_promotion.product_promotion_view_tree
+msgid "Promotion"
+msgstr "Promotion"
+
+#. module: website_sale_product_promotion
+#: model:ir.ui.view,arch_db:website_sale_product_promotion.promo_notification_details
+msgid "Promotion Notification"
+msgstr "Notification pour les promotions"
+
+#. module: website_sale_product_promotion
+#: model:ir.ui.view,arch_db:website_sale_product_promotion.product_promotion_view_form
+msgid "Promotion name"
+msgstr "Nom de la promotion"
+
+#. module: website_sale_product_promotion
+#: model:ir.ui.menu,name:website_sale_product_promotion.menu_catalog_products
+msgid "Promotions"
+msgstr "Promotions"
+
+#. module: website_sale_product_promotion
+#: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_product_second
+msgid "Second product"
+msgstr "Deuxième produit"
+
+#. module: website_sale_product_promotion
+#: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_sequence
+msgid "Sequence"
+msgstr "Séquence"
+
+#. module: website_sale_product_promotion
+#: model:ir.ui.view,arch_db:website_sale_product_promotion.product_promotion_view_form
+msgid "Set to closed"
+msgstr "Marquer comme clôturé"
+
+#. module: website_sale_product_promotion
+#: model:ir.ui.view,arch_db:website_sale_product_promotion.product_promotion_view_form
+msgid "Set to current"
+msgstr "Marquer comme actuel"
+
+#. module: website_sale_product_promotion
+#: model:ir.ui.view,arch_db:website_sale_product_promotion.product_promotion_view_form
+msgid "Set to next"
+msgstr "Marquer comme suivant"
+
+#. module: website_sale_product_promotion
+#: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_state
+msgid "Status"
+msgstr "État"
+
+#. module: website_sale_product_promotion
+#: sql_constraint:product.promotion:0
+msgid "Your already have a promotion for this week."
+msgstr "Vous avez déjà encodé une promotion pour cette semaine."
+
+#. module: website_sale_product_promotion
+#: model:ir.model,name:website_sale_product_promotion.model_product_promotion
+msgid "product.promotion"
+msgstr "product.promotion"
