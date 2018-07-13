@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="email_template_sale_order_ready" model="mail.template">
+        <field name="name">Order Status Email</field>
+        <field name="email_from">${object.company_id and object.company_id.email or ''}</field>
+        <field name="subject">Your order ${object.name} is almost ready!</field>
+        <field name="partner_to">${object.partner_id.id}</field>
+        <field name="email_to">${object.email|safe}</field>
+        <field name="lang">${object.partner_id.lang}</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="auto_delete" eval="True"/>
+        <field name="body_html">
+            <![CDATA[
+<p>
+    Dear ${(object.partner_id.name)},
+<br />
+<br />
+    Your order ${(object.name)} is almost ready to pick up, please note the information below:
+</p>
+<p>
+    <ul>
+        % for line in object.order_line:
+            % if line.product_id.categ_id.wait_message: 
+            <li>
+                ${line.name}<br />
+                => ${line.product_id.categ_id.wait_message}
+            </li>
+            %endif 
+        %endfor
+    </ul>
+</p>
+<p>
+    Regards,
+    ${(object.company_id.name)}
+</p>
+	    ]]>
+        </field>
+    </record>
+</odoo>

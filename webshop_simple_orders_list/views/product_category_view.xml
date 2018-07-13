@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_category_form_view_waiting_message" model="ir.ui.view">
+        <field name="name">product.category.form.view.waiting.message</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='first']" position="after">
+                <group name="wait_message_property" groups="sales_team.group_sale_manager">
+                    <group string="Wait Messages">
+                        <field name="wait_message" />
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

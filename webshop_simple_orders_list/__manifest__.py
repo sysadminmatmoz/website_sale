@@ -12,6 +12,8 @@
     ],
     'data': [
         'views/simplesale_order.xml',
+        'views/product_category_view.xml',
+        'data/mail_template.xml',
     ],
     'installable': True
 }

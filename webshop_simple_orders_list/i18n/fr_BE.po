@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e-20180529\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-12 13:35+0000\n"
-"PO-Revision-Date: 2018-07-12 15:37+0200\n"
+"POT-Creation-Date: 2018-07-13 15:11+0000\n"
+"PO-Revision-Date: 2018-07-13 17:18+0200\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,6 +16,59 @@ msgstr ""
 "Plural-Forms: \n"
 "Language: fr_BE\n"
 "X-Generator: Poedit 2.0.7\n"
+
+#. module: webshop_simple_orders_list
+#: model:mail.template,body_html:webshop_simple_orders_list.email_template_sale_order_ready
+msgid ""
+"\n"
+"            \n"
+"<p style=\"margin:0px 0px 9px 0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">\n"
+"    Dear ${(object.partner_id.name)},</p><p style=\"margin:0px 0px 9px 0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\"><br>\n"
+"    Your order ${(object.name)} is almost ready to pick up.\n"
+"</p>\n"
+"<p style=\"margin:0px 0px 9px 0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">\n"
+"    </p><ul style=\"margin:0px 0 9px 0;\">\n"
+"        % for line in object.order_line:\n"
+"            % if line.product_id.categ_id.wait_message: \n"
+"            <li>\n"
+"                ${line.name}<br>\n"
+"                =&gt; ${line.product_id.categ_id.wait_message}\n"
+"            </li>\n"
+"            %endif \n"
+"        %endfor\n"
+"    </ul>\n"
+"<p style=\"margin:0px 0px 9px 0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\"></p>\n"
+"<p style=\"margin:0px 0px 9px 0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">\n"
+"    Regards,\n"
+"    ${(object.company_id.name)}\n"
+"</p>\n"
+"\t    \n"
+"        "
+msgstr ""
+"\n"
+"            \n"
+"<p style=\"margin:0px 0px 9px 0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">\n"
+"    Chèr\\Chère ${(object.partner_id.name)},</p><p style=\"margin:0px 0px 9px 0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\"><br>\n"
+"    Vous pouvez bientôt venir chercher votre ${(object.name)}.\n"
+"</p>\n"
+"<p style=\"margin:0px 0px 9px 0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">\n"
+"    </p><ul style=\"margin:0px 0 9px 0;\">\n"
+"        % for line in object.order_line:\n"
+"            % if line.product_id.categ_id.wait_message: \n"
+"            <li>\n"
+"                ${line.name}<br>\n"
+"                =&gt; ${line.product_id.categ_id.wait_message}\n"
+"            </li>\n"
+"            %endif \n"
+"        %endfor\n"
+"    </ul>\n"
+"<p style=\"margin:0px 0px 9px 0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\"></p>\n"
+"<p style=\"margin:0px 0px 9px 0px;font-size:13px;font-family:&quot;Lucida Grande&quot;, Helvetica, Verdana, Arial, sans-serif;\">\n"
+"    Merci à vous et à bientôt,\n"
+"    ${(object.company_id.name)}\n"
+"</p>\n"
+"\t    \n"
+"        "
 
 #. module: webshop_simple_orders_list
 #: model:ir.actions.act_window,help:webshop_simple_orders_list.action_today_simple_orders
@@ -47,6 +100,11 @@ msgstr "Qté commandée"
 #: model:ir.ui.view,arch_db:webshop_simple_orders_list.view_simple_orders_form
 msgid "Print and Close"
 msgstr "Imprimer et clôturer"
+
+#. module: webshop_simple_orders_list
+#: model:ir.model,name:webshop_simple_orders_list.model_product_category
+msgid "Product Category"
+msgstr "Catégorie d'article"
 
 #. module: webshop_simple_orders_list
 #: model:ir.model,name:webshop_simple_orders_list.model_sale_order
@@ -82,7 +140,16 @@ msgid "Tomorrow's Orders"
 msgstr "Commandes de demain"
 
 #. module: webshop_simple_orders_list
-#: code:addons/webshop_simple_orders_list/models/sale_order.py:20
-#, python-format
-msgid "Your order ({}) is ready !"
-msgstr "Votre commande ({}) est prête !"
+#: model:ir.ui.view,arch_db:webshop_simple_orders_list.product_category_form_view_waiting_message
+msgid "Wait Messages"
+msgstr "Messages d'attente"
+
+#. module: webshop_simple_orders_list
+#: model:ir.model.fields,field_description:webshop_simple_orders_list.field_product_category_wait_message
+msgid "Wait message"
+msgstr "Message d'attente (envoyé par email)"
+
+#. module: webshop_simple_orders_list
+#: model:mail.template,subject:webshop_simple_orders_list.email_template_sale_order_ready
+msgid "Your order ${object.name} is almost ready!"
+msgstr "Votre commande ${object.name} est presque prête"
