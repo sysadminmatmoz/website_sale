@@ -6,8 +6,8 @@
             <field name="model">product.category</field>
             <field name="inherit_id" ref="product.product_category_form_view"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='type']" position="after">
-                    <field name="has_base_products" />
+                <xpath expr="//form/sheet/div[@name='button_box']" position="after">
+                    <field name="image_medium" widget='image' class="oe_avatar"/>
                 </xpath>
             </field>
         </record>

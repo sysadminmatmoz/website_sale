@@ -7,8 +7,8 @@ from odoo import api, fields, models, tools, _
 _logger = logging.getLogger(__name__)
 
 
-class ProductPublicCategory(models.Model):
-    _inherit = 'product.public.category'
+class ProductCategory(models.Model):
+    _inherit = 'product.category'
 
     has_base_products = fields.Boolean(default=False,
                                        help="All product from this category are equivalent in nature."

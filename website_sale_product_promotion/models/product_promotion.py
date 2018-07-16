@@ -58,7 +58,7 @@ class ProductPromotion(models.Model):
         days_ahead = 7 - date.today().weekday()
         next_monday = date.today() + timedelta(days_ahead)
         next_week_name = next_monday.strftime('%Yw%V')
-        promo_count = self.env['product.promotion'].search([
+        promo_count = self.env['product.promotion'].search_count([
             ('state', '=', 'next'),
             ('name', '=', next_week_name)])
         res = 'PASSED'
