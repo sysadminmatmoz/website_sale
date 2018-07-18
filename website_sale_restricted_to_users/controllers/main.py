@@ -15,12 +15,26 @@ class WebsiteSaleRestricted(WebsiteSale):
         '/shop',
         '/shop/page/<int:page>',
         '/shop/category/<model("product.public.category"):category>',
-        '/shop/category/<model("product.public.category"):category>/page/<int:page>'
+        '/shop/category/<model("product.public.category"):category>/page/<int:page>',
     ], type='http', auth="public", website=True)
     def shop(self, page=0, category=None, search='', ppg=False, **post):
-        public_user = http.request.env['res.users'].sudo().search([('login', '=', 'public'),('active', '=', False)]) # Public user default ID
-        if request.uid != public_user.id:
+        if not self.is_public_user():
             #only render the template with other operations
             return super(WebsiteSaleRestricted, self).shop(page, category, search, ppg)
         else:
             return request.render("website_sale_restricted_to_users.website_sale_restricted_access", {})
+
+    @http.route(['/shop/product/<model("product.template"):product>'], type='http', auth="public", website=True)
+    def product(self, product, category='', search='', **kwargs):
+        if not self.is_public_user():
+            #only render the template with other operations
+            return super(WebsiteSaleRestricted, self).product(product, category, search)
+        else:
+            return request.render("website_sale_restricted_to_users.website_sale_restricted_access", {})
+
+    # This method returns True if the current user is the public one (no user)
+    def is_public_user(self):
+        public_user = http.request.env['res.users'].sudo().search([('login', '=', 'public'),('active', '=', False)]) # Public user default ID
+        if request.uid == public_user.id:
+            return True
+        return False
