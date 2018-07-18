@@ -12,6 +12,7 @@
     "license": "AGPL-3",
     "installable": True,
     "depends": [
+        'website_sale',
         'website_portal',
     ],
     "data": [
