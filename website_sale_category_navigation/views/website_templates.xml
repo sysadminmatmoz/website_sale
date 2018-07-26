@@ -17,9 +17,11 @@
 
         <!-- Regular parent category listing -->
         <template id="category_empty_hide" inherit_id="website_sale.products_categories">
-            <xpath expr="//div[@id='products_grid_before']/ul/t/t" position="replace">
-                <t t-if="c.products_count > 0">
-                    <t t-call="website_sale_category_navigation.categories_recursive_hide"/>
+            <xpath expr="//t[@t-foreach='categories']" position="replace">
+                <t t-foreach="categories" t-as="c">
+                    <t t-if="c.products_count > 0">
+                        <t t-call="website_sale_category_navigation.categories_recursive_hide"/>
+                    </t>
                 </t>
             </xpath>
         </template>
