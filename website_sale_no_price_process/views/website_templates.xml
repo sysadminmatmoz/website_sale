@@ -16,8 +16,8 @@
 
         <!-- Cart page -->
         <template id="cart_lines_no_price" inherit_id="website_sale.cart_lines">
-            <xpath expr="//table//th[@width='100']" position="replace" />
-            <xpath expr="//tbody//td[@id='td-price']" position="replace" />
+            <xpath expr="//table//th[@class='text-center td-price']" position="replace" />
+            <xpath expr="//tbody//td[@class='text-center td-price']" position="replace" />
         </template>
 
         <!-- Cart total -->
@@ -52,7 +52,7 @@
         	
 
         <!-- My orders page -->
-        <template id="portal_my_quotations_no_price" inherit_id="website_portal_sale.portal_my_quotations">
+        <template id="portal_my_quotations_no_price" inherit_id="sale.portal_my_quotations">
             <xpath expr="//table//td[last()]" position="replace">
                 <t t-if="quotation.portal_price_visible==True">
                     <td>
@@ -66,7 +66,7 @@
         </template>
 
         <!-- Order page -->
-        <template id="orders_followup_no_price" inherit_id="website_portal_sale.orders_followup">
+        <template id="orders_followup_no_price" inherit_id="sale.portal_order_page">
             <!-- Price unit -->
             <xpath expr="//span[@t-field='ol.price_unit']" position="replace">
                 <t t-if="order.portal_price_visible==True">
@@ -95,12 +95,25 @@
                 </t>
             </xpath>
             <!-- Taxes -->
-            <xpath expr="//span[@t-field='order.amount_tax']" position="replace">
+            <xpath expr="//t[@t-foreach='tax_groups']" position="replace">
                 <t t-if="order.portal_price_visible==True">
-                    <span t-field="order.amount_tax" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: order.pricelist_id.currency_id}"/>
-                </t>
-                <t t-if="order.portal_price_visible==False">
-                    /
+                    <t t-foreach="tax_groups" t-as="amount_by_group">
+                        <t t-if="len(tax_groups) == 1 and order.amount_untaxed == amount_by_group[2]">
+                            <div class="col-md-9 col-xs-8 text-right"><span t-esc="amount_by_group[0]"/></div>
+                            <div class="col-md-3 col-xs-4 text-right">
+                                <span t-esc="amount_by_group[1]" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: order.pricelist_id.currency_id}"/>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <div class="col-md-9 col-xs-8 text-right">
+                                <span t-esc="amount_by_group[0]"/>
+                                <span>&amp;nbsp;<span>on</span>&amp;nbsp;<t t-esc="amount_by_group[2]" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: order.pricelist_id.currency_id}"/></span>
+                            </div>
+                            <div class="col-md-3 col-xs-4 text-right">
+                                <span t-esc="amount_by_group[1]" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: order.pricelist_id.currency_id}"/>
+                            </div>
+                        </t>
+                    </t>
                 </t>
             </xpath>
 
