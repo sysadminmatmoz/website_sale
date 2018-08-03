@@ -685,7 +685,7 @@ odoo.define('website_sale.alias', ['web.ajax'], function (require) {
             <th class="td-alias">Alias</th>
         </xpath>
         <!-- add column to body -->
-        <xpath expr="//tbody/tr/td[2]" position="after">
+        <xpath expr="//tbody/tr/td[1]" position="after">
             <td>
                 <div id="quote_alias">
                     <strong  t-esc="line.alias or line.order_partner_id.name.split(' ', 1)[0]"
