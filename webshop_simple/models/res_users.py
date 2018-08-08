@@ -31,6 +31,12 @@ class ResUsers(models.Model):
 
     @api.model
     def create(self, values):
+        """
+        Default phone number to avoid displaying shop/address
+        Default country_id to allow payment
+        """
+        if not values.get('phone'):
+            values['phone'] = u'+32477353535'
         user = super(ResUsers, self).create(values)
         company_id = self.env['res.company']._company_default_get('webshop.simple')
         if company_id and company_id.country_id:
