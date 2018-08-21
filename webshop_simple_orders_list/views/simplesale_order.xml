@@ -122,7 +122,7 @@
          <field name="type">ir.actions.act_window</field>
          <field name="domain">[('state', '=', 'sale'),
              ('payment_state', '=', 'done'),
-             ('delivery_date', '&#60;=', context_today().strftime('%Y-%m-%d 00:00:00'))]
+             ('delivery_date', '&#60;=', datetime.date.today().strftime('%Y-%m-%d 00:00:00'))]
          </field>
          <field name="view_type">form</field>
          <field name="view_mode">tree,form</field>
@@ -148,7 +148,7 @@
          <field name="type">ir.actions.act_window</field>
          <field name="domain">[('state', '=', 'sale'),
              ('payment_state', '=', 'done'),
-             ('delivery_date', '&#62;=', (context_today()+datetime.timedelta(days=1)).strftime('%Y-%m-%d 00:00:00'))]
+             ('delivery_date', '&#62;=', (datetime.date.today()+datetime.timedelta(days=1)).strftime('%Y-%m-%d 00:00:00'))]
          </field>
          <field name="view_type">form</field>
          <field name="view_mode">tree,form</field>
