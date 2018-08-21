@@ -210,7 +210,7 @@
     <template id="category_product_image" name="Image for Category Product">
         <!-- images for currently selected product -->
         <div class="col-sm-7">
-            <!-- Menu if the week badge -->
+            <!-- Menu of the week badge -->
             <t t-if="product_id == company.week_menu_product_id.id">
                 <div style="position: absolute; width: 65px; height: 65px; border-radius: 50%; font-size: 12px; padding-top: 15px; color: #fff; line-height: 15px; text-align: center; background: #39d;">
                     Menu Of The Week
@@ -365,6 +365,12 @@
                                         </div>
                                         <t t-set="product_id" t-value="product.product_variant_id.id if len(product.product_variant_ids) == 1 else '0'"/>
                                         <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                                        <!-- Extra product description in notes -->
+                                        <t t-if="product.description_sale">
+                                            <div class="js_product_description">
+                                                <span t-esc="product.description_sale" />
+                                            </div>
+                                        </t>
                                         <!-- Item Size -->
                                         <t t-if="product.categ_id.has_sizetag">
                                             <t t-call="webshop_simple.sizetag"/>
@@ -428,6 +434,12 @@
                                         <h1 itemprop="name"><t t-esc="product.name"/></h1>
                                         <t t-set="product_id" t-value="product.product_variant_id.id if len(product.product_variant_ids) == 1 else '0'"/>
                                         <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
+                                        <!-- Extra product description in notes -->
+                                        <t t-if="product.description_sale">
+                                            <div class="js_product_description">
+                                                <span t-esc="product.description_sale" />
+                                            </div>
+                                        </t>
                                         <!-- Item Size -->
                                         <t t-if="product.categ_id.has_sizetag">
                                             <t t-call="webshop_simple.sizetag"/>
