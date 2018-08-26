@@ -105,13 +105,51 @@
 
     <template id="sides" name="Sides">
         <div class="row" id="sides_row">
+            <style>
+<![CDATA[
+.price-side-selected {
+    background-color: #b3b3b3;
+    color: #ffffff;
+}
+.price-side {
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 75%;
+    font-weight: bold;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+}
+]]>
+            </style>
             <div>
                 <t t-foreach="sides" t-as="side_product">
                     <t t-set="side_product_id" t-value="side_product.id"/>
                     <div class="checkbox-group">
                         <input type="checkbox" t-attf-id="sides-{{product_id}}-{{side_product_id}}" t-attf-name="sides-{{product_id}}-{{side_product_id}}" t-att-value="side_product.id" t-attf-onclick="compute_sides({{product_id}});"/>
-                        <label t-attf-for="sides-{{product_id}}-{{side_product_id}}" ><t t-esc="side_product.name"/>  (<t t-esc="'+{0:,.2f}'.format(side_product.lst_price)"/><![CDATA[&nbsp;&euro;]]>)</label>
-                        <input type="hidden" t-attf-id="side_price_{{product_id}}_{{side_product_id}}" t-att-value="side_product.lst_price" />
+                        <t t-if="len(side_product.sizetags_line_ids)>0">
+                            <label t-attf-for="sides-{{product_id}}-{{side_product_id}}" >
+                                <t t-esc="side_product.name"/><![CDATA[&nbsp;]]>
+                                <t t-foreach="side_product.sizetags_line_ids" t-as="sl">
+                                    <div t-attf-id="sides_{{product_id}}_{{side_product_id}}_{{sl_index}}" t-att-class="'price-side price-side-selected' if sl_index == 0 else 'price-side'">
+                                        <t t-esc="sl.sizetag_id.name[0].upper()"/> (<t t-esc="'+{0:,.2f}'.format(sl.sizetag_price)"/><![CDATA[&nbsp;&euro;]]>)
+                                        <input type="hidden" t-attf-id="side_sizetag_price_{{product_id}}_{{side_product_id}}_{{sl_index}}" t-att-value="sl.sizetag_price" />
+                                    </div>
+                                </t>
+                            </label>
+                            <input type="hidden" t-attf-id="side_price_{{product_id}}_{{side_product_id}}" t-att-value="side_product.sizetags_line_ids[0].sizetag_price" />
+                        </t>
+                        <t t-else="">
+                            <label t-attf-for="sides-{{product_id}}-{{side_product_id}}" >
+                                <t t-esc="side_product.name"/><![CDATA[&nbsp;]]>
+                                <div class="price-side price-side-selected">
+                                    (<t t-esc="'+{0:,.2f}'.format(side_product.lst_price)"/><![CDATA[&nbsp;&euro;]]>)
+                                </div>
+                            </label>
+                            <input type="hidden" t-attf-id="side_price_{{product_id}}_{{side_product_id}}" t-att-value="side_product.lst_price" />
+                        </t>
                     </div>
                 </t>
             </div>
