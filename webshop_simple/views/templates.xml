@@ -21,14 +21,12 @@
                     <b><![CDATA[&nbsp;&euro;]]></b>
                 </h4>
             </t>
-            <t t-if="sides_count>0">
-                <h4 class="oe_price_h4 css_editable_mode_hidden" style="display:none">
-                    <span style="width:75%;">Sides ....................... </span>
-                    <b class="oe_price" style="white-space: nowrap;" t-attf-id="sides_price_{{product_id}}"
-                       t-options="{'widget': 'monetary', 'display_currency': website.currency_id}">0.00</b>
-                    <b><![CDATA[&nbsp;&euro;]]></b>
-                </h4>
-            </t>
+            <h4 class="oe_price_h4 css_editable_mode_hidden" style="display:none">
+                <span style="width:75%;">Sides ....................... </span>
+                <b class="oe_price" style="white-space: nowrap;" t-attf-id="sides_price_{{product_id}}"
+                   t-options="{'widget': 'monetary', 'display_currency': website.currency_id}">0.00</b>
+                <b><![CDATA[&nbsp;&euro;]]></b>
+            </h4>
             <h4 class="oe_price_h4 css_editable_mode_hidden" style="display:none">
                 <span><t t-esc="product.name"/>......... </span>
                 <span class="text-danger oe_default_price"
@@ -594,19 +592,19 @@
                         </style>
                         <div class="sandwich_row">
                             <div class="sandwich_column">
-                                <a href="/shop/simple/category/sandwich-7">
+                                <a href="/shop/simple/category/sandwich-3">
                                     <h2 data-original-title="Sandwiches" title="Sandwiches" style="text-align: center; ">Sandwiches</h2>
                                     <img class="fillwidth" src="/webshop_simple/static/src/img/cat_sandwich.jpg"/>
                                 </a>
                             </div>
                             <div class="sandwich_column">
-                                <a href="/shop/simple/category/salades-9">
+                                <a href="/shop/simple/category/salades-4">
                                     <h2 data-original-title="Salades" title="Salades" style="text-align: center; ">Salades</h2>
                                     <img class="fillwidth" src="/webshop_simple/static/src/img/cat_salade.jpg"/>
                                 </a>
                             </div>
                             <div class="sandwich_column">
-                                <a href="/shop/simple/category/menus-10">
+                                <a href="/shop/simple/category/menus-5">
                                     <h2 data-original-title="Menus" title="Menus" style="text-align: center; ">Menus</h2>
                                     <img class="fillwidth" src="/webshop_simple/static/src/img/cat_plat.jpg"/>
                                 </a>
@@ -614,7 +612,7 @@
                         </div>
                         <div class="sandwich_row">
                             <div class="dessert_column">
-                                <a href="/shop/simple/category/desert-11">
+                                <a href="/shop/simple/category/desert-6">
                                     <h2 data-original-title="Deserts" title="Deserts" style="text-align: center; ">Deserts</h2>
                                     <img class="fillheight" src="/webshop_simple/static/src/img/cat_dessert.jpg"/>
                                 </a>
