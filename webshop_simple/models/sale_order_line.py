@@ -29,7 +29,12 @@ class SaleOrderLine(models.Model):
         # sides if any
         if self.sides:
             for side_product in self.sides:
-                self.product_price_unit += side_product.lst_price
+                if side_product.has_sizetag:
+                    for sizetag in side_product.sizetags_line_ids:
+                        if sizetag.sizetag_id == self.sizetag.sizetag_id:
+                            self.product_price_unit += sizetag.sizetag_price
+                else:
+                    self.product_price_unit += side_product.lst_price
 
     @api.depends('product_uom_qty', 'discount', 'price_unit', 'tax_id', 'product_price_unit')
     def _compute_amount(self):
