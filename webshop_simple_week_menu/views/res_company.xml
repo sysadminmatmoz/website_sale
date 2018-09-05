@@ -9,7 +9,11 @@
             <page string="Menu of the Week">
                 <group>
                     <group string="Menu of the Week" name="week_menu">
-                        <field name="week_menu_product_id" />
+                        <field name="monday_product_id" domain="[('categ_id', '=', %(product.product_category_todaysspecial)d)]"/>
+                        <field name="tuesday_product_id" domain="[('categ_id', '=', %(product.product_category_todaysspecial)d)]"/>
+                        <field name="wednesday_product_id" domain="[('categ_id', '=', %(product.product_category_todaysspecial)d)]"/>
+                        <field name="thursday_product_id" domain="[('categ_id', '=', %(product.product_category_todaysspecial)d)]"/>
+                        <field name="friday_product_id" domain="[('categ_id', '=', %(product.product_category_todaysspecial)d)]"/>
                     </group>
                 </group>
             </page>
