@@ -9,7 +9,7 @@ _logger = logging.getLogger(__name__)
 class ResCompany(models.Model):
     _inherit = 'res.company'
 
-    monday_product_id = fields.Many2one('product.product', string='Monday Product'),
+    monday_product_id = fields.Many2one('product.product', string='Monday Product')
     tuesday_product_id = fields.Many2one('product.product', string='Tuesday Product')
     wednesday_product_id = fields.Many2one('product.product', string='Wednesday Product')
     thursday_product_id = fields.Many2one('product.product', string='Thursday Product')
