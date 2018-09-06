@@ -12,6 +12,13 @@ from odoo.addons.website.models.website import slug
 
 _logger = logging.getLogger(__name__)
 
+DEFAULT_CATEGORIES = [
+    "product.product_category_sandwich",
+    "product.product_category_salad",
+    "product.product_category_meal",
+    "product.product_category_dessert",
+]
+
 
 class WebsiteSaleSimple(WebsiteSale):
 
@@ -44,9 +51,13 @@ class WebsiteSaleSimple(WebsiteSale):
                     '|', '|', '|', ('name', 'ilike', srch), ('description', 'ilike', srch),
                     ('description_sale', 'ilike', srch), ('product_variant_ids.default_code', 'ilike', srch)]
 
-        if category:
-            # here we use internal categories instead of public (public_categ_ids)
-            domain += [('categ_id', '=', int(category))]
+        # categories = [request.env.ref(x).id for x in DEFAULT_CATEGORIES]
+        # _logger.debug("ABAKUS: categories={}".format(categories))
+        if category and int(category):
+            # if category:
+            # Note that we use internal categories instead of public (public_categ_ids)
+            domain += [('categ_id', '=', category.id)]
+            _logger.debug("ABAKUS: category.id={} - category.name={}".format(category.id, category.name))
 
         if attrib_values:
             attrib = None
@@ -73,7 +84,8 @@ class WebsiteSaleSimple(WebsiteSale):
     def shop_simple(self, category=None, search='', **kwargs):
         simple_categories = ('sandwich', 'salad', 'meal', 'dessert')
         # Build the /shop/simple endpoint using internal categories
-        categories = request.env['product.category'].search([('name', 'in', simple_categories)])
+        # categories = request.env['product.category'].search([('name', 'in', simple_categories)])
+        categories = {x: request.env.ref('product.product_category_' + x).id for x in simple_categories}
 
         values = {
             'categories': categories,
@@ -102,6 +114,10 @@ class WebsiteSaleSimple(WebsiteSale):
     @http.route(['/shop/simple/category/<model("product.category"):category>'],
                 type='http', auth="public", website=True)
     def shop_simple_category(self, category=None, search='', **kwargs):
+        """ We display results from 5 top categories only
+        Work categories like product_category_todaysspecial should not be accessible through
+        this endpoint
+        """
         attrib_list = request.httprequest.args.getlist('attrib')
         attrib_values = [map(int, v.split("-")) for v in attrib_list if v]
         attrib_set = set([v[1] for v in attrib_values])
