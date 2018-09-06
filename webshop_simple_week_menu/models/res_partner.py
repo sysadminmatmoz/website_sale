@@ -60,7 +60,6 @@ class ResPartner(models.Model):
                 if user.partner_id.allow_week_menu_notification:
                     _logger.debug(u"ABAKUS: Week Menu Mailing - SEND TO: {}".format(user.name))
                     template.send_mail(user.id, force_send=True)
-                    break
                 else:
                     _logger.debug(u"ABAKUS: Week Menu Mailing - DISABLED FOR: {}".format(user.name))
             else:
