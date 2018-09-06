@@ -11,15 +11,49 @@
         <field name="auto_delete" eval="True"/>
         <field name="body_html">
             <![CDATA[
-	          <p>Dear ${(object.name)},<br/>
+	          <p style="font-family: verdana">Dear ${(object.name)},<br/>
 	          <br/>
 		  Here is the Menu of the Week for this week.<br/>
 		  </p>
-		  <div>
-		    <b><span>${ctx["promo"]["product_gift"]}</span></b>
+		  <div style="font-family: verdana">
+		    <ul style="width:300px; list-style: none;text-align: center;">
+%if 'monday' in ctx["promo"]:
+                <li style="margin: 10px 0;display:inline-block;">
+    		        <div style="margin: 10px 0;">Monday: <b><span>${ctx["promo"]["monday"]["name"]}</span></b></div>
+	    	        <div><img src="${ctx["promo"]["monday"]["url"]}" style="max-height:150px;"></div>
+		        </li>
+%endif
+%if 'tuesday' in ctx["promo"]:
+                <li style="margin: 10px 0;display:inline-block;">
+    		        <div style="margin: 10px 0;">Tuesday: <b><span>${ctx["promo"]["tuesday"]["name"]}</span></b></div>
+	    	        <div><img src="${ctx["promo"]["tuesday"]["url"]}" style="max-height:150px;"></div>
+    		    </li>
+%endif
+%if 'wednesday' in ctx["promo"]:
+                <li style="margin: 10px 0;display:inline-block;">
+		            <div style="margin: 10px 0;">Wednesday: <b><span>${ctx["promo"]["wednesday"]["name"]}</span></b></div>
+	    	        <div><img src="${ctx["promo"]["wednesday"]["url"]}" style="max-height:150px;"></div>
+		        </li>
+%endif
+%if 'thursday' in ctx["promo"]:
+                <li style="margin: 10px 0;display:inline-block;">
+		            <div style="margin: 10px 0;">Thursday: <b><span>${ctx["promo"]["thursday"]["name"]}</span></b></div>
+	    	        <div><img src="${ctx["promo"]["thursday"]["url"]}" style="max-height:150px;"></div>
+		        </li>
+%endif
+%if 'friday' in ctx["promo"]:
+                <li style="margin: 10px 0;display:inline-block;">
+    		        <div style="margin: 10px 0;">Friday: <b><span>${ctx["promo"]["friday"]["name"]}</span></b></div>
+	    	        <div><img src="${ctx["promo"]["friday"]["url"]}" style="max-height:150px;"></div>
+    		    </li>
+%endif
+		    </ul>
 		  </div>
-                  Regards,<br/>
+		  <p style="font-family: verdana">
+		          <br/>
+                  Enjoy your meal,<br/>
                   ${(object.company_id.name)}
+           </p>
 	    ]]>
         </field>
     </record>

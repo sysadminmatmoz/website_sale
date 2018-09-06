@@ -22,15 +22,15 @@ class ResPartner(models.Model):
             context.update(self.env.context)
         context['promo'] = {}
         company = self.env.user.company_id
-        product_id = company.birthday_promotion_product_id
         # check if we actually have a product in promotion
         if not company.birthday_promotion_product_id:
             return
+        product_id = company.birthday_promotion_product_id
         # construct product url
         # <website_domain>/shop/simple/category/<category-slug>#product_id_<id>
         base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         # NOTE: only the first public category is used in creating the slug
-        product_url = u"{}/shop/simple/category/{}#product_details_{}".format(base_url, slug(product_id.	public_categ_ids[0]), product_id.id)
+        product_url = u"{}/shop/simple/category/{}#product_details_{}".format(base_url, slug(product_id.public_categ_ids[0]), product_id.id)
         context['promo'] = {
             'product_gift': product_id.name,
             'product_url': product_url,
