@@ -9,7 +9,11 @@ _logger = logging.getLogger(__name__)
 
 
 class ProductPromotion(models.Model):
-    """ Promotion main class """
+    """ Promotion main class
+        We promote two products, one from each following categories salad and sandwich.
+        We set the base price to be used when these product are in promotion.
+        This price replaces the regular base price when ordering.
+     """
     _name = 'product.promotion'
 
     name = fields.Char(index=True, readonly=True, required=True, default=lambda self: _('New'))
@@ -18,8 +22,13 @@ class ProductPromotion(models.Model):
     display_name = fields.Char(string='Name', compute='_compute_display_name')
     date_beg = fields.Datetime(default=date.today())
     date_end = fields.Datetime(computed="_compute_date_end", readonly=True, default=date.today() + timedelta(weeks=1))
-    product_first = fields.Many2one('product.product', 'First product')
-    product_second = fields.Many2one('product.product', 'Second product')
+    product_sandwich = fields.Many2one('product.product', 'Sandwich in promotion')
+    product_sandwich_promo_price = fields.Monetary('Promo Price')
+    product_salad = fields.Many2one('product.product', 'Salad in promotion')
+    product_salad_promo_price = fields.Monetary('Promo Price')
+    company_id = fields.Many2one('res.company', string='Company', required=True,
+                                 default=lambda self: self.env.user.company_id)
+    currency_id = fields.Many2one(related="company_id.currency_id", string="Currency", readonly=True)
     state = fields.Selection([
         ('draft', _('Draft')),
         ('next', _('Next')),
@@ -93,8 +102,8 @@ class ProductPromotion(models.Model):
         if promo_record:
             context['promo'] = {
                 'description': promo_record.description,
-                'product_first': promo_record.product_first.name,
-                'product_second': promo_record.product_second.name,
+                'product_sandwich': promo_record.product_sandwich.name,
+                'product_salad': promo_record.product_salad.name,
             }
         else:
             # No promo set as current notify the admin
