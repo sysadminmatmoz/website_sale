@@ -240,7 +240,7 @@ class WebsiteSaleSimple(WebsiteSale):
             'compute_currency': compute_currency,
             'get_attribute_value_ids': self.get_attribute_value_ids,
         }
-        return request.render("webshop_simple.category_product", values)
+        return self.shop_simple_category_render("webshop_simple.category_product", values)
 
     # ------------------------------------------------------
     # Handle cart
