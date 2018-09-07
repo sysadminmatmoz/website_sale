@@ -26,7 +26,7 @@ class WebsiteSimplePromos(WebsiteSaleSimple):
     @staticmethod
     def shop_simple_category_render(page, values):
         # Get all promo product from this week
-        promo_record = request.env['product.promotion'].search([('state', '=', 'curr')], limit=1)
+        promo_record = request.env['product.promotion'].sudo().search([('state', '=', 'curr')], limit=1)
         if promo_record:
             promo_products = {
                 'sandwich': promo_record.product_sandwich,
