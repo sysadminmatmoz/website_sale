@@ -140,6 +140,7 @@ class WebsiteSaleSimple(WebsiteSale):
         domain = self._get_search_domain_simple(search, category, attrib_values)
         domain += [('active', '=', True)]
         products = request.env['product.template'].search(domain)
+
         # set the default product to display
         product_count = len(products)
         if product_count == 0:
@@ -169,9 +170,13 @@ class WebsiteSaleSimple(WebsiteSale):
             'get_attribute_value_ids': self.get_attribute_value_ids,
         }
         if category.has_base_products:
-            return request.render("webshop_simple.category", values)
+            return self.shop_simple_category_render("webshop_simple.category", values)
         else:
-            return request.render("webshop_simple.category_product", values)
+            return self.shop_simple_category_render("webshop_simple.category_product", values)
+
+    @staticmethod
+    def shop_simple_category_render(page, values):
+        return request.render(page, values)
 
     # ------------------------------------------------------
     # Simple Web Shop category product page
