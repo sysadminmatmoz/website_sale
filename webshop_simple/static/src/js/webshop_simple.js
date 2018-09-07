@@ -6,7 +6,7 @@ function compute_sizetag (product_id){
         return;
     }
     var radios = document.getElementsByName('sizetag_' + product_id);
-    if(radios.length == 0){
+    if(radios.length < 1){
         return;
     }
     var indexChecked = 0;
@@ -22,9 +22,6 @@ function compute_sizetag (product_id){
     };
     // update sides with sizetag labels
     var my_sides = document.querySelectorAll('[for^="sides-' + product_id + '"]');
-    if(my_sides.length < 1){
-        return;
-    }
     for( var i = 0; i < my_sides.length; i++) {
         var divs = my_sides[i].querySelectorAll('div');
         var side_price = 0;
@@ -72,9 +69,6 @@ function compute_sides(product_id){
     }
     var sides_price = 0.0;
     var my_sides = document.querySelectorAll('[id^="sides-' + product_id + '"]');
-    if(my_sides.length < 1){
-        return;
-    }
     for( var i = 0; i < my_sides.length; i++) {
         if(my_sides[i].checked){
             var price = document.getElementById('side_price_' + product_id + '_' + my_sides[i].value).value
