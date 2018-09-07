@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-07 01:07+0000\n"
-"PO-Revision-Date: 2018-09-07 03:12+0200\n"
+"POT-Creation-Date: 2018-09-07 09:49+0000\n"
+"PO-Revision-Date: 2018-09-07 11:51+0200\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -72,37 +72,37 @@ msgstr ""
 "            \n"
 "\t          <p style=\"font-family: verdana\">Cher/Chère ${(object.name)},<br/>\n"
 "\t          <br/>\n"
-"\t\t  Voici les soups du jour pour cette semaine.<br/>\n"
+"\t\t  Voici les soupes du jour pour cette semaine.<br/>\n"
 "\t\t  </p>\n"
 "\t\t  <div style=\"font-family: verdana\">\n"
 "\t\t    <ul style=\"width:300px; list-style: none;text-align: center;\">\n"
 "%if 'monday' in ctx[\"promo\"]:\n"
 "                <li style=\"margin: 10px 0;display:inline-block;\">\n"
-"    \t\t        <div style=\"margin: 10px 0;\">Monday: <b><span>${ctx[\"promo\"][\"monday\"][\"name\"]}</span></b></div>\n"
+"    \t\t        <div style=\"margin: 10px 0;\">Lundi: <b><span>${ctx[\"promo\"][\"monday\"][\"name\"]}</span></b></div>\n"
 "\t    \t        <div><img src=\"${ctx[\"promo\"][\"monday\"][\"url\"]}\" style=\"max-height:150px;\"></div>\n"
 "\t\t        </li>\n"
 "%endif\n"
 "%if 'tuesday' in ctx[\"promo\"]:\n"
 "                <li style=\"margin: 10px 0;display:inline-block;\">\n"
-"    \t\t        <div style=\"margin: 10px 0;\">Tuesday: <b><span>${ctx[\"promo\"][\"tuesday\"][\"name\"]}</span></b></div>\n"
+"    \t\t        <div style=\"margin: 10px 0;\">Mardi: <b><span>${ctx[\"promo\"][\"tuesday\"][\"name\"]}</span></b></div>\n"
 "\t    \t        <div><img src=\"${ctx[\"promo\"][\"tuesday\"][\"url\"]}\" style=\"max-height:150px;\"></div>\n"
 "    \t\t    </li>\n"
 "%endif\n"
 "%if 'wednesday' in ctx[\"promo\"]:\n"
 "                <li style=\"margin: 10px 0;display:inline-block;\">\n"
-"\t\t            <div style=\"margin: 10px 0;\">Wednesday: <b><span>${ctx[\"promo\"][\"wednesday\"][\"name\"]}</span></b></div>\n"
+"\t\t            <div style=\"margin: 10px 0;\">Mercredi: <b><span>${ctx[\"promo\"][\"wednesday\"][\"name\"]}</span></b></div>\n"
 "\t    \t        <div><img src=\"${ctx[\"promo\"][\"wednesday\"][\"url\"]}\" style=\"max-height:150px;\"></div>\n"
 "\t\t        </li>\n"
 "%endif\n"
 "%if 'thursday' in ctx[\"promo\"]:\n"
 "                <li style=\"margin: 10px 0;display:inline-block;\">\n"
-"\t\t            <div style=\"margin: 10px 0;\">Thursday: <b><span>${ctx[\"promo\"][\"thursday\"][\"name\"]}</span></b></div>\n"
+"\t\t            <div style=\"margin: 10px 0;\">Jeudi: <b><span>${ctx[\"promo\"][\"thursday\"][\"name\"]}</span></b></div>\n"
 "\t    \t        <div><img src=\"${ctx[\"promo\"][\"thursday\"][\"url\"]}\" style=\"max-height:150px;\"></div>\n"
 "\t\t        </li>\n"
 "%endif\n"
 "%if 'friday' in ctx[\"promo\"]:\n"
 "                <li style=\"margin: 10px 0;display:inline-block;\">\n"
-"    \t\t        <div style=\"margin: 10px 0;\">Friday: <b><span>${ctx[\"promo\"][\"friday\"][\"name\"]}</span></b></div>\n"
+"    \t\t        <div style=\"margin: 10px 0;\">Vendredi: <b><span>${ctx[\"promo\"][\"friday\"][\"name\"]}</span></b></div>\n"
 "\t    \t        <div><img src=\"${ctx[\"promo\"][\"friday\"][\"url\"]}\" style=\"max-height:150px;\"></div>\n"
 "    \t\t    </li>\n"
 "%endif\n"
@@ -117,52 +117,46 @@ msgstr ""
 "        "
 
 #. module: webshop_simple_week_soup
-#: model:ir.model.fields,field_description:webshop_simple_week_soup.field_res_partner_allow_week_menu_notification
-#: model:ir.model.fields,field_description:webshop_simple_week_soup.field_res_users_allow_week_menu_notification
-msgid "Allow week menu notification"
-msgstr "Recevoir le menu de la semaine"
-
-#. module: webshop_simple_week_soup
 #: model:ir.model,name:webshop_simple_week_soup.model_res_company
 msgid "Companies"
 msgstr "Sociétés"
 
 #. module: webshop_simple_week_soup
-#: model:ir.model.fields,field_description:webshop_simple_week_soup.field_res_company_friday_product_id
-msgid "Friday Product"
-msgstr "Soup du Vendredi"
+#: model:ir.model.fields,field_description:webshop_simple_week_soup.field_res_company_friday_soup_id
+msgid "Friday Soup"
+msgstr "Soupe du Vendredi"
 
 #. module: webshop_simple_week_soup
-#: model:ir.ui.view,arch_db:webshop_simple_week_soup.res_company_week_soup_form
-msgid "Soup of the Week"
-msgstr "Soup de la semaine"
-
-#. module: webshop_simple_week_soup
-#: model:ir.model.fields,field_description:webshop_simple_week_soup.field_res_company_monday_product_id
-msgid "Monday Product"
-msgstr "Soup du Lundi"
+#: model:ir.model.fields,field_description:webshop_simple_week_soup.field_res_company_monday_soup_id
+msgid "Monday Soup"
+msgstr "Soupe du Lundi"
 
 #. module: webshop_simple_week_soup
 #: model:ir.model,name:webshop_simple_week_soup.model_res_partner
 msgid "Partner"
-msgstr "Contact"
+msgstr "Partenaire"
+
+#. module: webshop_simple_week_soup
+#: model:ir.ui.view,arch_db:webshop_simple_week_soup.res_company_week_soup_form
+msgid "Soups of the Week"
+msgstr "Soupes de la Semaine"
 
 #. module: webshop_simple_week_soup
 #: model:mail.template,subject:webshop_simple_week_soup.email_template_week_soup
-msgid "This Week Soups"
-msgstr "Soupes de la semaine"
+msgid "This Week Soup"
+msgstr "Soupe de la Semaine"
 
 #. module: webshop_simple_week_soup
-#: model:ir.model.fields,field_description:webshop_simple_week_soup.field_res_company_thursday_product_id
-msgid "Thursday Product"
-msgstr "Soup du Jeudi"
+#: model:ir.model.fields,field_description:webshop_simple_week_soup.field_res_company_thursday_soup_id
+msgid "Thursday Soup"
+msgstr "Soupe du Jeudi"
 
 #. module: webshop_simple_week_soup
-#: model:ir.model.fields,field_description:webshop_simple_week_soup.field_res_company_tuesday_product_id
-msgid "Tuesday Product"
-msgstr "Soup du Mardi"
+#: model:ir.model.fields,field_description:webshop_simple_week_soup.field_res_company_tuesday_soup_id
+msgid "Tuesday Soup"
+msgstr "Soupe du Mardi"
 
 #. module: webshop_simple_week_soup
-#: model:ir.model.fields,field_description:webshop_simple_week_soup.field_res_company_wednesday_product_id
-msgid "Wednesday Product"
-msgstr "Soup du Mercredi"
+#: model:ir.model.fields,field_description:webshop_simple_week_soup.field_res_company_wednesday_soup_id
+msgid "Wednesday Soup"
+msgstr "Soupe du Mercredi"
