@@ -103,7 +103,9 @@ class ProductPromotion(models.Model):
             context['promo'] = {
                 'description': promo_record.description,
                 'product_sandwich': promo_record.product_sandwich.name,
+                'product_sandwich_promo_price': promo_record.product_sandwich_promo_price,
                 'product_salad': promo_record.product_salad.name,
+                'product_salad_promo_price': promo_record.product_salad_promo_price,
             }
         else:
             # No promo set as current notify the admin

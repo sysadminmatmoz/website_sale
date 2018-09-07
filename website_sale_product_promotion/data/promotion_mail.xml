@@ -10,19 +10,31 @@
             <!--<field name="lang">${object.user_id.lang}</field>-->
             <field name="body_html">
             <![CDATA[
-                <p>
+                <p style="font-family: verdana">
                 Dear ${(object.name)},
                 <br/>
-% if "promo" in ctx:
                 <br/>
-                Here is this week promotion:
+                Here are this week promotions:
+                </p>
                 <p>${ctx["promo"]["description"]}</p>
-                <p><b>Promoted items</b></p>
-                <ul>
-                        <li>${ctx["promo"]["product_first"]}</li>
-                        <li>${ctx["promo"]["product_second"]}</li>
-                </ul>
-% endif
+                <br/>
+                <div style="font-family: verdana">
+                    <b>Sandwich in promotion</b>
+                    <ul style="width:300px; list-style: none;text-align: center;">
+                        <li style="margin: 10px 0;display:inline-block;">${ctx["promo"]["product_sandwich"]} (${ctx["promo"]["product_sandwich_promo_price"]} &euro;)</li>
+                    </ul>
+                </div>
+                <div style="font-family: verdana">
+                    <b>Salad in promotion</b>
+                    <ul style="width:300px; list-style: none;text-align: center;">
+                        <li style="margin: 10px 0;display:inline-block;">${ctx["promo"]["product_salad"]} (${ctx["promo"]["product_salad_promo_price"]} &euro;)</li>
+                    </ul>
+                </div>
+                <p style="font-family: verdana">
+		            <br/>
+                    Enjoy your meal,<br/>
+                    ${(object.company_id.name)}
+                </p>
             ]]>
             </field>
     </record>
