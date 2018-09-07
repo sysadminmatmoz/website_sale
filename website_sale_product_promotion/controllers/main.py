@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 from odoo.http import request
-from odoo.addons.website_sale.controllers.main import WebsiteSaleSimple
+from odoo.addons.webshop_simple.controllers.main import WebsiteSaleSimple
 from odoo.addons.website_portal.controllers.main import website_account
 website_account.OPTIONAL_BILLING_FIELDS += ['product_promotion_notification']
 
