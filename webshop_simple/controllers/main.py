@@ -51,14 +51,21 @@ class WebsiteSaleSimple(WebsiteSale):
                     '|', '|', '|', ('name', 'ilike', srch), ('description', 'ilike', srch),
                     ('description_sale', 'ilike', srch), ('product_variant_ids.default_code', 'ilike', srch)]
 
-        # categories = [request.env.ref(x).id for x in DEFAULT_CATEGORIES]
-        # _logger.debug("ABAKUS: categories={}".format(categories))
-        if category and int(category):
-            # if category:
+        if category:
             # Note that we use internal categories instead of public (public_categ_ids)
-            domain += [('categ_id', '=', category.id)]
-            _logger.debug("ABAKUS: category.id={} - category.name={}".format(category.id, category.name))
-
+            if category.id == request.env.ref('product.product_category_meal').id:
+                # include todays special
+                company = request.env.user.sudo().company_id
+                today_special_product_id = company.get_named_day_product()
+                if today_special_product_id:
+                    domain += ['|',
+                               ('id', '=', today_special_product_id.product_tmpl_id.id),
+                               ('categ_id', '=', category.id)
+                               ]
+                else:
+                    domain += [('categ_id', '=', category.id)]
+            else:
+                domain += [('categ_id', '=', category.id)]
         if attrib_values:
             attrib = None
             ids = []
@@ -84,7 +91,6 @@ class WebsiteSaleSimple(WebsiteSale):
     def shop_simple(self, category=None, search='', **kwargs):
         simple_categories = ('sandwich', 'salad', 'meal', 'dessert')
         # Build the /shop/simple endpoint using internal categories
-        # categories = request.env['product.category'].search([('name', 'in', simple_categories)])
         categories = {x: request.env.ref('product.product_category_' + x).id for x in simple_categories}
 
         values = {
@@ -118,6 +124,14 @@ class WebsiteSaleSimple(WebsiteSale):
         Work categories like product_category_todaysspecial should not be accessible through
         this endpoint
         """
+        if category is None:
+            # we forbid call with not category
+            return request.redirect('/shop/simple')
+        category_ids = [request.env.ref(x).id for x in DEFAULT_CATEGORIES]
+        if category.id not in category_ids:
+            # we forbid call to non simple categories
+            return request.redirect('/shop/simple')
+
         attrib_list = request.httprequest.args.getlist('attrib')
         attrib_values = [map(int, v.split("-")) for v in attrib_list if v]
         attrib_set = set([v[1] for v in attrib_values])
