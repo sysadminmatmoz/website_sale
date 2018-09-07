@@ -247,11 +247,6 @@
         <!-- images for currently selected product -->
         <div class="col-sm-7">
             <!-- Menu of the week badge -->
-            <t t-if="product_id == company.week_menu_product_id.id">
-                <div style="position: absolute; width: 65px; height: 65px; border-radius: 50%; font-size: 12px; padding-top: 15px; color: #fff; line-height: 15px; text-align: center; background: #39d;">
-                    Menu Of The Week
-                </div>
-            </t>
             <div class="oe_product_image">
                 <span itemprop="image"
                       t-attf-content="{{request.httprequest.url_root}}web/image/product.template/{{product.id}}/image"
@@ -455,7 +450,7 @@
                     <t t-else="">
                         <!-- ============== No Base Product ================================ -->
                         <t t-foreach="products" t-as="product">
-                    <div class="row">
+                    <div class="row" t-att-style="'background-color: #e8f1f9;' if product.id == company.get_named_day_product().product_tmpl_id.id else ''">
                         <t t-call="webshop_simple.category_product_image" />
                         <!-- Products details -->
                         <div class="col-sm-5 col-lg-4 col-lg-offset-1">
@@ -467,7 +462,12 @@
                                 <div class="js_product" >
                                     <t t-placeholder="select">
                                         <!-- Product Name -->
-                                        <h1 itemprop="name"><t t-esc="product.name"/></h1>
+                                        <h1 itemprop="name">
+                                            <t t-if="product.id == company.get_named_day_product().product_tmpl_id.id">
+                                                Menu Of The Day:<![CDATA[&nbsp;]]>
+                                            </t>
+                                            <t t-esc="product.name"/>
+                                        </h1>
                                         <t t-set="product_id" t-value="product.product_variant_id.id if len(product.product_variant_ids) == 1 else '0'"/>
                                         <input type="hidden" class="product_id" name="product_id" t-att-value="product_id"/>
                                         <!-- Extra product description in notes -->
@@ -592,19 +592,19 @@
                         </style>
                         <div class="sandwich_row">
                             <div class="sandwich_column">
-                                <a href="/shop/simple/category/sandwich-3">
+                                <a t-attf-href="/shop/simple/category/sandwich-{{categories['sandwich']}}">
                                     <h2 data-original-title="Sandwiches" title="Sandwiches" style="text-align: center; ">Sandwiches</h2>
                                     <img class="fillwidth" src="/webshop_simple/static/src/img/cat_sandwich.jpg"/>
                                 </a>
                             </div>
                             <div class="sandwich_column">
-                                <a href="/shop/simple/category/salades-4">
+                                <a t-attf-href="/shop/simple/category/salad-{{categories['salad']}}">
                                     <h2 data-original-title="Salades" title="Salades" style="text-align: center; ">Salades</h2>
                                     <img class="fillwidth" src="/webshop_simple/static/src/img/cat_salade.jpg"/>
                                 </a>
                             </div>
                             <div class="sandwich_column">
-                                <a href="/shop/simple/category/menus-5">
+                                <a t-attf-href="/shop/simple/category/meal-{{categories['meal']}}">
                                     <h2 data-original-title="Menus" title="Menus" style="text-align: center; ">Menus</h2>
                                     <img class="fillwidth" src="/webshop_simple/static/src/img/cat_plat.jpg"/>
                                 </a>
@@ -612,8 +612,8 @@
                         </div>
                         <div class="sandwich_row">
                             <div class="dessert_column">
-                                <a href="/shop/simple/category/desert-6">
-                                    <h2 data-original-title="Deserts" title="Deserts" style="text-align: center; ">Deserts</h2>
+                                <a t-attf-href="/shop/simple/category/dessert-{{categories['dessert']}}">
+                                    <h2 data-original-title="Desserts" title="Desserts" style="text-align: center; ">Desserts</h2>
                                     <img class="fillheight" src="/webshop_simple/static/src/img/cat_dessert.jpg"/>
                                 </a>
                             </div>
