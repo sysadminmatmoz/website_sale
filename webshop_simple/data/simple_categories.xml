@@ -40,4 +40,12 @@
         <field name="has_base_products">False</field>
         <field name="parent_id">2</field>
     </record>
+    <record model="product.category" id="product.product_category_todayssoup">
+        <field name="name">Today's Soup</field>
+        <field name="type">normal</field>
+        <field name="has_breadtype">False</field>
+        <field name="has_sizetag">False</field>
+        <field name="has_base_products">False</field>
+        <field name="parent_id">2</field>
+    </record>
 </odoo>
