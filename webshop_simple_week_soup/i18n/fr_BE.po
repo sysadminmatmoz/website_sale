@@ -1,0 +1,162 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* webshop_simple_week_soup
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-09-07 09:49+0000\n"
+"PO-Revision-Date: 2018-09-07 11:51+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: fr_BE\n"
+"X-Generator: Poedit 2.1.1\n"
+
+#. module: webshop_simple_week_soup
+#: model:mail.template,body_html:webshop_simple_week_soup.email_template_week_soup
+msgid ""
+"\n"
+"            \n"
+"\t          <p style=\"font-family: verdana\">Dear ${(object.name)},<br/>\n"
+"\t          <br/>\n"
+"\t\t  Here are proposed Soup of The Day for this week.<br/>\n"
+"\t\t  </p>\n"
+"\t\t  <div style=\"font-family: verdana\">\n"
+"\t\t    <ul style=\"width:300px; list-style: none;text-align: center;\">\n"
+"%if 'monday' in ctx[\"promo\"]:\n"
+"                <li style=\"margin: 10px 0;display:inline-block;\">\n"
+"    \t\t        <div style=\"margin: 10px 0;\">Monday: <b><span>${ctx[\"promo\"][\"monday\"][\"name\"]}</span></b></div>\n"
+"\t    \t        <div><img src=\"${ctx[\"promo\"][\"monday\"][\"url\"]}\" style=\"max-height:150px;\"></div>\n"
+"\t\t        </li>\n"
+"%endif\n"
+"%if 'tuesday' in ctx[\"promo\"]:\n"
+"                <li style=\"margin: 10px 0;display:inline-block;\">\n"
+"    \t\t        <div style=\"margin: 10px 0;\">Tuesday: <b><span>${ctx[\"promo\"][\"tuesday\"][\"name\"]}</span></b></div>\n"
+"\t    \t        <div><img src=\"${ctx[\"promo\"][\"tuesday\"][\"url\"]}\" style=\"max-height:150px;\"></div>\n"
+"    \t\t    </li>\n"
+"%endif\n"
+"%if 'wednesday' in ctx[\"promo\"]:\n"
+"                <li style=\"margin: 10px 0;display:inline-block;\">\n"
+"\t\t            <div style=\"margin: 10px 0;\">Wednesday: <b><span>${ctx[\"promo\"][\"wednesday\"][\"name\"]}</span></b></div>\n"
+"\t    \t        <div><img src=\"${ctx[\"promo\"][\"wednesday\"][\"url\"]}\" style=\"max-height:150px;\"></div>\n"
+"\t\t        </li>\n"
+"%endif\n"
+"%if 'thursday' in ctx[\"promo\"]:\n"
+"                <li style=\"margin: 10px 0;display:inline-block;\">\n"
+"\t\t            <div style=\"margin: 10px 0;\">Thursday: <b><span>${ctx[\"promo\"][\"thursday\"][\"name\"]}</span></b></div>\n"
+"\t    \t        <div><img src=\"${ctx[\"promo\"][\"thursday\"][\"url\"]}\" style=\"max-height:150px;\"></div>\n"
+"\t\t        </li>\n"
+"%endif\n"
+"%if 'friday' in ctx[\"promo\"]:\n"
+"                <li style=\"margin: 10px 0;display:inline-block;\">\n"
+"    \t\t        <div style=\"margin: 10px 0;\">Friday: <b><span>${ctx[\"promo\"][\"friday\"][\"name\"]}</span></b></div>\n"
+"\t    \t        <div><img src=\"${ctx[\"promo\"][\"friday\"][\"url\"]}\" style=\"max-height:150px;\"></div>\n"
+"    \t\t    </li>\n"
+"%endif\n"
+"\t\t    </ul>\n"
+"\t\t  </div>\n"
+"\t\t  <p style=\"font-family: verdana\">\n"
+"\t\t          <br/>\n"
+"                  Enjoy your meal,<br/>\n"
+"                  ${(object.company_id.name)}\n"
+"           </p>\n"
+"\t    \n"
+"        "
+msgstr ""
+"\n"
+"            \n"
+"\t          <p style=\"font-family: verdana\">Cher/Chère ${(object.name)},<br/>\n"
+"\t          <br/>\n"
+"\t\t  Voici les soupes du jour pour cette semaine.<br/>\n"
+"\t\t  </p>\n"
+"\t\t  <div style=\"font-family: verdana\">\n"
+"\t\t    <ul style=\"width:300px; list-style: none;text-align: center;\">\n"
+"%if 'monday' in ctx[\"promo\"]:\n"
+"                <li style=\"margin: 10px 0;display:inline-block;\">\n"
+"    \t\t        <div style=\"margin: 10px 0;\">Lundi: <b><span>${ctx[\"promo\"][\"monday\"][\"name\"]}</span></b></div>\n"
+"\t    \t        <div><img src=\"${ctx[\"promo\"][\"monday\"][\"url\"]}\" style=\"max-height:150px;\"></div>\n"
+"\t\t        </li>\n"
+"%endif\n"
+"%if 'tuesday' in ctx[\"promo\"]:\n"
+"                <li style=\"margin: 10px 0;display:inline-block;\">\n"
+"    \t\t        <div style=\"margin: 10px 0;\">Mardi: <b><span>${ctx[\"promo\"][\"tuesday\"][\"name\"]}</span></b></div>\n"
+"\t    \t        <div><img src=\"${ctx[\"promo\"][\"tuesday\"][\"url\"]}\" style=\"max-height:150px;\"></div>\n"
+"    \t\t    </li>\n"
+"%endif\n"
+"%if 'wednesday' in ctx[\"promo\"]:\n"
+"                <li style=\"margin: 10px 0;display:inline-block;\">\n"
+"\t\t            <div style=\"margin: 10px 0;\">Mercredi: <b><span>${ctx[\"promo\"][\"wednesday\"][\"name\"]}</span></b></div>\n"
+"\t    \t        <div><img src=\"${ctx[\"promo\"][\"wednesday\"][\"url\"]}\" style=\"max-height:150px;\"></div>\n"
+"\t\t        </li>\n"
+"%endif\n"
+"%if 'thursday' in ctx[\"promo\"]:\n"
+"                <li style=\"margin: 10px 0;display:inline-block;\">\n"
+"\t\t            <div style=\"margin: 10px 0;\">Jeudi: <b><span>${ctx[\"promo\"][\"thursday\"][\"name\"]}</span></b></div>\n"
+"\t    \t        <div><img src=\"${ctx[\"promo\"][\"thursday\"][\"url\"]}\" style=\"max-height:150px;\"></div>\n"
+"\t\t        </li>\n"
+"%endif\n"
+"%if 'friday' in ctx[\"promo\"]:\n"
+"                <li style=\"margin: 10px 0;display:inline-block;\">\n"
+"    \t\t        <div style=\"margin: 10px 0;\">Vendredi: <b><span>${ctx[\"promo\"][\"friday\"][\"name\"]}</span></b></div>\n"
+"\t    \t        <div><img src=\"${ctx[\"promo\"][\"friday\"][\"url\"]}\" style=\"max-height:150px;\"></div>\n"
+"    \t\t    </li>\n"
+"%endif\n"
+"\t\t    </ul>\n"
+"\t\t  </div>\n"
+"\t\t  <p style=\"font-family: verdana\">\n"
+"\t\t          <br/>\n"
+"                  Bon Appétit,<br/>\n"
+"                  ${(object.company_id.name)}\n"
+"           </p>\n"
+"\t    \n"
+"        "
+
+#. module: webshop_simple_week_soup
+#: model:ir.model,name:webshop_simple_week_soup.model_res_company
+msgid "Companies"
+msgstr "Sociétés"
+
+#. module: webshop_simple_week_soup
+#: model:ir.model.fields,field_description:webshop_simple_week_soup.field_res_company_friday_soup_id
+msgid "Friday Soup"
+msgstr "Soupe du Vendredi"
+
+#. module: webshop_simple_week_soup
+#: model:ir.model.fields,field_description:webshop_simple_week_soup.field_res_company_monday_soup_id
+msgid "Monday Soup"
+msgstr "Soupe du Lundi"
+
+#. module: webshop_simple_week_soup
+#: model:ir.model,name:webshop_simple_week_soup.model_res_partner
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: webshop_simple_week_soup
+#: model:ir.ui.view,arch_db:webshop_simple_week_soup.res_company_week_soup_form
+msgid "Soups of the Week"
+msgstr "Soupes de la Semaine"
+
+#. module: webshop_simple_week_soup
+#: model:mail.template,subject:webshop_simple_week_soup.email_template_week_soup
+msgid "This Week Soup"
+msgstr "Soupe de la Semaine"
+
+#. module: webshop_simple_week_soup
+#: model:ir.model.fields,field_description:webshop_simple_week_soup.field_res_company_thursday_soup_id
+msgid "Thursday Soup"
+msgstr "Soupe du Jeudi"
+
+#. module: webshop_simple_week_soup
+#: model:ir.model.fields,field_description:webshop_simple_week_soup.field_res_company_tuesday_soup_id
+msgid "Tuesday Soup"
+msgstr "Soupe du Mardi"
+
+#. module: webshop_simple_week_soup
+#: model:ir.model.fields,field_description:webshop_simple_week_soup.field_res_company_wednesday_soup_id
+msgid "Wednesday Soup"
+msgstr "Soupe du Mercredi"
