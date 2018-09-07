@@ -1,11 +1,14 @@
 
-// size tage event handler
+// sizetags event handler
 
 function compute_sizetag (product_id){
     if(product_id == undefined){
         return;
     }
     var radios = document.getElementsByName('sizetag_' + product_id);
+    if(radios.length == 0){
+        return;
+    }
     var indexChecked = 0;
     for(var i = 0; i < radios.length; i++){
         if( radios[i].checked ){
