@@ -450,7 +450,7 @@
                     <t t-else="">
                         <!-- ============== No Base Product ================================ -->
                         <t t-foreach="products" t-as="product">
-                    <div class="row" t-att-style="'background-color: #e8f1f9;' if product.id == company.get_named_day_product().product_tmpl_id.id else ''">
+                    <div class="row" t-att-style="'background-color: #e8f1f9;' if product.id == company.get_named_day_product().product_tmpl_id.id else ('background-color: #efffdd;' if product.id == company.get_named_day_soup().product_tmpl_id.id else '')">
                         <t t-call="webshop_simple.category_product_image" />
                         <!-- Products details -->
                         <div class="col-sm-5 col-lg-4 col-lg-offset-1">
@@ -464,7 +464,10 @@
                                         <!-- Product Name -->
                                         <h1 itemprop="name">
                                             <t t-if="product.id == company.get_named_day_product().product_tmpl_id.id">
-                                                Menu Of The Day:<![CDATA[&nbsp;]]>
+                                                <i class="fa fa-bookmark" style="font-size:28px;color:blue"/>
+                                            </t>
+                                            <t t-elif="product.id == company.get_named_day_soup().product_tmpl_id.id">
+                                                <i class="fa fa-bookmark" style="font-size:28px;color:green"/>
                                             </t>
                                             <t t-esc="product.name"/>
                                         </h1>

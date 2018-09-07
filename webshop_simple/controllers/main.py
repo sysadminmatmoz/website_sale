@@ -56,12 +56,17 @@ class WebsiteSaleSimple(WebsiteSale):
             if category.id == request.env.ref('product.product_category_meal').id:
                 # include todays special
                 company = request.env.user.sudo().company_id
+                special_product_ids = []
+                # today's special
                 today_special_product_id = company.get_named_day_product()
                 if today_special_product_id:
-                    domain += ['|',
-                               ('id', '=', today_special_product_id.product_tmpl_id.id),
-                               ('categ_id', '=', category.id)
-                               ]
+                    special_product_ids.append(today_special_product_id.product_tmpl_id.id)
+                # today's soup
+                today_special_soup_id = company.get_named_day_soup()
+                if today_special_soup_id:
+                    special_product_ids.append(today_special_soup_id.product_tmpl_id.id)
+                if len(special_product_ids) > 0:
+                    domain += ['|', ('id', 'in', special_product_ids), ('categ_id', '=', category.id)]
                 else:
                     domain += [('categ_id', '=', category.id)]
             else:
