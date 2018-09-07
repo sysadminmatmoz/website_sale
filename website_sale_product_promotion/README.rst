@@ -4,9 +4,9 @@
 
 This module is an addon to ``website_sale``.
 
-It allows creating a weekly promotion on a two products.
+It allows creating a weekly promotion on a two web shop products: a sandwich and a salad
 
-We feature a reminder notification to all managers in case next week promotion is not created yet.
+Feature a reminder notification to all managers in case next week promotion is not created yet.
 
 Installation notes
 ==================

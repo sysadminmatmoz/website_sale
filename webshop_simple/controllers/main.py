@@ -12,6 +12,13 @@ from odoo.addons.website.models.website import slug
 
 _logger = logging.getLogger(__name__)
 
+DEFAULT_CATEGORIES = [
+    "product.product_category_sandwich",
+    "product.product_category_salad",
+    "product.product_category_meal",
+    "product.product_category_dessert",
+]
+
 
 class WebsiteSaleSimple(WebsiteSale):
 
@@ -45,9 +52,20 @@ class WebsiteSaleSimple(WebsiteSale):
                     ('description_sale', 'ilike', srch), ('product_variant_ids.default_code', 'ilike', srch)]
 
         if category:
-            # here we use internal categories instead of public (public_categ_ids)
-            domain += [('categ_id', '=', int(category))]
-
+            # Note that we use internal categories instead of public (public_categ_ids)
+            if category.id == request.env.ref('product.product_category_meal').id:
+                # include todays special
+                company = request.env.user.sudo().company_id
+                today_special_product_id = company.get_named_day_product()
+                if today_special_product_id:
+                    domain += ['|',
+                               ('id', '=', today_special_product_id.product_tmpl_id.id),
+                               ('categ_id', '=', category.id)
+                               ]
+                else:
+                    domain += [('categ_id', '=', category.id)]
+            else:
+                domain += [('categ_id', '=', category.id)]
         if attrib_values:
             attrib = None
             ids = []
@@ -73,7 +91,7 @@ class WebsiteSaleSimple(WebsiteSale):
     def shop_simple(self, category=None, search='', **kwargs):
         simple_categories = ('sandwich', 'salad', 'meal', 'dessert')
         # Build the /shop/simple endpoint using internal categories
-        categories = request.env['product.category'].search([('name', 'in', simple_categories)])
+        categories = {x: request.env.ref('product.product_category_' + x).id for x in simple_categories}
 
         values = {
             'categories': categories,
@@ -102,6 +120,18 @@ class WebsiteSaleSimple(WebsiteSale):
     @http.route(['/shop/simple/category/<model("product.category"):category>'],
                 type='http', auth="public", website=True)
     def shop_simple_category(self, category=None, search='', **kwargs):
+        """ We display results from 5 top categories only
+        Work categories like product_category_todaysspecial should not be accessible through
+        this endpoint
+        """
+        if category is None:
+            # we forbid call with not category
+            return request.redirect('/shop/simple')
+        category_ids = [request.env.ref(x).id for x in DEFAULT_CATEGORIES]
+        if category.id not in category_ids:
+            # we forbid call to non simple categories
+            return request.redirect('/shop/simple')
+
         attrib_list = request.httprequest.args.getlist('attrib')
         attrib_values = [map(int, v.split("-")) for v in attrib_list if v]
         attrib_set = set([v[1] for v in attrib_values])
@@ -110,6 +140,7 @@ class WebsiteSaleSimple(WebsiteSale):
         domain = self._get_search_domain_simple(search, category, attrib_values)
         domain += [('active', '=', True)]
         products = request.env['product.template'].search(domain)
+
         # set the default product to display
         product_count = len(products)
         if product_count == 0:
@@ -139,9 +170,13 @@ class WebsiteSaleSimple(WebsiteSale):
             'get_attribute_value_ids': self.get_attribute_value_ids,
         }
         if category.has_base_products:
-            return request.render("webshop_simple.category", values)
+            return self.shop_simple_category_render("webshop_simple.category", values)
         else:
-            return request.render("webshop_simple.category_product", values)
+            return self.shop_simple_category_render("webshop_simple.category_product", values)
+
+    @staticmethod
+    def shop_simple_category_render(page, values):
+        return request.render(page, values)
 
     # ------------------------------------------------------
     # Simple Web Shop category product page

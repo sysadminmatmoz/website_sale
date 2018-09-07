@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0+e-20180529\n"
+"Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-13 10:28+0000\n"
-"PO-Revision-Date: 2018-07-13 12:33+0200\n"
+"POT-Creation-Date: 2018-09-07 01:14+0000\n"
+"PO-Revision-Date: 2018-09-07 03:18+0200\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,44 +15,68 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 "Language: fr_BE\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Poedit 2.1.1\n"
 
 #. module: website_sale_product_promotion
 #: model:mail.template,body_html:website_sale_product_promotion.email_template_product_promotion
 msgid ""
 "\n"
 "            \n"
-"                <p>\n"
+"                <p style=\"font-family: verdana\">\n"
 "                Dear ${(object.name)},\n"
 "                <br/>\n"
-"% if \"promo\" in ctx:\n"
 "                <br/>\n"
-"                Here is this week promotion:\n"
+"                Here are this week promotions:\n"
+"                </p>\n"
 "                <p>${ctx[\"promo\"][\"description\"]}</p>\n"
-"                <p><b>Promoted items</b></p>\n"
-"                <ul>\n"
-"                        <li>${ctx[\"promo\"][\"product_first\"]}</li>\n"
-"                        <li>${ctx[\"promo\"][\"product_second\"]}</li>\n"
-"                </ul>\n"
-"% endif\n"
+"                <br/>\n"
+"                <div style=\"font-family: verdana\">\n"
+"                    <b>Sandwich in promotion</b>\n"
+"                    <ul style=\"width:300px; list-style: none;text-align: center;\">\n"
+"                        <li style=\"margin: 10px 0;display:inline-block;\">${ctx[\"promo\"][\"product_sandwich\"]} (${ctx[\"promo\"][\"product_sandwich_promo_price\"]} &euro;)</li>\n"
+"                    </ul>\n"
+"                </div>\n"
+"                <div style=\"font-family: verdana\">\n"
+"                    <b>Salad in promotion</b>\n"
+"                    <ul style=\"width:300px; list-style: none;text-align: center;\">\n"
+"                        <li style=\"margin: 10px 0;display:inline-block;\">${ctx[\"promo\"][\"product_salad\"]} (${ctx[\"promo\"][\"product_salad_promo_price\"]} &euro;)</li>\n"
+"                    </ul>\n"
+"                </div>\n"
+"                <p style=\"font-family: verdana\">\n"
+"\t\t            <br/>\n"
+"                    Enjoy your meal,<br/>\n"
+"                    ${(object.company_id.name)}\n"
+"                </p>\n"
 "            \n"
 "            "
 msgstr ""
 "\n"
 "            \n"
-"                <p>\n"
-"                Cher\\Chère ${(object.name)},\n"
+"                <p style=\"font-family: verdana\">\n"
+"                Cher/Chère ${(object.name)},\n"
 "                <br/>\n"
-"% if \"promo\" in ctx:\n"
 "                <br/>\n"
-"                Vous trouverez ci-bas les promotions de la semaine :\n"
+"                Voici nos promotions de la semaine:\n"
+"                </p>\n"
 "                <p>${ctx[\"promo\"][\"description\"]}</p>\n"
-"                <p><b>Produits en promo :</b></p>\n"
-"                <ul>\n"
-"                        <li>${ctx[\"promo\"][\"product_first\"]}</li>\n"
-"                        <li>${ctx[\"promo\"][\"product_second\"]}</li>\n"
-"                </ul>\n"
-"% endif\n"
+"                <br/>\n"
+"                <div style=\"font-family: verdana\">\n"
+"                    <b>Sandwich en promotion</b>\n"
+"                    <ul style=\"width:300px; list-style: none;text-align: center;\">\n"
+"                        <li style=\"margin: 10px 0;display:inline-block;\">${ctx[\"promo\"][\"product_sandwich\"]} (${ctx[\"promo\"][\"product_sandwich_promo_price\"]} &euro;)</li>\n"
+"                    </ul>\n"
+"                </div>\n"
+"                <div style=\"font-family: verdana\">\n"
+"                    <b>Salade en promotion</b>\n"
+"                    <ul style=\"width:300px; list-style: none;text-align: center;\">\n"
+"                        <li style=\"margin: 10px 0;display:inline-block;\">${ctx[\"promo\"][\"product_salad\"]} (${ctx[\"promo\"][\"product_salad_promo_price\"]} &euro;)</li>\n"
+"                    </ul>\n"
+"                </div>\n"
+"                <p style=\"font-family: verdana\">\n"
+"\t\t            <br/>\n"
+"                    Bon Appétit,<br/>\n"
+"                    ${(object.company_id.name)}\n"
+"                </p>\n"
 "            \n"
 "            "
 
@@ -67,11 +91,16 @@ msgid "Back To Draft"
 msgstr "Remettrer en brouillon"
 
 #. module: website_sale_product_promotion
-#: code:addons/website_sale_product_promotion/models/product_promotion.py:27
+#: code:addons/website_sale_product_promotion/models/product_promotion.py:36
 #: selection:product.promotion,state:0
 #, python-format
 msgid "Closed"
 msgstr "Fermée"
+
+#. module: website_sale_product_promotion
+#: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_company_id
+msgid "Company"
+msgstr "Société"
 
 #. module: website_sale_product_promotion
 #: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_create_uid
@@ -84,7 +113,12 @@ msgid "Created on"
 msgstr "Créé le"
 
 #. module: website_sale_product_promotion
-#: code:addons/website_sale_product_promotion/models/product_promotion.py:26
+#: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_currency_id
+msgid "Currency"
+msgstr "Devise"
+
+#. module: website_sale_product_promotion
+#: code:addons/website_sale_product_promotion/models/product_promotion.py:35
 #: selection:product.promotion,state:0
 #, python-format
 msgid "Current"
@@ -106,16 +140,11 @@ msgid "Description"
 msgstr "Description"
 
 #. module: website_sale_product_promotion
-#: code:addons/website_sale_product_promotion/models/product_promotion.py:24
+#: code:addons/website_sale_product_promotion/models/product_promotion.py:33
 #: selection:product.promotion,state:0
 #, python-format
 msgid "Draft"
 msgstr "Brouillon"
-
-#. module: website_sale_product_promotion
-#: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_product_first
-msgid "First product"
-msgstr "Premier produit"
 
 #. module: website_sale_product_promotion
 #: model:ir.model.fields,help:website_sale_product_promotion.field_product_promotion_sequence
@@ -149,14 +178,14 @@ msgid "Name"
 msgstr "Nom"
 
 #. module: website_sale_product_promotion
-#: code:addons/website_sale_product_promotion/models/product_promotion.py:15
-#: code:addons/website_sale_product_promotion/models/product_promotion.py:35
+#: code:addons/website_sale_product_promotion/models/product_promotion.py:19
+#: code:addons/website_sale_product_promotion/models/product_promotion.py:44
 #, python-format
 msgid "New"
 msgstr "Nouveau"
 
 #. module: website_sale_product_promotion
-#: code:addons/website_sale_product_promotion/models/product_promotion.py:25
+#: code:addons/website_sale_product_promotion/models/product_promotion.py:34
 #: selection:product.promotion,state:0
 #, python-format
 msgid "Next"
@@ -165,21 +194,21 @@ msgstr "Suivant"
 #. module: website_sale_product_promotion
 #: model:mail.template,subject:website_sale_product_promotion.email_template_product_promotion
 msgid "Our promotion for this week"
-msgstr "Notre promotion de cette semaine"
+msgstr "Notre promotion de la semaine"
 
 #. module: website_sale_product_promotion
 #: model:ir.model,name:website_sale_product_promotion.model_res_partner
 msgid "Partner"
-msgstr "Partenaire"
+msgstr "Contact"
 
 #. module: website_sale_product_promotion
-#: code:addons/website_sale_product_promotion/models/product_promotion.py:71
+#: code:addons/website_sale_product_promotion/models/product_promotion.py:80
 #, python-format
 msgid "Please remember to create a promotion for week {}"
 msgstr "Svp, veuillez encoder une promotion pour la semaine {}"
 
 #. module: website_sale_product_promotion
-#: code:addons/website_sale_product_promotion/models/product_promotion.py:103
+#: code:addons/website_sale_product_promotion/models/product_promotion.py:114
 #, python-format
 msgid "Please remember to set this week's promotion to CURRENT"
 msgstr "Svp, veuillez marquer la promotion de cette semaine comme \"ACTUELLE\""
@@ -189,6 +218,12 @@ msgstr "Svp, veuillez marquer la promotion de cette semaine comme \"ACTUELLE\""
 #: model:ir.model.fields,field_description:website_sale_product_promotion.field_res_users_product_promotion_notification
 msgid "Product promotion notification"
 msgstr "Notification des promotions"
+
+#. module: website_sale_product_promotion
+#: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_product_salad_promo_price
+#: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_product_sandwich_promo_price
+msgid "Promo Price"
+msgstr "Prix Promo"
 
 #. module: website_sale_product_promotion
 #: model:ir.actions.act_window,name:website_sale_product_promotion.product_promotion_template_action_website
@@ -213,9 +248,14 @@ msgid "Promotions"
 msgstr "Promotions"
 
 #. module: website_sale_product_promotion
-#: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_product_second
-msgid "Second product"
-msgstr "Deuxième produit"
+#: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_product_salad
+msgid "Salad in promotion"
+msgstr "Salade en promotion"
+
+#. module: website_sale_product_promotion
+#: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_product_sandwich
+msgid "Sandwich in promotion"
+msgstr "Sandwich en promotion"
 
 #. module: website_sale_product_promotion
 #: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_sequence
