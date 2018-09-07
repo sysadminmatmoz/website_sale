@@ -35,10 +35,18 @@
                       t-options="{'widget': 'monetary', 'display_currency': website.get_current_pricelist().currency_id, 'from_currency': website.currency_id}"
                       t-att-style="'text-decoration: line-through; white-space: nowrap; ' + '' if product.website_price_difference and website.get_current_pricelist().discount_policy == 'without_discount' else 'display: none;'"
                 />
-                <b class="oe_price" style="white-space: nowrap;" t-esc="product.website_price"
-                   t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
-                    t-attf-id="base_price_{{product_id}}"/>
-                <span itemprop="price" style="display:none;" t-esc="product.website_price"/>
+                <t t-if="promo_product_id and promo_product_id.product_tmpl_id.id == product.id">
+                    <b class="oe_price" style="white-space: nowrap;" t-esc="promo_product_price"
+                       t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
+                       t-attf-id="base_price_{{product_id}}"/>
+                    <span itemprop="price" style="display:none;" t-esc="promo_product_price"/>
+                </t>
+                <t t-else="1">
+                    <b class="oe_price" style="white-space: nowrap;" t-esc="product.website_price"
+                       t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
+                       t-attf-id="base_price_{{product_id}}"/>
+                    <span itemprop="price" style="display:none;" t-esc="product.website_price"/>
+                </t>
                 <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name"/>
             </h4>
             <h4 class="oe_price_h4 css_editable_mode_hidden">
@@ -221,12 +229,23 @@
                                                         <t t-foreach="products" t-as="s_product">
                                                             <t t-set="s_product_id"
                                                                t-value="s_product.product_variant_id.id if len(s_product.product_variant_ids) == 1 else '0'"/>
+                                                            <!-- we have a promo on this product -->
+                                                            <t t-if="promo_product_id and promo_product_id.product_tmpl_id.id == s_product.id">
+                                                                <option t-attf-value="/shop/simple/product/{{slug(s_product)}}" style="background-color: #c6ffff">
+                                                                <t t-esc="s_product.name"/>
+                                                                (<span t-esc="promo_product_price"
+                                                                       t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
+                                                                       t-attf-id="base_price_{{s_product_id}}"/>)
+                                                                </option>
+                                                            </t>
+                                                            <t t-else="1">
                                                             <option t-attf-value="/shop/simple/product/{{slug(s_product)}}">
                                                                 <t t-esc="s_product.name"/>
                                                                 (<span t-esc="s_product.website_price"
                                                                        t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
                                                                        t-attf-id="base_price_{{s_product_id}}"/>)
                                                             </option>
+                                                            </t>
                                                         </t>
                                                     </select>
                                                 </div>
@@ -382,13 +401,24 @@
                                                         <t t-foreach="products" t-as="s_product">
                                                             <t t-set="s_product_id"
                                                                t-value="s_product.product_variant_id.id if len(s_product.product_variant_ids) == 1 else '0'"/>
-                                                            <option t-attf-value="/shop/simple/product/{{slug(s_product)}}"
-                                                                    t-att-selected="(s_product.id == product.id)">
-                                                                <t t-esc="s_product.name"/>
-                                                                (<span t-esc="s_product.website_price"
-                                                                       t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
-                                                                       t-attf-id="base_price_{{s_product_id}}"/>)
-                                                            </option>
+                                                            <t t-if="promo_product_id and promo_product_id.product_tmpl_id.id == s_product.id">
+                                                                <option t-attf-value="/shop/simple/product/{{slug(s_product)}}"
+                                                                        style="background-color: #c6ffff">
+                                                                    <t t-esc="s_product.name"/>
+                                                                    (<span t-esc="promo_product_price"
+                                                                           t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
+                                                                           t-attf-id="base_price_{{s_product_id}}"/>)
+                                                                </option>
+                                                            </t>
+                                                            <t t-else="1">
+                                                                <option t-attf-value="/shop/simple/product/{{slug(s_product)}}"
+                                                                        t-att-selected="(s_product.id == product.id)">
+                                                                    <t t-esc="s_product.name"/>
+                                                                    (<span t-esc="s_product.website_price"
+                                                                           t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
+                                                                           t-attf-id="base_price_{{s_product_id}}"/>)
+                                                                </option>
+                                                            </t>
                                                         </t>
                                                     </select>
                                                 </div>

@@ -27,12 +27,17 @@ class WebsiteSimplePromos(WebsiteSaleSimple):
     def shop_simple_category_render(page, values):
         # Get all promo product from this week
         promo_record = request.env['product.promotion'].sudo().search([('state', '=', 'curr')], limit=1)
+        _logger.debug("ABAKUS: found ({}) promo records".format(len(promo_record)))
         if promo_record:
-            promo_products = {
-                'sandwich': promo_record.product_sandwich,
-                'sandwich_promo_price': promo_record.product_sandwich_promo_price,
-                'salad': promo_record.product_salad,
-                'salad_promo_price': promo_record.product_salad_promo_price,
-            }
-            values['promo_products'] = promo_products
+            promo_record = promo_record[0]
+            _logger.debug("ABAKUS: categ:{} - sand cat:{} - sal cat:{}".format(
+                values['category'].id, promo_record.product_sandwich.categ_id.id, promo_record.product_salad.categ_id.id))
+            if 'category' in values:
+                if values['category'].id == promo_record.product_sandwich.categ_id.id:
+                    values['promo_product_id'] = promo_record.product_sandwich
+                    values['promo_product_price'] = promo_record.product_sandwich_promo_price
+                elif values['category'].id == promo_record.product_salad.categ_id.id:
+                    values['promo_product_id'] = promo_record.product_salad
+                    values['promo_product_price'] = promo_record.product_salad_promo_price
+            _logger.debug("ABAKUS: values products - {}".format(values))
         return request.render(page, values)
