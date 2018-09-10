@@ -403,6 +403,7 @@
                                                                t-value="s_product.product_variant_id.id if len(s_product.product_variant_ids) == 1 else '0'"/>
                                                             <t t-if="promo_product_id and promo_product_id.product_tmpl_id.id == s_product.id">
                                                                 <option t-attf-value="/shop/simple/product/{{slug(s_product)}}"
+                                                                        t-att-selected="(s_product.id == product.id)"
                                                                         style="background-color: #c6ffff">
                                                                     <t t-esc="s_product.name"/>
                                                                     (<span t-esc="promo_product_price"
