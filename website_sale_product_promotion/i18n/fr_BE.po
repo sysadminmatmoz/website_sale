@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-07 01:14+0000\n"
-"PO-Revision-Date: 2018-09-07 03:18+0200\n"
+"POT-Creation-Date: 2018-09-14 14:53+0000\n"
+"PO-Revision-Date: 2018-09-14 16:58+0200\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -33,13 +33,28 @@ msgid ""
 "                <div style=\"font-family: verdana\">\n"
 "                    <b>Sandwich in promotion</b>\n"
 "                    <ul style=\"width:300px; list-style: none;text-align: center;\">\n"
-"                        <li style=\"margin: 10px 0;display:inline-block;\">${ctx[\"promo\"][\"product_sandwich\"]} (${ctx[\"promo\"][\"product_sandwich_promo_price\"]} &euro;)</li>\n"
+"%if 'product_sandwich_sizetags_line_ids' in ctx[\"promo\"]:\n"
+"                        <li style=\"margin: 10px 0;display:inline-block;\">\n"
+"                            <div>${ctx[\"promo\"][\"product_sandwich\"]} (${ctx[\"promo\"][\"product_sandwich_promo_price\"]} &euro;)</div>\n"
+"                            <div><img src=\"${ctx[\"promo\"][\"url_sandwich\"]}\" style=\"max-height:150px;\"></div>\n"
+"                            <div>${ctx[\"promo\"][\"product_sandwich_sizetags_line_ids\"][0][\"sizetag_id\"][\"name\"]}: (+${ctx[\"promo\"][\"product_sandwich_sizetags_line_ids\"][0][\"sizetag_price\"]} &euro;)</div>\n"
+"                            <div>${ctx[\"promo\"][\"product_sandwich_sizetags_line_ids\"][1][\"sizetag_id\"][\"name\"]}: (+${ctx[\"promo\"][\"product_sandwich_sizetags_line_ids\"][1][\"sizetag_price\"]} &euro;)</div>\n"
+"                        </li>\n"
+"%else\n"
+"                        <li style=\"margin: 10px 0;display:inline-block;\">\n"
+"                            <div>${ctx[\"promo\"][\"product_sandwich\"]} (${ctx[\"promo\"][\"product_sandwich_promo_price\"]} &euro;)</div>\n"
+"                            <div><img src=\"${ctx[\"promo\"][\"url_sandwich\"]}\" style=\"max-height:150px;\"></div>\n"
+"                        </li>\n"
+"%endif\n"
 "                    </ul>\n"
 "                </div>\n"
 "                <div style=\"font-family: verdana\">\n"
 "                    <b>Salad in promotion</b>\n"
 "                    <ul style=\"width:300px; list-style: none;text-align: center;\">\n"
-"                        <li style=\"margin: 10px 0;display:inline-block;\">${ctx[\"promo\"][\"product_salad\"]} (${ctx[\"promo\"][\"product_salad_promo_price\"]} &euro;)</li>\n"
+"                        <li style=\"margin: 10px 0;display:inline-block;\">\n"
+"                           <div>${ctx[\"promo\"][\"product_salad\"]} (${ctx[\"promo\"][\"product_salad_promo_price\"]} &euro;)</div>\n"
+"                            <div><img src=\"${ctx[\"promo\"][\"url_salad\"]}\" style=\"max-height:150px;\"></div>\n"
+"                        </li>\n"
 "                    </ul>\n"
 "                </div>\n"
 "                <p style=\"font-family: verdana\">\n"
@@ -53,23 +68,38 @@ msgstr ""
 "\n"
 "            \n"
 "                <p style=\"font-family: verdana\">\n"
-"                Cher/Chère ${(object.name)},\n"
+"                Cher ${(object.name)},\n"
 "                <br/>\n"
 "                <br/>\n"
-"                Voici nos promotions de la semaine:\n"
+"                Voici les promotions de la semaines:\n"
 "                </p>\n"
 "                <p>${ctx[\"promo\"][\"description\"]}</p>\n"
 "                <br/>\n"
 "                <div style=\"font-family: verdana\">\n"
 "                    <b>Sandwich en promotion</b>\n"
 "                    <ul style=\"width:300px; list-style: none;text-align: center;\">\n"
-"                        <li style=\"margin: 10px 0;display:inline-block;\">${ctx[\"promo\"][\"product_sandwich\"]} (${ctx[\"promo\"][\"product_sandwich_promo_price\"]} &euro;)</li>\n"
+"%if 'product_sandwich_sizetags_line_ids' in ctx[\"promo\"]:\n"
+"                        <li style=\"margin: 10px 0;display:inline-block;\">\n"
+"                            <div>${ctx[\"promo\"][\"product_sandwich\"]} (${ctx[\"promo\"][\"product_sandwich_promo_price\"]} &euro;)</div>\n"
+"                            <div><img src=\"${ctx[\"promo\"][\"url_sandwich\"]}\" style=\"max-height:150px;\"></div>\n"
+"                            <div>${ctx[\"promo\"][\"product_sandwich_sizetags_line_ids\"][0][\"sizetag_id\"][\"name\"]}: (+${ctx[\"promo\"][\"product_sandwich_sizetags_line_ids\"][0][\"sizetag_price\"]} &euro;)</div>\n"
+"                            <div>${ctx[\"promo\"][\"product_sandwich_sizetags_line_ids\"][1][\"sizetag_id\"][\"name\"]}: (+${ctx[\"promo\"][\"product_sandwich_sizetags_line_ids\"][1][\"sizetag_price\"]} &euro;)</div>\n"
+"                        </li>\n"
+"%else\n"
+"                        <li style=\"margin: 10px 0;display:inline-block;\">\n"
+"                            <div>${ctx[\"promo\"][\"product_sandwich\"]} (${ctx[\"promo\"][\"product_sandwich_promo_price\"]} &euro;)</div>\n"
+"                            <div><img src=\"${ctx[\"promo\"][\"url_sandwich\"]}\" style=\"max-height:150px;\"></div>\n"
+"                        </li>\n"
+"%endif\n"
 "                    </ul>\n"
 "                </div>\n"
 "                <div style=\"font-family: verdana\">\n"
 "                    <b>Salade en promotion</b>\n"
 "                    <ul style=\"width:300px; list-style: none;text-align: center;\">\n"
-"                        <li style=\"margin: 10px 0;display:inline-block;\">${ctx[\"promo\"][\"product_salad\"]} (${ctx[\"promo\"][\"product_salad_promo_price\"]} &euro;)</li>\n"
+"                        <li style=\"margin: 10px 0;display:inline-block;\">\n"
+"                           <div>${ctx[\"promo\"][\"product_salad\"]} (${ctx[\"promo\"][\"product_salad_promo_price\"]} &euro;)</div>\n"
+"                            <div><img src=\"${ctx[\"promo\"][\"url_salad\"]}\" style=\"max-height:150px;\"></div>\n"
+"                        </li>\n"
 "                    </ul>\n"
 "                </div>\n"
 "                <p style=\"font-family: verdana\">\n"
@@ -91,7 +121,7 @@ msgid "Back To Draft"
 msgstr "Remettrer en brouillon"
 
 #. module: website_sale_product_promotion
-#: code:addons/website_sale_product_promotion/models/product_promotion.py:36
+#: code:addons/website_sale_product_promotion/models/product_promotion.py:37
 #: selection:product.promotion,state:0
 #, python-format
 msgid "Closed"
@@ -118,7 +148,7 @@ msgid "Currency"
 msgstr "Devise"
 
 #. module: website_sale_product_promotion
-#: code:addons/website_sale_product_promotion/models/product_promotion.py:35
+#: code:addons/website_sale_product_promotion/models/product_promotion.py:36
 #: selection:product.promotion,state:0
 #, python-format
 msgid "Current"
@@ -140,7 +170,7 @@ msgid "Description"
 msgstr "Description"
 
 #. module: website_sale_product_promotion
-#: code:addons/website_sale_product_promotion/models/product_promotion.py:33
+#: code:addons/website_sale_product_promotion/models/product_promotion.py:34
 #: selection:product.promotion,state:0
 #, python-format
 msgid "Draft"
@@ -179,13 +209,13 @@ msgstr "Nom"
 
 #. module: website_sale_product_promotion
 #: code:addons/website_sale_product_promotion/models/product_promotion.py:19
-#: code:addons/website_sale_product_promotion/models/product_promotion.py:44
+#: code:addons/website_sale_product_promotion/models/product_promotion.py:45
 #, python-format
 msgid "New"
 msgstr "Nouveau"
 
 #. module: website_sale_product_promotion
-#: code:addons/website_sale_product_promotion/models/product_promotion.py:34
+#: code:addons/website_sale_product_promotion/models/product_promotion.py:35
 #: selection:product.promotion,state:0
 #, python-format
 msgid "Next"
@@ -194,21 +224,21 @@ msgstr "Suivant"
 #. module: website_sale_product_promotion
 #: model:mail.template,subject:website_sale_product_promotion.email_template_product_promotion
 msgid "Our promotion for this week"
-msgstr "Notre promotion de la semaine"
+msgstr "Notre promotion de cette semaine"
 
 #. module: website_sale_product_promotion
 #: model:ir.model,name:website_sale_product_promotion.model_res_partner
 msgid "Partner"
-msgstr "Contact"
+msgstr "Partenaire"
 
 #. module: website_sale_product_promotion
-#: code:addons/website_sale_product_promotion/models/product_promotion.py:80
+#: code:addons/website_sale_product_promotion/models/product_promotion.py:90
 #, python-format
 msgid "Please remember to create a promotion for week {}"
 msgstr "Svp, veuillez encoder une promotion pour la semaine {}"
 
 #. module: website_sale_product_promotion
-#: code:addons/website_sale_product_promotion/models/product_promotion.py:114
+#: code:addons/website_sale_product_promotion/models/product_promotion.py:128
 #, python-format
 msgid "Please remember to set this week's promotion to CURRENT"
 msgstr "Svp, veuillez marquer la promotion de cette semaine comme \"ACTUELLE\""
@@ -253,6 +283,11 @@ msgid "Salad in promotion"
 msgstr "Salade en promotion"
 
 #. module: website_sale_product_promotion
+#: model:ir.model,name:website_sale_product_promotion.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Ligne du bon de commande"
+
+#. module: website_sale_product_promotion
 #: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_product_sandwich
 msgid "Sandwich in promotion"
 msgstr "Sandwich en promotion"
@@ -276,6 +311,16 @@ msgstr "Marquer comme actuel"
 #: model:ir.ui.view,arch_db:website_sale_product_promotion.product_promotion_view_form
 msgid "Set to next"
 msgstr "Marquer comme suivant"
+
+#. module: website_sale_product_promotion
+#: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_product_sandwich_sizetags_line_ids
+msgid "Size Tag Lines"
+msgstr "Ligne de tag de taille"
+
+#. module: website_sale_product_promotion
+#: model:ir.ui.view,arch_db:website_sale_product_promotion.product_promotion_view_form
+msgid "Size Tags"
+msgstr "Tags de taille"
 
 #. module: website_sale_product_promotion
 #: model:ir.model.fields,field_description:website_sale_product_promotion.field_product_promotion_state

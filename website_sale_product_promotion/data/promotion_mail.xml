@@ -21,13 +21,28 @@
                 <div style="font-family: verdana">
                     <b>Sandwich in promotion</b>
                     <ul style="width:300px; list-style: none;text-align: center;">
-                        <li style="margin: 10px 0;display:inline-block;">${ctx["promo"]["product_sandwich"]} (${ctx["promo"]["product_sandwich_promo_price"]} &euro;)</li>
+%if 'product_sandwich_sizetags_line_ids' in ctx["promo"]:
+                        <li style="margin: 10px 0;display:inline-block;">
+                            <div>${ctx["promo"]["product_sandwich"]} (${ctx["promo"]["product_sandwich_promo_price"]} &euro;)</div>
+                            <div><img src="${ctx["promo"]["url_sandwich"]}" style="max-height:150px;"></div>
+                            <div>${ctx["promo"]["product_sandwich_sizetags_line_ids"][0]["sizetag_id"]["name"]}: (+${ctx["promo"]["product_sandwich_sizetags_line_ids"][0]["sizetag_price"]} &euro;)</div>
+                            <div>${ctx["promo"]["product_sandwich_sizetags_line_ids"][1]["sizetag_id"]["name"]}: (+${ctx["promo"]["product_sandwich_sizetags_line_ids"][1]["sizetag_price"]} &euro;)</div>
+                        </li>
+%else
+                        <li style="margin: 10px 0;display:inline-block;">
+                            <div>${ctx["promo"]["product_sandwich"]} (${ctx["promo"]["product_sandwich_promo_price"]} &euro;)</div>
+                            <div><img src="${ctx["promo"]["url_sandwich"]}" style="max-height:150px;"></div>
+                        </li>
+%endif
                     </ul>
                 </div>
                 <div style="font-family: verdana">
                     <b>Salad in promotion</b>
                     <ul style="width:300px; list-style: none;text-align: center;">
-                        <li style="margin: 10px 0;display:inline-block;">${ctx["promo"]["product_salad"]} (${ctx["promo"]["product_salad_promo_price"]} &euro;)</li>
+                        <li style="margin: 10px 0;display:inline-block;">
+                           <div>${ctx["promo"]["product_salad"]} (${ctx["promo"]["product_salad_promo_price"]} &euro;)</div>
+                            <div><img src="${ctx["promo"]["url_salad"]}" style="max-height:150px;"></div>
+                        </li>
                     </ul>
                 </div>
                 <p style="font-family: verdana">
