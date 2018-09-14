@@ -8,6 +8,7 @@
     'category': 'Website',
     'version': '10.0.1.0.0',
     'depends': [
+        'webshop_simple_open_hours',
         'webshop_simple',
     ],
     'data': [

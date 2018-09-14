@@ -18,16 +18,35 @@ class ResCompany(models.Model):
     friday_soup_id = fields.Many2one('product.product', string='Friday Soup')
 
     def get_named_day_soup(self):
-        week_day = datetime.datetime.now(pytz.timezone('Europe/Brussels')).weekday()
+        """ A day takes into account open/closing day so
+          tuesday is actually from monday open hour to tuesday closing hour """
+        now = datetime.datetime.now(pytz.timezone(self.openhours_tz))
+        week_day = now.weekday()
+        position = self.is_between_open_hours(now)
         if week_day == 0:
-            return self.monday_soup_id
+            if position == 1:
+                return self.tuesday_soup_id
+            else:
+                return self.monday_soup_id
         elif week_day == 1:
-            return self.tuesday_soup_id
+            if position == 1:
+                return self.wednesday_soup_id
+            else:
+                return self.tuesday_soup_id
         elif week_day == 2:
-            return self.wednesday_soup_id
+            if position == 1:
+                return self.thursday_soup_id
+            else:
+                return self.wednesday_soup_id
         elif week_day == 3:
-            return self.thursday_soup_id
+            if position == 1:
+                return self.friday_soup_id
+            else:
+                return self.thursday_soup_id
         elif week_day == 4:
-            return self.friday_soup_id
+            if position == 1:
+                return self.monday_soup_id
+            else:
+                return self.friday_soup_id
         else:
-            return None
+            return self.monday_soup_id
