@@ -54,7 +54,12 @@
                         <group>
                             <field name="product_sandwich"  domain="[('categ_id', '=', %(product.product_category_sandwich)d)]"/>
                             <field name="product_sandwich_promo_price" widget="monetary"/>
-                            <field name="product_sandwich_promo_price_big" widget="monetary"/>
+                            <field name="product_sandwich_sizetags_line_ids" widget="one2many_list">
+                                <tree string="Size Tags" editable="bottom">
+                                    <field name="sizetag_id"/>
+                                    <field name="sizetag_price"/>
+                                </tree>
+                            </field>
                         </group>
                         <group>
                             <field name="product_salad"  domain="[('categ_id', '=', %(product.product_category_salad)d)]"/>
