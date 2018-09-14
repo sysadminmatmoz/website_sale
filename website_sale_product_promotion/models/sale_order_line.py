@@ -27,7 +27,12 @@ class SaleOrderLine(models.Model):
             self.product_price_unit = self.price_unit
         # sizetag if any
         if self.sizetag:
-            self.product_price_unit += self.sizetag.sizetag_price
+            if promo_record and promo_record.product_sandwich.id == self.product_id.id:
+                for sizetag in promo_record.product_sandwich_sizetags_line_ids:
+                    if sizetag.sizetag_id == self.sizetag.sizetag_id:
+                        self.product_price_unit += sizetag.sizetag_price
+            else:
+                self.product_price_unit += self.sizetag.sizetag_price
         # breadtype if any
         if self.breadtype:
             self.product_price_unit += self.breadtype.breadtype_price
