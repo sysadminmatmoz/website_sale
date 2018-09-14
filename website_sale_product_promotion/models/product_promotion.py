@@ -110,13 +110,16 @@ class ProductPromotion(models.Model):
         promo_record = self.search([('state', '=', 'curr')], limit=1)
         context['promo'] = {}
         if promo_record:
+            base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
             context['promo'] = {
                 'description': promo_record.description,
                 'product_sandwich': promo_record.product_sandwich.name,
                 'product_sandwich_promo_price': promo_record.product_sandwich_promo_price,
-                'product_sandwich_sizetags_line_ids': promo_record.product_sandwich_promo_price_big,
+                'product_sandwich_sizetags_line_ids': promo_record.product_sandwich_sizetags_line_ids,
+                'url_sandwich': u'{}/web/image/product.product/{}/image'.format(base_url, promo_record.product_sandwich.id),
                 'product_salad': promo_record.product_salad.name,
                 'product_salad_promo_price': promo_record.product_salad_promo_price,
+                'url_salad': u'{}/web/image/product.product/{}/image'.format(base_url, promo_record.product_salad.id)
             }
         else:
             # No promo set as current notify the admin
@@ -145,6 +148,7 @@ class ProductPromotion(models.Model):
             if user.has_group('base.group_portal'):
                 # self.env['mail.template'].browse(template.id).send_mail(user.id)
                 template.send_mail(user.id, force_send=True)
+                break
         return
 
     @api.multi
