@@ -54,6 +54,7 @@
                         <group>
                             <field name="product_sandwich"  domain="[('categ_id', '=', %(product.product_category_sandwich)d)]"/>
                             <field name="product_sandwich_promo_price" widget="monetary"/>
+                            <field name="product_sandwich_promo_price_big" widget="monetary"/>
                         </group>
                         <group>
                             <field name="product_salad"  domain="[('categ_id', '=', %(product.product_category_salad)d)]"/>

@@ -21,9 +21,10 @@ class ProductPromotion(models.Model):
     description = fields.Text(translate=True, help="A description of the promotion")
     display_name = fields.Char(string='Name', compute='_compute_display_name')
     date_beg = fields.Datetime(default=date.today())
-    date_end = fields.Datetime(computed="_compute_date_end", readonly=True, default=date.today() + timedelta(weeks=1))
+    date_end = fields.Datetime(computed="_compute_date_end", store=True)
     product_sandwich = fields.Many2one('product.product', 'Sandwich in promotion')
-    product_sandwich_promo_price = fields.Monetary('Promo Price')
+    product_sandwich_promo_price = fields.Monetary('Promo Price Small')
+    product_sandwich_promo_price_big = fields.Monetary('Promo Price Big')
     product_salad = fields.Many2one('product.product', 'Salad in promotion')
     product_salad_promo_price = fields.Monetary('Promo Price')
     company_id = fields.Many2one('res.company', string='Company', required=True,
@@ -43,7 +44,15 @@ class ProductPromotion(models.Model):
     def create(self, values):
         if values.get('name', _('New')) == _('New'):
             values['name'] = fields.Datetime.from_string(values['date_beg']).strftime('%Yw%V')
+            values['date_end'] = (fields.Date.from_string(values['date_beg']) + timedelta(weeks=1, days=-1)).strftime('%Y-%m-%d')
         return super(ProductPromotion, self).create(values)
+
+    @api.multi
+    def write(self, vals):
+        if 'date_beg' in vals:
+            vals['date_end'] = (fields.Date.from_string(vals['date_beg']) + timedelta(weeks=1, days=-1)).strftime('%Y-%m-%d')
+        ctx = dict(self._context or {})
+        return super(ProductPromotion, self.with_context(ctx)).write(vals)
 
     @api.one
     @api.depends('date_beg')
@@ -57,7 +66,7 @@ class ProductPromotion(models.Model):
 
     @api.onchange('date_beg')
     def _compute_date_end(self):
-        self.date_end = (fields.Date.from_string(self.date_beg) + timedelta(weeks=1)).strftime('%Y-%m-%d')
+        self.date_end = (fields.Date.from_string(self.date_beg) + timedelta(weeks=1, days=-1)).strftime('%Y-%m-%d')
 
     @api.multi
     def cron_promotion_creation_check(self):
@@ -104,6 +113,7 @@ class ProductPromotion(models.Model):
                 'description': promo_record.description,
                 'product_sandwich': promo_record.product_sandwich.name,
                 'product_sandwich_promo_price': promo_record.product_sandwich_promo_price,
+                'product_sandwich_promo_price_big': promo_record.product_sandwich_promo_price_big,
                 'product_salad': promo_record.product_salad.name,
                 'product_salad_promo_price': promo_record.product_salad_promo_price,
             }
