@@ -30,7 +30,12 @@ class ResPartner(models.Model):
         # <website_domain>/shop/simple/category/<category-slug>#product_id_<id>
         base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         # NOTE: only the first public category is used in creating the slug
-        product_url = u"{}/shop/simple/category/{}#product_details_{}".format(base_url, slug(product_id.public_categ_ids[0]), product_id.id)
+        product_url = u"{}/shop/simple/category/{}#base_price_{}".format(
+            base_url,
+            slug(product_id.categ_id),
+            product_id.id
+        )
+        _logger.debug("ABAKUS: url=%s" % product_url)
         context['promo'] = {
             'product_gift': product_id.name,
             'product_url': product_url,
