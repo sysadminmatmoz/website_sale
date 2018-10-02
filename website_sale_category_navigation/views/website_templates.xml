@@ -29,11 +29,9 @@
         <!-- Collapsible category child listing -->
         <template id="option_collapse_categories_recursive_hide" name="Collapse Category Recursive">
             <li t-att-class="'active' if categ.id == int(category or 0) else None">
-                <i t-if="categ.child_id"
-                   t-attf-class="text-primary fa #{'fa-chevron-down' if categ.id in parent_category_ids else 'fa-chevron-right'}"/>
+                <i t-if="categ.child_id" t-attf-class="text-primary fa #{'fa-chevron-down' if categ.id in parent_category_ids else 'fa-chevron-right'}"/>
                 <a t-att-href="keep('/shop/category/' + slug(categ), category=0)" t-field="categ.name"/>
-                <ul t-if="categ.child_id" class="nav nav-pills nav-stacked nav-hierarchy"
-                    t-att-style="'display:block;' if categ.id in parent_category_ids else 'display:none;'">
+                <ul t-if="categ.child_id" class="nav nav-pills nav-stacked nav-hierarchy" t-att-style="'display:block;' if categ.id in parent_category_ids else 'display:none;'">
                     <t t-foreach="categ.child_id" t-as="categ">
                         <t t-if="categ.products_count > 0">
                             <t t-call="website_sale_category_navigation.option_collapse_categories_recursive_hide"/>
@@ -44,8 +42,7 @@
         </template>
 
         <!-- Collapsible category listing -->
-        <template id="option_collapsible_category_empty_hide"
-                  inherit_id="website_sale.option_collapse_products_categories">
+        <template id="option_collapsible_category_empty_hide" inherit_id="website_sale.option_collapse_products_categories">
             <xpath expr="//ul[@id='o_shop_collapse_category']/t/t" position="replace">
                 <t t-if="categ.products_count > 0">
                     <t t-call="website_sale_category_navigation.option_collapse_categories_recursive_hide"/>
