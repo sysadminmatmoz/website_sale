@@ -2,9 +2,12 @@
 <odoo>
     <data>
         <!-- Regular child category listing -->
-        <template id="categories_recursive_hide" name="Category List">
+        <template id="categories_recursive_hide" name="Category Recursive (Hide empty)">
             <li t-att-class="'active' if c.id == int(category or 0) else None">
-                <a t-att-href="keep('/shop/category/' + slug(c), category=0)" t-field="c.name"/>
+                <a t-att-href="keep('/shop/category/' + slug(c), category=0)">
+                    <span t-field="c.name"/>
+                    (<span t-field="c.products_count" />)
+                </a>
                 <ul t-if="c.child_id" class="nav nav-pills nav-stacked nav-hierarchy">
                     <t t-foreach="c.child_id" t-as="c">
                         <t t-if="c.products_count > 0">
@@ -16,7 +19,7 @@
         </template>
 
         <!-- Regular parent category listing -->
-        <template id="category_empty_hide" inherit_id="website_sale.products_categories">
+        <template id="category_empty_hide" inherit_id="website_sale.products_categories"  name="Category Parent (Hide empty)">
             <xpath expr="//t[@t-foreach='categories']" position="replace">
                 <t t-foreach="categories" t-as="c">
                     <t t-if="c.products_count > 0">
@@ -27,10 +30,13 @@
         </template>
 
         <!-- Collapsible category child listing -->
-        <template id="option_collapse_categories_recursive_hide" name="Collapse Category Recursive">
+        <template id="option_collapse_categories_recursive_hide" name="Collapse Category Recursive (Hide empty)">
             <li t-att-class="'active' if categ.id == int(category or 0) else None">
                 <i t-if="categ.child_id" t-attf-class="text-primary fa #{'fa-chevron-down' if categ.id in parent_category_ids else 'fa-chevron-right'}"/>
-                <a t-att-href="keep('/shop/category/' + slug(categ), category=0)" t-field="categ.name"/>
+                <a t-att-href="keep('/shop/category/' + slug(categ), category=0)">
+                    <span t-field="categ.name"/>
+                    (<span t-field="categ.products_count" />)
+                </a>
                 <ul t-if="categ.child_id" class="nav nav-pills nav-stacked nav-hierarchy" t-att-style="'display:block;' if categ.id in parent_category_ids else 'display:none;'">
                     <t t-foreach="categ.child_id" t-as="categ">
                         <t t-if="categ.products_count > 0">
@@ -42,7 +48,7 @@
         </template>
 
         <!-- Collapsible category listing -->
-        <template id="option_collapsible_category_empty_hide" inherit_id="website_sale.option_collapse_products_categories">
+        <template id="option_collapsible_category_empty_hide" inherit_id="website_sale.option_collapse_products_categories" name="Collapse Category Parent (Hide empty)">
             <xpath expr="//ul[@id='o_shop_collapse_category']/t/t" position="replace">
                 <t t-if="categ.products_count > 0">
                     <t t-call="website_sale_category_navigation.option_collapse_categories_recursive_hide"/>
