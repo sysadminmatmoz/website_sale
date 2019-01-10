@@ -8,7 +8,8 @@
     'category': 'Sale',
     'version': '11.0.1.0',
     'depends': [
-        'website_sale'
+        'website_sale',
+        'website_sale_options',
     ],
 
     'data': [

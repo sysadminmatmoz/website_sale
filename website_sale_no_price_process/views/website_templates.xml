@@ -144,5 +144,18 @@
                 <span class="hidden-xs">Process Shipping &amp; Billing</span>
             </xpath>
         </template>
+
+        <!-- Options Wizard -->
+        <template id="website_sale_options_no_payment" inherit_id="website_sale_options.modal">
+            <xpath expr="//span[@t-field='product.website_price']" position="replace">
+                <span name="no_price_replace">Requested</span>
+            </xpath>
+            <xpath expr="//span[@t-field='product.lst_price']" position="replace">
+                <span name="no_price_replace">Requested</span>
+            </xpath>
+            <xpath expr="//span[@class='oe_price product_id']" position="replace">
+                <span name="no_price_replace">Requested</span>
+            </xpath>
+        </template>
     </data>
 </odoo>
