@@ -39,5 +39,5 @@
     <menuitem name="Category Size tag"
               id="menu_category_sizetag_action"
               action="category_sizetag_action"
-              parent="sales_team.menu_sales" sequence="14" />
+              parent="sale.prod_config_main" sequence="14" />
 </odoo>
