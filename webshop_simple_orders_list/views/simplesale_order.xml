@@ -211,12 +211,6 @@
     <menuitem id="menu_closed_orders"
               name="Closed Orders"
               action="action_simple_orders"
-<<<<<<< HEAD
               parent="sale_simple_root"
               sequence="15"/>
 </odoo>
-=======
-              parent="sales_team.menu_base_partner"
-              sequence="17"/>
-</odoo>
->>>>>>> 66e959a1e43eefd441bc64c65a943ff0dd3b631e
