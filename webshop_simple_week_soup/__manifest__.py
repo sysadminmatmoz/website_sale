@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
+# (c) AbAKUS IT Solutions
 {
-    'name': "Week Menu for Simple Webshop",
-    'summary': "Mail Menu of The Week",
+    'name': "Week Soup for Simple Webshop",
+    'summary': "Mail Soup of The Week",
     'author': "AbAKUS it-solutions SARL",
     'website': "http://www.abakusitsolutions.eu",
     'category': 'Website',
@@ -12,9 +13,8 @@
     ],
     'data': [
         'data/ir_cron.xml',
-        'data/week_menu_email_template.xml',
+        'data/week_soup_email_template.xml',
 
-        'views/res_partner.xml',
         'views/res_company.xml',
     ],
     'installable': True

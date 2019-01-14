@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Production Promotion",
-    'summary': "Allows ceating a promotion featuring two products",
+    'name': "Web Shop Product Promotion",
+    'summary': "Promote two products from web shop",
     'author': "AbAKUS it-solutions SARL",
     'website': "http://www.abakusitsolutions.eu",
     'category': 'Sale',
-    'version': '10.0.1.0',
+    'version': '10.0.2.0.0',
     'depends': [
         'base',
         'mail',
+        'webshop_simple',
     ],
     'data': [
         'views/portal_template.xml',

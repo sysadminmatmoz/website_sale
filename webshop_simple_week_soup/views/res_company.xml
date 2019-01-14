@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_company_week_soup_form" model="ir.ui.view">
+        <field name="name">Company Week Soup Form</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[1]" position="after">
+                <page string="Soups of the Week">
+                    <group string="Soups of the Week" name="week_soups">
+                        <field name="monday_soup_id"
+                               domain="[('categ_id', '=', %(product.product_category_todayssoup)d)]"/>
+                        <field name="tuesday_soup_id"
+                               domain="[('categ_id', '=', %(product.product_category_todayssoup)d)]"/>
+                        <field name="wednesday_soup_id"
+                               domain="[('categ_id', '=', %(product.product_category_todayssoup)d)]"/>
+                        <field name="thursday_soup_id"
+                               domain="[('categ_id', '=', %(product.product_category_todayssoup)d)]"/>
+                        <field name="friday_soup_id"
+                               domain="[('categ_id', '=', %(product.product_category_todayssoup)d)]"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

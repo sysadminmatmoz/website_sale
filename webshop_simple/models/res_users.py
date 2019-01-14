@@ -28,3 +28,19 @@ class ResUsers(models.Model):
             return self.partner_id.is_bday_gift_available
         else:
             return False
+
+    @api.model
+    def create(self, values):
+        """
+        Default phone number to avoid displaying shop/address
+        Default country_id to allow payment
+        """
+        if not values.get('phone'):
+            values['phone'] = u'+32477353535'
+        user = super(ResUsers, self).create(values)
+        company_id = self.env['res.company']._company_default_get('webshop.simple')
+        if company_id and company_id.country_id:
+            user.partner_id.write({'country_id': company_id.country_id.id})
+        else:
+            _logger.warning("ABK: No country set for company [{}]".format(company_id.name))
+        return user

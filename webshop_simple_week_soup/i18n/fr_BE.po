@@ -1,13 +1,13 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* webshop_simple_week_menu
+# 	* webshop_simple_week_soup
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-07 01:07+0000\n"
-"PO-Revision-Date: 2018-09-07 16:31+0200\n"
+"POT-Creation-Date: 2018-09-07 09:49+0000\n"
+"PO-Revision-Date: 2018-09-07 11:51+0200\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,14 +17,14 @@ msgstr ""
 "Language: fr_BE\n"
 "X-Generator: Poedit 2.1.1\n"
 
-#. module: webshop_simple_week_menu
-#: model:mail.template,body_html:webshop_simple_week_menu.email_template_week_menu
+#. module: webshop_simple_week_soup
+#: model:mail.template,body_html:webshop_simple_week_soup.email_template_week_soup
 msgid ""
 "\n"
 "            \n"
 "\t          <p style=\"font-family: verdana\">Dear ${(object.name)},<br/>\n"
 "\t          <br/>\n"
-"\t\t  Here is the Menu of the Week for this week.<br/>\n"
+"\t\t  Here are proposed Soup of The Day for this week.<br/>\n"
 "\t\t  </p>\n"
 "\t\t  <div style=\"font-family: verdana\">\n"
 "\t\t    <ul style=\"width:300px; list-style: none;text-align: center;\">\n"
@@ -72,7 +72,7 @@ msgstr ""
 "            \n"
 "\t          <p style=\"font-family: verdana\">Cher/Chère ${(object.name)},<br/>\n"
 "\t          <br/>\n"
-"\t\t  Voici les plats du jour pour cette semaine.<br/>\n"
+"\t\t  Voici les soupes du jour pour cette semaine.<br/>\n"
 "\t\t  </p>\n"
 "\t\t  <div style=\"font-family: verdana\">\n"
 "\t\t    <ul style=\"width:300px; list-style: none;text-align: center;\">\n"
@@ -116,53 +116,47 @@ msgstr ""
 "\t    \n"
 "        "
 
-#. module: webshop_simple_week_menu
-#: model:ir.model.fields,field_description:webshop_simple_week_menu.field_res_partner_allow_week_menu_notification
-#: model:ir.model.fields,field_description:webshop_simple_week_menu.field_res_users_allow_week_menu_notification
-msgid "Allow week menu notification"
-msgstr "Recevoir le menu de la semaine"
-
-#. module: webshop_simple_week_menu
-#: model:ir.model,name:webshop_simple_week_menu.model_res_company
+#. module: webshop_simple_week_soup
+#: model:ir.model,name:webshop_simple_week_soup.model_res_company
 msgid "Companies"
 msgstr "Sociétés"
 
-#. module: webshop_simple_week_menu
-#: model:ir.model.fields,field_description:webshop_simple_week_menu.field_res_company_friday_product_id
-msgid "Friday Product"
-msgstr "Plat du Vendredi"
+#. module: webshop_simple_week_soup
+#: model:ir.model.fields,field_description:webshop_simple_week_soup.field_res_company_friday_soup_id
+msgid "Friday Soup"
+msgstr "Soupe du Vendredi"
 
-#. module: webshop_simple_week_menu
-#: model:ir.ui.view,arch_db:webshop_simple_week_menu.res_company_week_menu_form
-msgid "Menu of the Week"
-msgstr "Menu de la semaine"
+#. module: webshop_simple_week_soup
+#: model:ir.model.fields,field_description:webshop_simple_week_soup.field_res_company_monday_soup_id
+msgid "Monday Soup"
+msgstr "Soupe du Lundi"
 
-#. module: webshop_simple_week_menu
-#: model:ir.model.fields,field_description:webshop_simple_week_menu.field_res_company_monday_product_id
-msgid "Monday Product"
-msgstr "Plat du Lundi"
-
-#. module: webshop_simple_week_menu
-#: model:ir.model,name:webshop_simple_week_menu.model_res_partner
+#. module: webshop_simple_week_soup
+#: model:ir.model,name:webshop_simple_week_soup.model_res_partner
 msgid "Partner"
-msgstr "Contact"
+msgstr "Partenaire"
 
-#. module: webshop_simple_week_menu
-#: model:mail.template,subject:webshop_simple_week_menu.email_template_week_menu
-msgid "This Week Menu"
-msgstr "Menu de la semaine"
+#. module: webshop_simple_week_soup
+#: model:ir.ui.view,arch_db:webshop_simple_week_soup.res_company_week_soup_form
+msgid "Soups of the Week"
+msgstr "Soupes de la Semaine"
 
-#. module: webshop_simple_week_menu
-#: model:ir.model.fields,field_description:webshop_simple_week_menu.field_res_company_thursday_product_id
-msgid "Thursday Product"
-msgstr "Plat du Jeudi"
+#. module: webshop_simple_week_soup
+#: model:mail.template,subject:webshop_simple_week_soup.email_template_week_soup
+msgid "This Week Soup"
+msgstr "Soupe de la Semaine"
 
-#. module: webshop_simple_week_menu
-#: model:ir.model.fields,field_description:webshop_simple_week_menu.field_res_company_tuesday_product_id
-msgid "Tuesday Product"
-msgstr "Plat du Mardi"
+#. module: webshop_simple_week_soup
+#: model:ir.model.fields,field_description:webshop_simple_week_soup.field_res_company_thursday_soup_id
+msgid "Thursday Soup"
+msgstr "Soupe du Jeudi"
 
-#. module: webshop_simple_week_menu
-#: model:ir.model.fields,field_description:webshop_simple_week_menu.field_res_company_wednesday_product_id
-msgid "Wednesday Product"
-msgstr "Plat du Mercredi"
+#. module: webshop_simple_week_soup
+#: model:ir.model.fields,field_description:webshop_simple_week_soup.field_res_company_tuesday_soup_id
+msgid "Tuesday Soup"
+msgstr "Soupe du Mardi"
+
+#. module: webshop_simple_week_soup
+#: model:ir.model.fields,field_description:webshop_simple_week_soup.field_res_company_wednesday_soup_id
+msgid "Wednesday Soup"
+msgstr "Soupe du Mercredi"

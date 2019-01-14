@@ -5,15 +5,22 @@
         <field name="model">res.company</field>
         <field name="inherit_id" ref="base.view_company_form"/>
         <field name="arch" type="xml">
-        <xpath expr="//notebook/page[1]" position="after">
-            <page string="Menu of the Week">
-                <group>
+            <xpath expr="//notebook/page[1]" position="after">
+                <page string="Menu of the Week">
                     <group string="Menu of the Week" name="week_menu">
-                        <field name="week_menu_product_id" />
+                        <field name="monday_product_id"
+                               domain="[('categ_id', '=', %(product.product_category_todaysspecial)d)]"/>
+                        <field name="tuesday_product_id"
+                               domain="[('categ_id', '=', %(product.product_category_todaysspecial)d)]"/>
+                        <field name="wednesday_product_id"
+                               domain="[('categ_id', '=', %(product.product_category_todaysspecial)d)]"/>
+                        <field name="thursday_product_id"
+                               domain="[('categ_id', '=', %(product.product_category_todaysspecial)d)]"/>
+                        <field name="friday_product_id"
+                               domain="[('categ_id', '=', %(product.product_category_todaysspecial)d)]"/>
                     </group>
-                </group>
-            </page>
-        </xpath>
+                </page>
+            </xpath>
         </field>
     </record>
 </odoo>

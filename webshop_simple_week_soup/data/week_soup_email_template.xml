@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="email_template_week_menu" model="mail.template">
-        <field name="name">Menu Of The Week Email</field>
+    <record id="email_template_week_soup" model="mail.template">
+        <field name="name">Soup Of The Week Email</field>
         <field name="email_from">${object.company_id and object.company_id.email or ''}</field>
-        <field name="subject">This Week Menu</field>
+        <field name="subject">This Week Soup</field>
         <field name="partner_to">${object.partner_id.id}</field>
         <field name="email_to">${object.email|safe}</field>
         <field name="lang">${object.partner_id.lang}</field>
@@ -13,7 +13,7 @@
             <![CDATA[
 	          <p style="font-family: verdana">Dear ${(object.name)},<br/>
 	          <br/>
-		  Here is the Menu of the Week for this week.<br/>
+		  Here are proposed Soup of The Day for this week.<br/>
 		  </p>
 		  <div style="font-family: verdana">
 		    <ul style="width:300px; list-style: none;text-align: center;">

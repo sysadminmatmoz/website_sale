@@ -26,19 +26,19 @@ class SaleOrder(models.Model):
         if breadtype:
             for bl in main_product.breadtype_line_ids:
                 if int(bl.id) == int(breadtype):
-                    extra_name += u"\nBread: %s" % bl.breadtype_id.name
+                    extra_name += _(u"\nBread: %s") % bl.breadtype_id.name
         if sizetag:
             for sl in main_product.sizetags_line_ids:
                 if int(sl.id) == int(sizetag):
-                    extra_name += u"\nSize: %s" % sl.sizetag_id.name
+                    extra_name += _(u"\nSize: %s") % sl.sizetag_id.name
         if sides and len(sides) > 0:
             for side in sides:
                 side_product = self.env['product.template'].search([('id', '=', int(side))])
                 if side_product:
-                    extra_name += "\nSide: %s" % side_product.display_name
+                    extra_name += _(u"\nSide: %s") % side_product.display_name
                 else:
                     # TODO: raise error
-                    _logger.debug(u"ABAKUS**: can_t find side product_id:{}".format(int(side)))
+                    _logger.warning(u"ABAKUS**: can_t find side product_id:{}".format(int(side)))
                     return None
         return extra_name
 
@@ -84,7 +84,7 @@ class SaleOrder(models.Model):
                 sides = kwargs['sides']
             values['breadtype'] = breadtype
             values['sizetag'] = sizetag
-            # make sur we create sides properly
+            # make sure we create sides properly
             values['sides'] = [(6, 0, sides)]
             values['name'] = self._get_line_description(self.id, product_id, attributes=attributes)
             # Extra infos

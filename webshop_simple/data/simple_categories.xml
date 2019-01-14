@@ -1,37 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <data noupdate="1">
-        <record model="product.category" id="product.product_category_sandwich">
-            <field name="name">Sandwich</field>
-            <field name="type">normal</field>
-            <field name="has_breadtype">True</field>
-            <field name="has_sizetag">True</field>
-            <field name="has_base_products">True</field>
-            <field name="parent_id">2</field>
-        </record>
-        <record model="product.category" id="product.product_category_salad">
-            <field name="name">Salad</field>
-            <field name="type">normal</field>
-            <field name="has_breadtype">False</field>
-            <field name="has_sizetag">True</field>
-            <field name="has_base_products">True</field>
-            <field name="parent_id">2</field>
-        </record>
-        <record model="product.category" id="product.product_category_meal">
-            <field name="name">Menus</field>
-            <field name="type">normal</field>
-            <field name="has_breadtype">False</field>
-            <field name="has_sizetag">False</field>
-            <field name="has_base_products">False</field>
-            <field name="parent_id">2</field>
-        </record>
-        <record model="product.category" id="product.product_category_dessert">
-            <field name="name">Dessert</field>
-            <field name="type">normal</field>
-            <field name="has_breadtype">False</field>
-            <field name="has_sizetag">False</field>
-            <field name="has_base_products">False</field>
-            <field name="parent_id">2</field>
-        </record>
-    </data>
+<odoo noupdate="1">
+    <record model="product.category" id="product.product_category_sandwich">
+        <field name="name">Sandwich</field>
+        <field name="type">normal</field>
+        <field name="has_breadtype">True</field>
+        <field name="has_sizetag">True</field>
+        <field name="has_base_products">True</field>
+        <field name="parent_id">2</field>
+    </record>
+    <record model="product.category" id="product.product_category_salad">
+        <field name="name">Salad</field>
+        <field name="type">normal</field>
+        <field name="has_breadtype">False</field>
+        <field name="has_sizetag">True</field>
+        <field name="has_base_products">True</field>
+        <field name="parent_id">2</field>
+    </record>
+    <record model="product.category" id="product.product_category_meal">
+        <field name="name">Menus</field>
+        <field name="type">normal</field>
+        <field name="has_breadtype">False</field>
+        <field name="has_sizetag">False</field>
+        <field name="has_base_products">False</field>
+        <field name="parent_id">2</field>
+    </record>
+    <record model="product.category" id="product.product_category_dessert">
+        <field name="name">Dessert</field>
+        <field name="type">normal</field>
+        <field name="has_breadtype">False</field>
+        <field name="has_sizetag">False</field>
+        <field name="has_base_products">False</field>
+        <field name="parent_id">2</field>
+    </record>
+    <record model="product.category" id="product.product_category_todaysspecial">
+        <field name="name">Today's Special</field>
+        <field name="type">normal</field>
+        <field name="has_breadtype">False</field>
+        <field name="has_sizetag">False</field>
+        <field name="has_base_products">False</field>
+        <field name="parent_id">2</field>
+    </record>
+    <record model="product.category" id="product.product_category_todayssoup">
+        <field name="name">Today's Soup</field>
+        <field name="type">normal</field>
+        <field name="has_breadtype">False</field>
+        <field name="has_sizetag">False</field>
+        <field name="has_base_products">False</field>
+        <field name="parent_id">2</field>
+    </record>
 </odoo>

@@ -22,7 +22,7 @@ class ResCompany(models.Model):
             company.tz_offset = datetime.now(pytz.timezone(company.openhours_tz or 'GMT')).strftime('%z')
 
     openhours_tz_offset = fields.Char(compute='_compute_tz_offset', string='Timezone offset', invisible=True)
-    openhours_tz = fields.Selection(_tz_get, string='Timezone', default=pytz.timezone('Europe/Brussels'))
+    openhours_tz = fields.Selection(_tz_get, string='Timezone', default='Europe/Brussels')
     openhours_open = fields.Float(string='Tomorrow Orders Opening Hour', help="Opening hour for tomorrow's orders")
     openhours_close = fields.Float(string='Day Orders Closing Hour', help="Closing hour for today's orders")
 

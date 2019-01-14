@@ -1,13 +1,18 @@
 
-// size tage event handler
+// sizetags event handler
 
 function compute_sizetag (product_id){
     if(product_id == undefined){
         return;
     }
     var radios = document.getElementsByName('sizetag_' + product_id);
+    if(radios.length < 1){
+        return;
+    }
+    var indexChecked = 0;
     for(var i = 0; i < radios.length; i++){
         if( radios[i].checked ){
+            indexChecked = i;
             var price = document.getElementById('sizetag_price_' + product_id + '_' + radios[i].value).value
             if(price == "") {
                 price = "0.00"
@@ -15,7 +20,26 @@ function compute_sizetag (product_id){
             document.getElementById('sizetag_price_' + product_id).innerText = parseFloat(price.replace(',', '.')).toFixed(2);
         }
     };
-    compute_unit_total(product_id);
+    // update sides with sizetag labels
+    var my_sides = document.querySelectorAll('[for^="sides-' + product_id + '"]');
+    for( var i = 0; i < my_sides.length; i++) {
+        var divs = my_sides[i].querySelectorAll('div');
+        var side_price = 0;
+        for( var j = 0; j < divs.length; j++){
+            if( j == indexChecked ){
+                divs[j].classList.add('price-side-selected');
+                var str = divs[j].id.replace('sides_', 'side_sizetag_price_');
+                side_price = document.getElementById(str).value;
+            } else {
+                divs[j].classList.remove('price-side-selected');
+            }
+        }
+        // update the side price
+        var str2 = my_sides[i].getAttribute('for').replace(/-/g,'_').replace('sides_','side_price_')
+        document.getElementById(str2).value = side_price;
+    }
+    // compute the total sides price
+    compute_sides(product_id);
 };
 
 // breadtype event handler
@@ -45,9 +69,6 @@ function compute_sides(product_id){
     }
     var sides_price = 0.0;
     var my_sides = document.querySelectorAll('[id^="sides-' + product_id + '"]');
-    if(my_sides.length < 1){
-        return;
-    }
     for( var i = 0; i < my_sides.length; i++) {
         if(my_sides[i].checked){
             var price = document.getElementById('side_price_' + product_id + '_' + my_sides[i].value).value

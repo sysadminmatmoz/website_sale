@@ -18,13 +18,39 @@ class ResPartner(models.Model):
             context.update(self.env.context)
         context['promo'] = {}
         company = self.env.user.company_id
-        if not company.week_menu_product_id:
+        if not company.monday_product_id and not company.tuesday_product_id.name \
+                and not company.wednesday_product_id.name and not company.thursday_product_id.name\
+                and not company.friday_product_id.name:
             _logger.debug(u"ABAKUS: Week Menu Mailing - NO WEEK MENU SET - STOP")
             return
-        _logger.debug(u"ABAKUS: Week Menu Mailing - Menu: {}".format(company.week_menu_product_id.name))
-        context['promo'] = {
-            'product_gift': company.week_menu_product_id.name,
-        }
+        """ If at least one is set we proceed. This allow to handle special weeks with days off"""
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        if company.monday_product_id:
+            context['promo']['monday'] = {
+                'name': company.monday_product_id.name,
+                'url': u'{}/web/image/product.product/{}/image'.format(base_url, company.monday_product_id.id),
+            }
+        if company.tuesday_product_id:
+            context['promo']['tuesday'] = {
+                'name': company.tuesday_product_id.name,
+                'url': u'{}/web/image/product.product/{}/image'.format(base_url, company.tuesday_product_id.id),
+            }
+        if company.wednesday_product_id:
+            context['promo']['wednesday'] = {
+                'name': company.wednesday_product_id.name,
+                'url': u'{}/web/image/product.product/{}/image'.format(base_url, company.wednesday_product_id.id),
+            }
+        if company.thursday_product_id:
+            context['promo']['thursday'] = {
+                'name': company.thursday_product_id.name,
+                'url': u'{}/web/image/product.product/{}/image'.format(base_url, company.thursday_product_id.id),
+            }
+        if company.friday_product_id:
+            context['promo']['friday'] = {
+                'name': company.friday_product_id.name,
+                'url': u'{}/web/image/product.product/{}/image'.format(base_url, company.friday_product_id.id),
+            }
+
         self.env.context = context
         template = self.env.ref('webshop_simple_week_menu.email_template_week_menu')
         public_users = self.env['res.users'].search([])
