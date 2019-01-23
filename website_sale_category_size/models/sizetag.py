@@ -26,3 +26,13 @@ class SizeTageLine(models.Model):
     product_id = fields.Many2one('product.template', string="Product")
     sizetag_id = fields.Many2one('category.sizetag', string="Size Tag", ondelete='cascade', required=True)
     sizetag_price = fields.Float(string='Size Tag Price', default=0.0)
+
+    @api.multi
+    def name_get(self):
+        result = []
+        for line in self:
+            if line.sizetag_price > 0:
+                result.append((line.id, line.sizetag_id.name + " (+ " + str(line.sizetag_price) + ")"))
+            else:
+                result.append((line.id, line.sizetag_id.name))
+        return result
