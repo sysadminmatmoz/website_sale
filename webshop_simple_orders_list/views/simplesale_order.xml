@@ -46,6 +46,9 @@
                             <field name="partner_id" domain="[('customer','=',True)]" context="{'search_default_customer':1, 'show_address': 1}" options="{&quot;always_reload&quot;: True}"/>
                             <field name="partner_invoice_id" groups="sale.group_delivery_invoice_address" context="{'default_type':'invoice'}"/>
                         </group>
+                        <group>
+                            <field name="delivery_date" widget="date"/>
+                        </group>
                     </group>
                     <notebook>
                         <page string="Order Lines">
