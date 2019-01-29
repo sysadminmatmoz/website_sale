@@ -151,6 +151,8 @@ class WebsiteSaleSimple(WebsiteSale):
         if product_count == 0:
             return request.redirect('/shop/simple')
 
+        products = sorted(products, key=lambda x: x.name)
+
         pricelist_context = dict(request.env.context)
         if not pricelist_context.get('pricelist'):
             pricelist = request.website.get_current_pricelist()
